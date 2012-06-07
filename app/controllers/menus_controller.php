@@ -1,6 +1,7 @@
 <?php
 	class MenusController extends AppController{
-		var $uses = array('ContractBillEstimation');
+		//var $uses = array('ContractBillEstimation');
+		var $uses = '';
 		function beforeFilter(){
 			parent::beforeFilter();
 		}

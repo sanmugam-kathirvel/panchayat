@@ -1,6 +1,7 @@
 <?php
 	class IncomesController extends AppController{
-		var $uses = array('Income');
+		//var $uses = array('Income');
+		var $uses = '';
 		function beforeFilter(){
 			parent::beforeFilter();
 		}

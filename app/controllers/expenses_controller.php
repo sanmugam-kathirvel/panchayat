@@ -1,6 +1,7 @@
 <?php
 	class ExpensesController extends AppController{
-		var $uses = array('ContractBillEstimation');
+		//var $uses = array('ContractBillEstimation');
+		var $uses = '';
 		function beforeFilter(){
 			parent::beforeFilter();
 		}
