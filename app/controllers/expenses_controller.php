@@ -1,7 +1,6 @@
 <?php
 	class ExpensesController extends AppController{
-		//var $uses = array('ContractBillEstimation');
-		var $uses = '';
+		var $uses = array('Purchase', 'Salary', 'EmployeeSalary', 'PurchaseItem');
 		function beforeFilter(){
 			parent::beforeFilter();
 		}
@@ -24,6 +23,17 @@
 		}
 		function addexpense(){
 			
+		}
+		function purchase(){
+			if(!empty($this->data)){
+				$this->Purchase->saveAll($this->data);
+			}
+		}
+		function salary(){
+			if(!empty($this->data)){
+				//var_dump($this->data);die;
+				$this->Salary->saveAll($this->data);
+			}
 		}
 	}
 ?>
