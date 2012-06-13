@@ -4,7 +4,7 @@
 	echo $form->input('company_name');
 	echo $form->input('voucher_number');
 	echo $form->input('cheque_number');
-	echo $form->input('cheque_date', array('type' => 'text'));
+	echo $form->input('cheque_date', array('type' => 'text', 'id' => 'datepicker'));
 	echo $form->input('PurchaseItem.0.item_description');
 	echo $form->input('PurchaseItem.0.item_quantity');
 	echo $form->input('PurchaseItem.0.item_rate');
