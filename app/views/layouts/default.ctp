@@ -47,33 +47,32 @@
   				<?= $this->Html->link("Grama", "#", array("class" => "brand")) ?>
   				<ul class = "nav">
   					<li class = "dropdown" data-dropdown="dropdown">
-  						<?= $this->Html->link("Expences", "#", array("class" => 'dropdown-toggle') ) ?>
+  						<?= $this->Html->link("Main", "#", array("class" => 'dropdown-toggle') ) ?>
   						<ul class = "dropdown-menu">
-  							<li><?= $this->Html->link("Purchase", array('plugin' => false, "controller" => "products", "action" => "index", "manage" => true)); ?></li>
-  							<li><?= $this->Html->link("Salary", array('plugin' => false, "controller" => "classifications", "action" => "index", "manage" => true)); ?></li>
+  							<li><?= $this->Html->link("Opening Balance", array('plugin' => false, "controller" => "menus", "action" => "addopeningbals")); ?></li>
+  							<li><?= $this->Html->link("Hamlets", array('plugin' => false, "controller" => "menus", "action" => "addhamlet")); ?></li>
+  							<li><?= $this->Html->link("Headers", array('plugin' => false, "controller" => "menus", "action" => "addheader")); ?></li>
+  							<li><?= $this->Html->link("Opening Stocks", array('plugin' => false, "controller" => "menus", "action" => "addopeningstock")); ?></li>
+  							<li><?= $this->Html->link("Stock Issue", array('plugin' => false, "controller" => "menus", "action" => "index")); ?></li>
   						</ul>
   					</li>
   					<li class = "dropdown" data-dropdown="dropdown">
-  						<?= $this->Html->link("Users", "#", array("class" => 'dropdown-toggle') ) ?>
+  						<?= $this->Html->link("Demands", "#", array("class" => 'dropdown-toggle') ) ?>
   						<ul class = "dropdown-menu">
-  							<li><?= $this->Html->link("List", array('plugin' => 'usermgmt', 'controller' => 'users', 'action' => 'index', 'manage' => true)); ?></li>
-  							<li><?= $this->Html->link("Add", array('plugin' => 'usermgmt', 'controller' => 'users', 'action' => 'addUser', 'manage' => true)); ?></li>
+  							<li><?= $this->Html->link("House Tax", array('plugin' => false, "controller" => "demands", "action" => "addhtdemand")); ?></li>
+  							<li><?= $this->Html->link("Water Tax", array('plugin' => false, "controller" => "demands", "action" => "addwtdemand")); ?></li>
+  							<li><?= $this->Html->link("Professional Tax", array('plugin' => false, "controller" => "demands", "action" => "addptdemand")); ?></li>
+  							<li><?= $this->Html->link("D & O Traders", array('plugin' => false, "controller" => "demands", "action" => "adddodemand")); ?></li>
   						</ul>
   					</li>
   					<li class = "dropdown" data-dropdown="dropdown">
-  						<?= $this->Html->link("Roles", "#", array("class" => 'dropdown-toggle') ) ?>
+  						<?= $this->Html->link("Accounts", "#", array("class" => 'dropdown-toggle') ) ?>
   						<ul class = "dropdown-menu">
-  							<li><?= $this->Html->link("List", array('plugin' => 'usermgmt', 'controller' => 'user_groups', 'action' => 'index', 'manage' => true)); ?></li>
-  							<li><?= $this->Html->link("Add", array('plugin' => 'usermgmt', 'controller' => 'user_groups', 'action' => 'addGroup', 'manage' => true)); ?></li>
-  							<li><?= $this->Html->link("Permission", array('plugin' => 'usermgmt', 'controller' => 'user_group_permissions', 'action' => 'index', 'manage' => true)); ?></li>
-  						</ul>
-  					</li>
-  					<li class = "dropdown" data-dropdown="dropdown">
-  						<?//= $this->Html->link($this->User->display("username"), "#", array("class" => 'dropdown-toggle') ) ?>
-  						<ul class = "dropdown-menu">
-  							<li><?= $this->Html->link("Signout", array('plugin' => 'usermgmt', 'controller' => 'users', 'action' => 'logout', 'manage' => false)); ?></li>
-  							<li><?//= $this->Html->link("Edit", array('plugin' => 'usermgmt', 'controller' => 'users', 'action' => 'editUser', $this->User->display("id"))); ?></li>
-  							<li><?= $this->Html->link("Change password", array('plugin' => 'usermgmt', 'controller' => 'users', 'action' => 'changePassword', 'manage' => false)); ?></li>
+  							<li><?= $this->Html->link("Purchase", array('plugin' => false, "controller" => "expenses", "action" => "purchase")); ?></li>
+  							<li><?= $this->Html->link("Salary", array('plugin' => false, "controller" => "expenses", "action" => "salary")); ?></li>
+  							<li><?= $this->Html->link("Bill Estimation", array('plugin' => false, "controller" => "expenses", "action" => "addbill")); ?></li>
+  							<li><?= $this->Html->link("Incomes", array('plugin' => false, "controller" => "incomes", "action" => "addincome")); ?></li>
+  							<li><?= $this->Html->link("Expenses", array('plugin' => false, "controller" => "expenses", "action" => "addexpense")); ?></li>
   						</ul>
   					</li>
   				</ul>

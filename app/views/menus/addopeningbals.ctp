@@ -1,13 +1,17 @@
 <p>Opening Balance</p>
 <?php
-	$options = array('account_1' => 'Account I', 'account_2' => 'Account II', 'account_3' => 'Account III', 'account_4' => 'Account IV', 'account_5' => 'Account V', 'account_6' => 'Account VI', );
-	echo $form->create('OpeningBalance', array( 'url' => array('controller' => 'menus', 'action' => 'addopeningbals')));
+	$account_op = array();
+	foreach($account as $acc){
+		$account_op[$acc['Account']['id']] =  $acc['Account']['account_name'];
+	}
+	echo $form->create('BankDetail', array( 'url' => array('controller' => 'menus', 'action' => 'addopeningbals')));
 	//echo $form->select('account_name', $options);
-	echo $form->input('account_name',array('type'=>'select','options'=> $options)); 
+	echo $form->input('account_id',array('type'=>'select','options'=> $account_op));
+	echo $form->input('accounting_year', array('id' => 'datepicker', 'type' => 'text'));
 	echo $form->input('account_number');
 	echo $form->input('bank_name');
 	echo $form->input('branch');
-	echo $form->input('cash_balance');
-	echo $form->input('bank_balance');
+	echo $form->input('opening_cash_balance', array('label' => 'Cash Balance'));
+	echo $form->input('opening_bank_balance', array('label' => 'Bank Balance'));
 	echo $form->end('Submit');
 ?>
