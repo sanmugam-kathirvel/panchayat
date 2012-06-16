@@ -1,6 +1,6 @@
 <?php
 	class MenusController extends AppController{
-		var $uses = array('Account', 'BankDetail', 'Header', 'Hamlet');
+		var $uses = array('Account', 'BankDetail', 'Header', 'Hamlet', 'Stock', 'StockIssue');
 		function beforeFilter(){
 			parent::beforeFilter();
 		}
@@ -31,11 +31,20 @@
 			}
 		}
 		function addopeningstock(){
-			
+			if(!empty($this->data)){
+				$this->Stock->save($this->data);
+			}
 		}
 		function addhamlet(){
 			if(!empty($this->data)){
 				$this->Hamlet->save($this->data);
+			}
+		}
+		function stockissue(){
+			$stock = $this->Stock->find('all');
+			$this->set(compact('stock'));
+			if(!empty($this->data)){
+				$this->StockIssue->save($this->data);
 			}
 		}
 	}

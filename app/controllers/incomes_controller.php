@@ -1,7 +1,6 @@
 <?php
 	class IncomesController extends AppController{
-		//var $uses = array('Income');
-		var $uses = array('Account');
+		var $uses = array('Account','Header');
 		function beforeFilter(){
 			parent::beforeFilter();
 		}
@@ -21,6 +20,15 @@
 			else{
 				//$this->data = $gallery;
 			}
+		}
+		function avail_header($account){
+			$this->layout = false;
+			$headers = $this->Header->find('all', array(
+				'conditions' => array('Header.header_type' => 'income', 'Header.account_id' => $account)
+			));
+			$this->set(compact('headers'));
+			//echo json_encode($headers);
+			//exit;	
 		}
 	}
 ?>

@@ -53,7 +53,7 @@
   							<li><?= $this->Html->link("Hamlets", array('plugin' => false, "controller" => "menus", "action" => "addhamlet")); ?></li>
   							<li><?= $this->Html->link("Headers", array('plugin' => false, "controller" => "menus", "action" => "addheader")); ?></li>
   							<li><?= $this->Html->link("Opening Stocks", array('plugin' => false, "controller" => "menus", "action" => "addopeningstock")); ?></li>
-  							<li><?= $this->Html->link("Stock Issue", array('plugin' => false, "controller" => "menus", "action" => "index")); ?></li>
+  							<li><?= $this->Html->link("Stock Issue", array('plugin' => false, "controller" => "menus", "action" => "stockissue")); ?></li>
   						</ul>
   					</li>
   					<li class = "dropdown" data-dropdown="dropdown">
