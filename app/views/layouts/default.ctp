@@ -81,6 +81,7 @@
   	</div>
   	<div id = "container">
   		<div class = "content">
+  			<?php echo $this->Session->flash(); ?>
   			<?php echo $content_for_layout; ?>
   		</div>	
   	</div>

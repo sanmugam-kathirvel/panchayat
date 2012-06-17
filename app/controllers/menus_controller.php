@@ -43,9 +43,28 @@
 		function stockissue(){
 			$stock = $this->Stock->find('all');
 			$this->set(compact('stock'));
-			if(!empty($this->data)){
-				$this->StockIssue->save($this->data);
+			if(!empty($this->data['StockIssue']['item_quantity'])){
+				$stock = $this->Stock->findById($this->data['StockIssue']['stock_id']);
+				if($stock['Stock']['item_quantity'] >= $this->data['StockIssue']['item_quantity']){
+					$stock['Stock']['item_quantity'] = $stock['Stock']['item_quantity'] - $this->data['StockIssue']['item_quantity'] ;
+					$this->Stock->save($stock);
+					if(!empty($this->data)){
+						$this->StockIssue->save($this->data);
+					}
+				}else{
+					$this->Session->setFlash('Available Stock only '.$stock['Stock']['item_quantity']);
+					$this->data['StockIssue'] = '';
+				}
 			}
+		}
+		function stockissue_avail(){
+			$this->layout = false;
+			$stocks = $this->Stock->find('all', array(
+				'conditions' => array('Stock.id' => $_POST['stock_id'])
+			));
+			$this->set(compact('stocks'));
+			echo json_encode($stocks);
+			exit;
 		}
 	}
 ?>

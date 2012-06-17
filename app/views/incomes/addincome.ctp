@@ -5,11 +5,11 @@
 		$account_op[$acc['Account']['id']] =  $acc['Account']['account_name'];
 	}
 	echo $form->create('Income', array( 'url' => array('controller' => 'incomes', 'action' => 'addincome')));
-	echo $form->input('account', array('options' => $account_op, 'class' => 'account', 'empty' => true));
-	echo $form->input('date', array('id' => 'datepicker'));
-	echo $form->input('header', array( 'type' => 'select','option' => '', 'empty' => true));
-	echo $form->input('amount');
-	echo $form->input('remarks');
+	echo $form->input('account_id', array('label' => 'Account', 'options' => $account_op, 'class' => 'account', 'empty' => true));
+	echo $form->input('header_id', array('label' => 'Header', 'type' => 'select','option' => '', 'empty' => true));
+	echo $form->input('income_date', array('label' => 'Date', 'id' => 'datepicker', 'type' => 'text'));
+	echo $form->input('income_amount', array('label' => 'Amount'));
+	echo $form->input('description');
 	echo $form->end('Submit');
 ?>
 
@@ -18,19 +18,17 @@ Webroot = 'http://localhost/myapp/panchayat';
 $(document).ready(function(){
 	$('.account').change(function(){
 	  var account = $('.account').val();
-		var form_data = $("#IncomeAddincomeForm").serialize();
 		  $.ajax({
 		  	type: 'POST',
-		  	url: Webroot+"/incomes/avail_header/"+account,
-		  	data: form_data,
+		  	url: Webroot+"/incomes/avail_header/",
+		  	data: {'account':account},
 		  	success: function(data){
 		  		output=JSON.parse(data);
 		  		var htmldata = "<option></option>";
 		  		for(var i = 0; i < output.length; i++){
 			 			htmldata = htmldata+"<option value='"+output[i].Header.id+"'>"+output[i].Header.header_name+"</option>";
 			 		}
-		  	  console.log(htmldata);
-		  	  $('#IncomeHeader').html(htmldata);	
+		  	  $('#IncomeHeaderId').html(htmldata);	
 		  	}
 		  });
 		 /*$.getJSON(Webroot + '/incomes/avail_header/' + account, function(data){

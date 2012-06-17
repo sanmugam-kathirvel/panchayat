@@ -2,19 +2,25 @@
 	class Income extends AppModel{
 		var $name = 'Income';
 		var $validate = array(
-				'date' => array(
+				'income_date' => array(
 					'rule' => 'notEmpty',
 					'allowEmpty' => false,
 					'message' => 'This Field Not Empty'
 					
 				),
-				'header' => array(
+				'header_id' => array(
 					'rule' => 'notEmpty',
 					'allowEmpty' => false,
 					'message' => 'This Field Not Empty'
 					
 				),
-				'amount' => array(
+				'income_amount' => array(
+					'rule' => 'notEmpty',
+					'allowEmpty' => false,
+					'message' => 'This Field Not Empty'
+					
+				),
+				'account_id' => array(
 					'rule' => 'notEmpty',
 					'allowEmpty' => false,
 					'message' => 'This Field Not Empty'

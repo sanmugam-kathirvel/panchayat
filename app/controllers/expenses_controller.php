@@ -1,6 +1,6 @@
 <?php
 	class ExpensesController extends AppController{
-		var $uses = array('Purchase', 'Salary', 'EmployeeSalary', 'PurchaseItem');
+		var $uses = array('Account', 'Purchase', 'Salary', 'EmployeeSalary', 'PurchaseItem', 'Header', 'Expense');
 		function beforeFilter(){
 			parent::beforeFilter();
 		}
@@ -22,7 +22,22 @@
 			}
 		}
 		function addexpense(){
-			
+			$account = $this->Account->find('all');
+			$this->set(compact('account'));
+			if(!empty($this->data)){
+				$this->Expense->set($this->data);
+				if($this->Expense->validates()){
+					$this->Expense->save();
+					//$this->Session->setFlash(__('Expense saved successfully', true));
+				}
+				/*else{
+					$this->Session->setFlash(__('Expense could not be saved', true));
+				}*/
+			}
+			else{
+				//$this->data = $gallery;
+			}
+			$this->data['Expense'] = '';
 		}
 		function purchase(){
 			if(!empty($this->data)){
@@ -34,6 +49,14 @@
 				//var_dump($this->data);die;
 				$this->Salary->saveAll($this->data);
 			}
+		}
+		function avail_header(){
+			$this->layout = false;
+			$headers = $this->Header->find('all', array(
+				'conditions' => array('Header.header_type' => 'expense', 'Header.account_id' => $_POST['account'])
+			));
+			 echo json_encode($headers);
+			 exit;	
 		}
 	}
 ?>
