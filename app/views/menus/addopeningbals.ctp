@@ -7,7 +7,8 @@
 	echo $form->create('BankDetail', array( 'url' => array('controller' => 'menus', 'action' => 'addopeningbals')));
 	//echo $form->select('account_name', $options);
 	echo $form->input('account_id',array('type'=>'select','options'=> $account_op));
-	echo $form->input('accounting_year', array('id' => 'datepicker', 'type' => 'text'));
+	echo $form->input('acc_openning_year', array('id' => 'datepicker', 'type' => 'text'));
+	echo $form->input('acc_closing_year', array('id' => 'datepicker1', 'type' => 'text'));
 	echo $form->input('account_number');
 	echo $form->input('bank_name');
 	echo $form->input('branch');

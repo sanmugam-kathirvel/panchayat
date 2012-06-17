@@ -26,7 +26,6 @@
 		  	data: {'stock_id': stock_id},
 		  	success: function(data){
 		  		output=JSON.parse(data);
-		  		alert('hi');
 		  	  $('.avail_stock').val(output[0].Stock.item_quantity);
 		  	}
 		  });

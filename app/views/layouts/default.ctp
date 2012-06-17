@@ -89,6 +89,7 @@
   <script>
     $(function() {
       $( "#datepicker" ).datepicker({dateFormat: "yy-mm-dd", showAnim: "show"});
+      $( "#datepicker1" ).datepicker({dateFormat: "yy-mm-dd", showAnim: "show"});
     });
   </script>
 </body>
