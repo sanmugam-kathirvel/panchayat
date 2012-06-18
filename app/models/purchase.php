@@ -1,7 +1,7 @@
 <?php
 	class Purchase extends AppModel{
 		var $name = 'Purchase';
-		var $hasMany = array('PurchaseItem' => array('className' => 'PurchaseItem', 'foreignKey' => 'purchase_id','dependent'=> true));
+		var $hasMany = array('PurchaseItem');
 		var $validate = array(
 				'company_name' => array(
 					'rule' => 'notEmpty',

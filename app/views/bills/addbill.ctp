@@ -1,6 +1,6 @@
-<p>Expenses</p>
+<p>Bill Estimation</p>
 <?php
-	echo $form->create('ContractBillEstimation', array( 'url' => array('controller' => 'expenses', 'action' => 'addbill')));
+	echo $form->create('ContractBillEstimation', array( 'url' => array('controller' => 'bills', 'action' => 'addbill')));
 	echo $form->input('estimation_amt');
 	echo $form->input('workdone_amt');
 	echo $form->input('emd', array('label' => 'EMD 5%'));

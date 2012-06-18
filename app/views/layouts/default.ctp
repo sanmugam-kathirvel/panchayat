@@ -68,11 +68,11 @@
   					<li class = "dropdown" data-dropdown="dropdown">
   						<?= $this->Html->link("Accounts", "#", array("class" => 'dropdown-toggle') ) ?>
   						<ul class = "dropdown-menu">
-  							<li><?= $this->Html->link("Purchase", array('plugin' => false, "controller" => "expenses", "action" => "purchase")); ?></li>
-  							<li><?= $this->Html->link("Salary", array('plugin' => false, "controller" => "expenses", "action" => "salary")); ?></li>
-  							<li><?= $this->Html->link("Bill Estimation", array('plugin' => false, "controller" => "expenses", "action" => "addbill")); ?></li>
-  							<li><?= $this->Html->link("Incomes", array('plugin' => false, "controller" => "incomes", "action" => "addincome")); ?></li>
-  							<li><?= $this->Html->link("Expenses", array('plugin' => false, "controller" => "expenses", "action" => "addexpense")); ?></li>
+  							<li><?= $this->Html->link("Purchase", array('plugin' => false, "controller" => "purchases", "action" => "purchase")); ?></li>
+  							<li><?= $this->Html->link("Salary", array('plugin' => false, "controller" => "salaries", "action" => "salary")); ?></li>
+  							<li><?= $this->Html->link("Bill Estimation", array('plugin' => false, "controller" => "bills", "action" => "index")); ?></li>
+  							<li><?= $this->Html->link("Incomes", array('plugin' => false, "controller" => "incomes", "action" => "index")); ?></li>
+  							<li><?= $this->Html->link("Expenses", array('plugin' => false, "controller" => "expenses", "action" => "index")); ?></li>
   						</ul>
   					</li>
   				</ul>

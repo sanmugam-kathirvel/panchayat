@@ -1,6 +1,8 @@
 <?php
 	class Income extends AppModel{
 		var $name = 'Income';
+		var $actsAs = array('Containable');
+		var $belongsTo = array('Header', 'Account');
 		var $validate = array(
 				'income_date' => array(
 					'rule' => 'notEmpty',

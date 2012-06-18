@@ -1,7 +1,7 @@
 <?php
 	class PurchaseItem extends AppModel{
 		var $name = 'PurchaseItem';
-		var $belongsTo = array('Purchase' => array('className'=> 'Purchase','foreignKey'=> 'purchase_id'));
+		var $belongsTo = array('Purchase');
 		var $validate = array(
 				'company_name' => array(
 					'rule' => 'notEmpty',
