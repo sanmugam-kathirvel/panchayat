@@ -1,4 +1,4 @@
-<p>House Tax Demand</p>
+<p>Add House Tax Demand</p>
 <?php
 	$hamlet_info = array();
 	foreach($hamlet as $ham){
@@ -10,9 +10,10 @@
 	echo $form->input('door_number');
 	echo $form->input('name');
 	echo $form->input('father_name');
+	echo $form->input('address');
 	echo $form->input('hamlet_id', array('type' => 'select','options'=> $hamlet_info, 'label' => 'Hamlet Code'));
 	echo $form->input('ht_demand', array('label' => 'House Tax'));
 	echo $form->input('lc_demand', array('label' => 'Library Charge'));
-	echo $form->input('total_amount', array('label' => 'Total Demand'));
+	echo $form->input('pending_amount', array('label' => 'Pending Amount'));
 	echo $form->end('Submit');
 ?>

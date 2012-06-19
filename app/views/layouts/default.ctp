@@ -49,9 +49,9 @@
   					<li class = "dropdown" data-dropdown="dropdown">
   						<?= $this->Html->link("Main", "#", array("class" => 'dropdown-toggle') ) ?>
   						<ul class = "dropdown-menu">
-  							<li><?= $this->Html->link("Opening Balance", array('plugin' => false, "controller" => "menus", "action" => "addopeningbals")); ?></li>
+  							<li><?= $this->Html->link("Opening Balance", array('plugin' => false, "controller" => "menus", "action" => "balanceindex")); ?></li>
   							<li><?= $this->Html->link("Hamlets", array('plugin' => false, "controller" => "menus", "action" => "addhamlet")); ?></li>
-  							<li><?= $this->Html->link("Headers", array('plugin' => false, "controller" => "menus", "action" => "addheader")); ?></li>
+  							<li><?= $this->Html->link("Headers", array('plugin' => false, "controller" => "menus", "action" => "headerindex")); ?></li>
   							<li><?= $this->Html->link("Opening Stocks", array('plugin' => false, "controller" => "menus", "action" => "addopeningstock")); ?></li>
   							<li><?= $this->Html->link("Stock Issue", array('plugin' => false, "controller" => "menus", "action" => "stockissue")); ?></li>
   						</ul>
@@ -59,20 +59,21 @@
   					<li class = "dropdown" data-dropdown="dropdown">
   						<?= $this->Html->link("Demands", "#", array("class" => 'dropdown-toggle') ) ?>
   						<ul class = "dropdown-menu">
-  							<li><?= $this->Html->link("House Tax", array('plugin' => false, "controller" => "demands", "action" => "addhtdemand")); ?></li>
-  							<li><?= $this->Html->link("Water Tax", array('plugin' => false, "controller" => "demands", "action" => "addwtdemand")); ?></li>
-  							<li><?= $this->Html->link("Professional Tax", array('plugin' => false, "controller" => "demands", "action" => "addptdemand")); ?></li>
-  							<li><?= $this->Html->link("D & O Traders", array('plugin' => false, "controller" => "demands", "action" => "adddodemand")); ?></li>
+  							<li><?= $this->Html->link("House Tax", array('plugin' => false, "controller" => "demands", "action" => "htindex")); ?></li>
+  							<li><?= $this->Html->link("Water Tax", array('plugin' => false, "controller" => "demands", "action" => "wtindex")); ?></li>
+  							<li><?= $this->Html->link("Professional Tax", array('plugin' => false, "controller" => "demands", "action" => "ptindex")); ?></li>
+  							<li><?= $this->Html->link("D & O Traders", array('plugin' => false, "controller" => "demands", "action" => "doindex")); ?></li>
   						</ul>
   					</li>
   					<li class = "dropdown" data-dropdown="dropdown">
   						<?= $this->Html->link("Accounts", "#", array("class" => 'dropdown-toggle') ) ?>
   						<ul class = "dropdown-menu">
-  							<li><?= $this->Html->link("Purchase", array('plugin' => false, "controller" => "purchases", "action" => "purchase")); ?></li>
-  							<li><?= $this->Html->link("Salary", array('plugin' => false, "controller" => "salaries", "action" => "salary")); ?></li>
-  							<li><?= $this->Html->link("Bill Estimation", array('plugin' => false, "controller" => "bills", "action" => "index")); ?></li>
-  							<li><?= $this->Html->link("Incomes", array('plugin' => false, "controller" => "incomes", "action" => "index")); ?></li>
-  							<li><?= $this->Html->link("Expenses", array('plugin' => false, "controller" => "expenses", "action" => "index")); ?></li>
+  							<li><?= $this->Html->link("Account 1", array('plugin' => false, "controller" => "accounts", "action" => "account1")); ?></li>
+  							<li><?= $this->Html->link("Account 2", array('plugin' => false, "controller" => "accounts", "action" => "account2")); ?></li>
+  							<li><?= $this->Html->link("Account 3", array('plugin' => false, "controller" => "accounts", "action" => "account3")); ?></li>
+  							<li><?= $this->Html->link("Account 4", array('plugin' => false, "controller" => "accounts", "action" => "account4")); ?></li>
+  							<li><?= $this->Html->link("Account 5", array('plugin' => false, "controller" => "accounts", "action" => "account5")); ?></li>
+  							<li><?= $this->Html->link("Account 6", array('plugin' => false, "controller" => "accounts", "action" => "account6")); ?></li>
   						</ul>
   					</li>
   				</ul>

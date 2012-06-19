@@ -1,10 +1,10 @@
-<p>Add Professional Tax Demand</p>
+<p>Edit Professional Tax Demand</p>
 <?php
 	$hamlet_info = array();
 	foreach($hamlet as $ham){
 		$hamlet_info[$ham['Hamlet']['id']] =  $ham['Hamlet']['hamlet_code'];
 	}
-	echo $form->create('PtDemand', array( 'url' => array('controller' => 'demands', 'action' => 'addptdemand')));
+	echo $form->create('PtDemand', array( 'url' => array('controller' => 'demands', 'action' => 'ptedit')));
 	echo $form->input('demand_number');
 	echo $form->input('demand_date', array('id' => 'datepicker', 'type' => 'text'));
 	echo $form->input('door_number');

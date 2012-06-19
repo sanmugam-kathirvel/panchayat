@@ -1,15 +1,12 @@
-<p>Edit Expense</p>
+<p><h3><?php __('Edit Account-'.$this->data['Expense']['account_id'].' Expense'); ?></h3></p>
 <?php
-	$account_op = array();
-	foreach($account as $acc){
-		$account_op[$acc['Account']['id']] =  $acc['Account']['account_name'];
-	}
+	$header_op = array();
 	foreach($header as $head){
 		$header_op[$head['Header']['id']] =  $head['Header']['header_name'];
 	}
 	echo $form->create('Expense', array( 'url' => array('controller' => 'expenses', 'action' => 'edit')));
 	echo $form->input('id');
-	echo $form->input('account_id', array('label' => 'Account', 'options' => $account_op, 'class' => 'account'));
+	echo $form->input('account_id', array('type' => 'hidden'));
 	echo $form->input('header_id', array('label' => 'Header', 'type' => 'select','option' => '', 'options' => $header_op));
 	echo $form->input('expense_date', array('label' => 'Date', 'id' => 'datepicker', 'type' => 'text'));
 	echo $form->input('voucher_number');

@@ -1,4 +1,4 @@
-<p>Adding Header</p>
+<p>Edit Header</p>
 <?php
 	$account_op = array();
 	foreach($account as $acc){

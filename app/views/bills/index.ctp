@@ -1,15 +1,17 @@
 
 <div class="blocks form">
-    <h2><?php __('Bill Estimation'); ?></h2>
+    <h2><?php __('Account-'.$acc_id.' Bill Estimations'); ?></h2>
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('Add Bill Estimation', true), array('action'=>'addbill')); ?></li>
+            <li><?php echo $html->link(__('Add Bill Estimation', true), array('action'=>'addbill', $acc_id)); ?></li>
         </ul>
     </div>
     
     <table cellpadding="0" cellspacing="0">
         <?php
             $tableHeaders = $html->tableHeaders(array(
+                $paginator->sort('contractor_name'),
+                $paginator->sort('address'),
                 $paginator->sort('estimation_amt'),
                 $paginator->sort('workdone_amt'),
                 $paginator->sort('emd'),
@@ -28,7 +30,8 @@
             foreach ($bills AS $bill) {
                 $actions = ' ' . $html->link(__('Edit', true), array(
                 		'action' => 'edit'
-                		, $bill['ContractBillEstimation']['id']));
+                		, $bill['ContractBillEstimation']['id'])
+								);
                 $actions .= ' ' . $html->link(__('Delete', true), array(
                     'action' => 'delete',
                     $bill['ContractBillEstimation']['id'])
@@ -36,6 +39,8 @@
 								);
     
                 $rows[] = array(
+                		$bill['ContractBillEstimation']['contractor_name'],
+                		$bill['ContractBillEstimation']['address'],
                     $bill['ContractBillEstimation']['estimation_amt'],
                     $bill['ContractBillEstimation']['workdone_amt'],
                     $bill['ContractBillEstimation']['emd'],

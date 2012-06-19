@@ -1,12 +1,12 @@
-<p>Adding Expense</p>
+<p><h3><?php __('Add Account-'.$acc_id.' Expense'); ?></h3></p>
 <?php
-	$account_op = array();
-	foreach($account as $acc){
-		$account_op[$acc['Account']['id']] =  $acc['Account']['account_name'];
+	$header_op = array();
+	foreach($header as $head){
+		$header_op[$head['Header']['id']] =  $head['Header']['header_name'];
 	}
 	echo $form->create('Expense', array( 'url' => array('controller' => 'expenses', 'action' => 'addexpense')));
-	echo $form->input('account_id', array('label' => 'Account', 'options' => $account_op, 'class' => 'account', 'empty' => true));
-	echo $form->input('header_id', array('label' => 'Header', 'type' => 'select','option' => '', 'empty' => true));
+	echo $form->input('account_id', array('type' => 'hidden', 'value' => $acc_id));
+	echo $form->input('header_id', array('label' => 'Header', 'type' => 'select','option' => '', 'options' => $header_op));
 	echo $form->input('expense_date', array('label' => 'Date', 'id' => 'datepicker', 'type' => 'text'));
 	echo $form->input('voucher_number');
 	echo $form->input('expense_amount', array('label' => 'Amount'));
@@ -16,25 +16,3 @@
 	echo $form->input('description');
 	echo $form->end('Submit');
 ?>
-
-<script>
-	Webroot = 'http://localhost/myapp/panchayat';
-	$(document).ready(function(){
-		$('.account').change(function(){
-		  var account = $('.account').val();
-			  $.ajax({
-			  	type: 'POST',
-			  	url: Webroot+"/expenses/avail_header/",
-			  	data: {'account':account},
-			  	success: function(data){
-			  		output=JSON.parse(data);
-			  		var htmldata = "<option></option>";
-			  		for(var i = 0; i < output.length; i++){
-				 			htmldata = htmldata+"<option value='"+output[i].Header.id+"'>"+output[i].Header.header_name+"</option>";
-				 		}
-			  	  $('#ExpenseHeaderId').html(htmldata);	
-			  	}
-			  });
-		});
-	});
-</script>

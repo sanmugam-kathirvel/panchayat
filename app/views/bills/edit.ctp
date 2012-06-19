@@ -1,7 +1,8 @@
-<p><h3><?php __('Add Account-'.$acc_id.' Bill Estimation'); ?></h3></p>
+<p><h3><?php __('Edit Account-'.$this->data['ContractBillEstimation']['account_id'].' Bill Estimation'); ?></h3></p>
 <?php
-	echo $form->create('ContractBillEstimation', array( 'url' => array('controller' => 'bills', 'action' => 'addbill')));
-	echo $form->input('account_id', array('type' => 'hidden', 'value' => $acc_id));
+	echo $form->create('ContractBillEstimation', array( 'url' => array('controller' => 'bills', 'action' => 'edit')));
+	echo $form->input('id');
+	echo $form->input('account_id', array('type' => 'hidden'));
 	echo $form->input('contractor_name');
 	echo $form->input('address');
 	echo $form->input('estimation_amt');

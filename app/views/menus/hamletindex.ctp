@@ -1,36 +1,34 @@
 
 <div class="blocks form">
-    <h2><?php __('Account '.$acc_id.' Incomes'); ?></h2>
+    <h2><?php __('Hamlets'); ?></h2>
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('Add Income', true), array('action'=>'addincome', $acc_id)); ?></li>
+            <li><?php echo $html->link(__('Add Hamlet', true), array('action'=>'addhamlet')); ?></li>
         </ul>
     </div>
-    
     <table cellpadding="0" cellspacing="0">
         <?php
             $tableHeaders = $html->tableHeaders(array(
-                $paginator->sort('header_id'),
-                $paginator->sort('income_date'),
-                $paginator->sort('income_amount'),
+                $paginator->sort('hamlet_code'),
+                $paginator->sort('hamlet_name'),
                 $paginator->sort('description'),
                 __('Actions', true),
             ));
             echo $tableHeaders;
     
             $rows = array();
-            foreach ($incomes AS $income) {
-                $actions = ' ' . $html->link(__('Edit', true), array('action' => 'edit', $income['Income']['id']));
+            foreach ($hamlets AS $hamlet) {
+                $actions = ' ' . $html->link(__('Edit', true), array(
+                	'action' => 'edithamlet',
+                	$hamlet['Hamlet']['id']));
                 $actions .= ' ' . $html->link(__('Delete', true), array(
-                    'action' => 'delete',
-                    $income['Income']['id'], $income['Income']['account_id'],  $income['Income']['income_amount']
-                ), null, __('Are you sure?', true));
-    
+                  'action' => 'deletehamlet', $hamlet['Hamlet']['id']),
+                	null, __('Are you sure?', true)
+								);
                 $rows[] = array(
-                    $income['Header']['header_name'],
-                    $income['Income']['income_date'],
-                    $income['Income']['income_amount'],
-                    $income['Income']['description'],
+                    $hamlet['Hamlet']['hamlet_code'],
+                    $hamlet['Hamlet']['hamlet_name'],
+                    $hamlet['Hamlet']['description'],
                     $actions,
                 );
             }
