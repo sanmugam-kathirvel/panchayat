@@ -16,6 +16,64 @@
 						echo "<th>Unit Cost</th>";
 						echo "<th>Total Amount</th>";
 					echo "</tr>";
+					for($i = 0; $i < 3 ; $i++){
+					  echo "<tr>";
+							echo '<td>'.$form->input('PurchaseItem'.$i.'item_description', array('label' => false)).'</td>';
+							echo '<td>'.$form->input('PurchaseItem'.$i.'item_quantity', array('label' => false, 'class' => 'quantity', 'value' => 0)).'</td>';
+							echo '<td>'.$form->input('PurchaseItem'.$i.'item_rate', array('label' => false, 'class' => 'unit_cost', 'value' => 0)).'</td>';
+							echo '<td>'.$form->input('PurchaseItem'.$i.'item_tot_amount', array('label' => false, 'id' => 'tot_amount', 'class' => 'tot_amount_'.$i, 'value' => 0, 'disabled' => true)).'</td>';
+						echo "</tr>";
+					}	
+			echo "</tbody>";
+		echo "</table>";
+		echo "</div>";
+	echo "<div class='link'>";	
+		echo $html->link('add new', '', array('class' => 'add_field'));
+		echo " | ";
+		echo $html->link('remove', '', array('class' => 'remove_field'));
+	echo "</div>";
+	echo $form->end('Submit');
+?>
+<script>
+	$('.unit_cost').focusout(function() {
+		var quantity = parseInt($(this).parent('div').parent().prev().children('div').children('.quantity').val());
+		var unit_cost = parseInt($(this).val());
+		var tot_amount = 0;
+		var grand_total;
+		$('.tot_amount').val(quantity*unit_cost);
+		var current_row_total_field = $(this).parent('div').parent().next().children('div').children().attr('class');
+		tot_amount = (quantity * unit_cost);
+		$(this).parent('div').parent().next().children('div').children('.'+current_row_total_field).val(tot_amount);
+		grand_total = 0;
+		$('div.new_field div.input').children('#tot_amount').each(function(){
+			if(parseInt($(this).val()) > 0){
+				grand_total += parseInt($(this).val());
+				$('.grand_total').val(grand_total);
+			}
+		});
+		
+	});
+</script>
+
+<!--
+<p>Purchase</p>
+<?php
+	echo $form->create('Purchase', array( 'url' => array('controller' => 'purchases', 'action' => 'purchase')));
+	echo $form->input('purchase_date', array('type' => 'text', 'id' => 'datepicker1'));
+	echo $form->input('company_name');
+	echo $form->input('voucher_number');
+	echo $form->input('cheque_number');
+	echo $form->input('cheque_date', array('type' => 'text', 'id' => 'datepicker'));
+	echo $form->input('total_amt', array('value' => 0, 'disabled' => true, 'class' => 'grand_total'));
+	echo "<div class='new_field'>";
+		echo "<table>";
+			echo "<tbody class= 'add_new_field'>";
+					echo "<tr>";
+						echo "<th>Item Description</th>";
+						echo "<th>Item Quantity</th>";
+						echo "<th>Unit Cost</th>";
+						echo "<th>Total Amount</th>";
+					echo "</tr>";
 				  echo "<tr>";
 						echo '<td>'.$form->input('PurchaseItem.0.item_description', array('label' => false)).'</td>';
 						echo '<td>'.$form->input('PurchaseItem.0.item_quantity', array('label' => false, 'class' => 'quantity', 'value' => 0)).'</td>';
@@ -74,3 +132,5 @@
     		}
     });
 </script>
+
+-->

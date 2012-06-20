@@ -6,7 +6,6 @@
 	}
 	echo $form->create('StockIssue', array( 'url' => array('controller' => 'menus', 'action' => 'stockissue')));
 	echo $form->input('stock_id', array('type' => 'select','options'=> $stock_info, 'label' => 'Item Name', 'empty' => true, 'class' => 'stock'));
-	//echo "<label class = 'avail_stock'></label>";
 	echo $form->input('available_quantity', array('disabled' => true, 'class' => 'avail_stock'));
 	echo $form->input('issue_date', array('id' => 'datepicker', 'type' => 'text'));
 	echo $form->input('item_quantity', array('label' => 'Item Quantity'));
