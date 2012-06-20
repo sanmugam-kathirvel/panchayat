@@ -1,12 +1,16 @@
 <p>Purchase</p>
 <?php
+	$stock_list = array();
+	foreach($stocks as $stock){
+		$stock_list[$stock['Stock']['id']] = $stock['Stock']['item_name'];
+	}
 	echo $form->create('Purchase', array( 'url' => array('controller' => 'purchases', 'action' => 'purchase')));
 	echo $form->input('purchase_date', array('type' => 'text', 'id' => 'datepicker1'));
 	echo $form->input('company_name');
 	echo $form->input('voucher_number');
 	echo $form->input('cheque_number');
 	echo $form->input('cheque_date', array('type' => 'text', 'id' => 'datepicker'));
-	echo $form->input('total_amt', array('value' => 0, 'disabled' => true, 'class' => 'grand_total'));
+	echo $form->input('total_amt', array( 'class' => 'grand_total','value' => 0, 'readonly' => 'readonly'));
 	echo "<div class='new_field'>";
 		echo "<table>";
 			echo "<tbody class= 'add_new_field'>";
@@ -16,12 +20,12 @@
 						echo "<th>Unit Cost</th>";
 						echo "<th>Total Amount</th>";
 					echo "</tr>";
-					for($i = 0; $i < 3 ; $i++){
-					  echo "<tr>";
-							echo '<td>'.$form->input('PurchaseItem'.$i.'item_description', array('label' => false)).'</td>';
-							echo '<td>'.$form->input('PurchaseItem'.$i.'item_quantity', array('label' => false, 'class' => 'quantity', 'value' => 0)).'</td>';
-							echo '<td>'.$form->input('PurchaseItem'.$i.'item_rate', array('label' => false, 'class' => 'unit_cost', 'value' => 0)).'</td>';
-							echo '<td>'.$form->input('PurchaseItem'.$i.'item_tot_amount', array('label' => false, 'id' => 'tot_amount', 'class' => 'tot_amount_'.$i, 'value' => 0, 'disabled' => true)).'</td>';
+					for($i = 0; $i < 2 ; $i++){
+					  echo "<tr id ='new_field' class='new_field_".$i."'>";
+							echo '<td>'.$form->input('PurchaseItem.'.$i.'.stock_id', array('options' => $stock_list, 'label' => false)).'</td>';
+							echo '<td>'.$form->input('PurchaseItem.'.$i.'.item_quantity', array('label' => false, 'class' => 'quantity', 'value' => 0)).'</td>';
+							echo '<td>'.$form->input('PurchaseItem.'.$i.'.item_rate', array('label' => false, 'class' => 'unit_cost', 'value' => 0)).'</td>';
+							echo '<td>'.$form->input('PurchaseItem.'.$i.'.item_tot_amount', array('label' => false, 'id' => 'tot_amount', 'class' => 'tot_amount_'.$i, 'value' => 0, 'readonly' => 'readonly')).'</td>';
 						echo "</tr>";
 					}	
 			echo "</tbody>";
@@ -35,6 +39,21 @@
 	echo $form->end('Submit');
 ?>
 <script>
+$(document).ready(function(){
+	$('tr#new_field').hide();
+	$('tr#new_field.new_field_0').show();
+	var $i = 1;
+	$('.add_field').click(function(){
+		$('tr#new_field.new_field_'+$i).show();
+		$i = $i +1;
+		return false;
+	});
+	$('.remove_field').click(function(){
+		$i = $i -1;
+		$('tr#new_field.new_field_'+$i).hide();
+		return false;
+	});
+	//calculation
 	$('.unit_cost').focusout(function() {
 		var quantity = parseInt($(this).parent('div').parent().prev().children('div').children('.quantity').val());
 		var unit_cost = parseInt($(this).val());
@@ -51,8 +70,8 @@
 				$('.grand_total').val(grand_total);
 			}
 		});
-		
 	});
+});
 </script>
 
 <!--
