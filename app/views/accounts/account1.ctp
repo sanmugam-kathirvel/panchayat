@@ -16,5 +16,8 @@
       <ul>
       	<li><?php echo $html->link(__('Expenses', true), array('action'=>'../expenses/index', '1')); ?></li>
       </ul>
+			<ul>
+      	<li><?php echo $html->link(__('Receipts', true), array('action'=>'../receipts/index')); ?></li>
+      </ul>
     </div>
 </div>

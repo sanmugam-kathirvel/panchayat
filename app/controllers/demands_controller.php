@@ -9,6 +9,7 @@
 			$this->set(compact('hamlet'));
 			if(!empty($this->data)){
 				$this->HtDemand->save($this->data);
+				$this->Session->setFlash(__('Demand added successfully', true));
 				$this->redirect(array('action'=>'htindex'));
 			}
 		}
@@ -17,6 +18,7 @@
 			$this->set(compact('hamlet'));
 			if(!empty($this->data)){
 				$this->WtDemand->save($this->data);
+				$this->Session->setFlash(__('Demand added successfully', true));
 				$this->redirect(array('action'=>'wtindex'));
 			}
 		}
@@ -25,6 +27,7 @@
 			$this->set(compact('hamlet'));
 			if(!empty($this->data)){
 				$this->PtDemand->save($this->data);
+				$this->Session->setFlash(__('Demand added successfully', true));
 				$this->redirect(array('action'=>'ptindex'));
 			}
 		}
@@ -33,6 +36,7 @@
 			$this->set(compact('hamlet'));
 			if(!empty($this->data)){
 				$this->DoDemand->save($this->data);
+				$this->Session->setFlash(__('Demand added successfully', true));
 				$this->redirect(array('action'=>'doindex'));
 			}
 		}

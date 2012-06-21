@@ -33,6 +33,9 @@
 
 		echo $scripts_for_layout;
 	?>
+	<script>
+	var	Webroot = 'http://localhost/myapp/panchayat';
+	</script>
 </head>
 <body>
   <div id ="wrapper">
