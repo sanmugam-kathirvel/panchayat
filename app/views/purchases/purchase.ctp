@@ -20,7 +20,7 @@
 						echo "<th>Unit Cost</th>";
 						echo "<th>Total Amount</th>";
 					echo "</tr>";
-					for($i = 0; $i < 2 ; $i++){
+					for($i = 0; $i < 20 ; $i++){
 					  echo "<tr id ='new_field' class='new_field_".$i."'>";
 							echo '<td>'.$form->input('PurchaseItem.'.$i.'.stock_id', array('options' => $stock_list, 'label' => false)).'</td>';
 							echo '<td>'.$form->input('PurchaseItem.'.$i.'.item_quantity', array('label' => false, 'class' => 'quantity', 'value' => 0)).'</td>';
