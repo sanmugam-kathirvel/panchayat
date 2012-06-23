@@ -1,6 +1,6 @@
 <?php
 	class ReceiptsController extends AppController{
-		var $uses = array('Hamlet', 'HousetaxReceipt','HtDemand', 'WatertaxReceipt', 'WtDemand'/*, 'ProfessionaltaxReceipt', 'PtDemand', 'DotaxReceipt', 'DoDemand'*/);
+		var $uses = array('Hamlet', 'HousetaxReceipt','HtDemand', 'WatertaxReceipt', 'WtDemand', 'ProfessionaltaxReceipt', 'PtDemand', 'DotaxReceipt', 'DoDemand');
 		function beforeFilter(){
 			parent::beforeFilter();
 		}
@@ -39,7 +39,7 @@
 		}
 		function get_watertax_family_demand(){
 			$this->layout = false;
-			$wtdemand = $this->WtDemand->find('all', array(
+			$wtdemand = $this->WtDemand->find('first', array(
 				'conditions' => array(
 					'WtDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']),
 					'WtDemand.demand_number' => $_POST['demand_number']
@@ -59,7 +59,7 @@
 		}
 		function get_professionaltax_family_demand(){
 			$this->layout = false;
-			$ptdemand = $this->PtDemand->find('all', array(
+			$ptdemand = $this->PtDemand->find('first', array(
 				'conditions' => array(
 					'PtDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']),
 					'PtDemand.demand_number' => $_POST['demand_number']
@@ -79,7 +79,7 @@
 		}
 		function get_dotax_family_demand(){
 			$this->layout = false;
-			$dodemand = $this->DoDemand->find('all', array(
+			$dodemand = $this->DoDemand->find('first', array(
 				'conditions' => array(
 					'DoDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']),
 					'DoDemand.demand_number' => $_POST['demand_number']

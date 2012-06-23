@@ -10,6 +10,7 @@
 	echo $form->input('voucher_number');
 	echo $form->input('cheque_number');
 	echo $form->input('cheque_date', array('type' => 'text', 'id' => 'datepicker'));
+	echo $form->input('tax_amount', array('class' => 'tax_amount','value' => 0));
 	echo $form->input('total_amt', array( 'class' => 'grand_total','value' => 0, 'readonly' => 'readonly'));
 	echo "<div class='new_field'>";
 		echo "<table>";
@@ -51,6 +52,13 @@ $(document).ready(function(){
 	$('.remove_field').click(function(){
 		$i = $i -1;
 		$('tr#new_field.new_field_'+$i).hide();
+		grand_total = 0;
+		grand_total = parseInt($('.grand_total').val()) - parseInt($('tr#new_field.new_field_'+$i).find('#tot_amount').val());
+		$('.grand_total').val(grand_total);
+		$('tr#new_field.new_field_'+$i).find('#tot_amount').val(0);
+		$('tr#new_field.new_field_'+$i).find('.quantity').val(0);
+		$('tr#new_field.new_field_'+$i).find('.unit_cost').val(0);
+		$('tr#new_field.new_field_0').show();
 		return false;
 	});
 	//calculation
@@ -64,12 +72,19 @@ $(document).ready(function(){
 		tot_amount = (quantity * unit_cost);
 		$(this).parent('div').parent().next().children('div').children('.'+current_row_total_field).val(tot_amount);
 		grand_total = 0;
+		var flag = 0;
 		$('div.new_field div.input').children('#tot_amount').each(function(){
 			if(parseInt($(this).val()) > 0){
+				flag = 1;
 				grand_total += parseInt($(this).val());
 				$('.grand_total').val(grand_total);
 			}
 		});
+		if(flag == 1 && parseInt($('.tax_amount').val()) > 0){
+			$('.grand_total').val(parseInt($('.grand_total').val()) + parseInt($('.tax_amount').val()));
+		}else{
+			$('.grand_total').val(0);
+		}
 	});
 });
 </script>

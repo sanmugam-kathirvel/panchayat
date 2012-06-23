@@ -47,17 +47,27 @@ $(document).ready(function(){
 	$('.remove_field').click(function(){
 		$i = $i -1;
 		$('tr#new_field.new_field_'+$i).hide();
+		grand_total = 0;
+		grand_total = parseInt($('.cheque_amount').val()) - parseInt($('tr#new_field.new_field_'+$i).find('.employee_pay').val());
+		$('.cheque_amount').val(grand_total);
+		$('tr#new_field.new_field_'+$i).find('.employee_pay').val(0);
+		$('tr#new_field.new_field_0').show();
 		return false;
 	});
 	//calculation
 	$('.employee_pay').focusout(function() {
 		grand_total = 0;
+		flag = 0;
 		$('div.new_field div.input').children('#employee_pay').each(function(){
 			if(parseInt($(this).val()) > 0){
+				flag = 1;
 				grand_total += parseInt($(this).val());
 				$('.cheque_amount').val(grand_total);
 			}
 		});
+		if(flag == 0){
+			$('.cheque_amount').val(0);
+		}
 	});
 });
 </script>

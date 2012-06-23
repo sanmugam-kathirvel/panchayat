@@ -5,3 +5,4 @@ body{margin-top:40px;}
 #wrapper #container form div.new_field table{width:70%;}
 #wrapper #container form#PurchasePurchaseForm,#wrapper #container form#SalarySalaryForm{position:relative;}#wrapper #container form#PurchasePurchaseForm div.submit,#wrapper #container form#SalarySalaryForm div.submit{top:190px;left:229px;position:absolute;}
 #wrapper #container form#PurchasePurchaseForm div.link,#wrapper #container form#SalarySalaryForm div.link{width:990px;text-align:right;}
+#wrapper #container form#PurchasePurchaseForm div.submit{top:227px;}
