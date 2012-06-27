@@ -4,7 +4,7 @@
 	foreach($hamlets as $hamlet){
 		$hamlet_op[$hamlet['Hamlet']['id']] =  $hamlet['Hamlet']['hamlet_code'];
 	}
-	echo $form->create('NregsRegistration', array( 'url' => array('controller' => 'nregs', 'action' => 'newregistration')));
+	echo $form->create('NregsRegistration', array( 'url' => array('controller' => 'nregs', 'action' => 'newregistration'), 'type' => 'file'));
 	echo $form->input('family_number');
 	echo $form->input('serial_number');
 	echo $form->input('job_card_number');
@@ -22,5 +22,6 @@
 	echo $form->input('bank_branch');
 	echo $form->input('application_date', array('id' => 'datepicker', 'type' => 'text'));
 	echo $form->input('job_card_issue_date', array('id' => 'datepicker1', 'type' => 'text'));
+	echo $form->input('photo', array('type' => 'file', 'label' => 'Upload Photo'));
 	echo $form->end('Submit');
 ?>

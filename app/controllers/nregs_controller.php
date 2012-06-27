@@ -1,6 +1,6 @@
 <?php
 	class NregsController extends AppController{
-		var $uses = array('NregsRegistration', 'Hamlet', 'Jobcard', 'NregsStock');
+		var $uses = array('NregsRegistration', 'Hamlet', 'Jobcard', 'NregsStock', 'NmrRoll'/*, 'NmrRollentry'*/);
 		function beforeFilter(){
 			parent::beforeFilter();
 		}
@@ -48,9 +48,29 @@
 	      }else{
 	        if($this->NregsRegistration->save($this->data)){
 	          $this->Session->setFlash(__('Registration updated successfully', true));    
-	          $this->redirect(array('action'=>'registrationindex'));       
+	          $this->redirect(array('action'=>'registrationindex'));
 	        }  
 				}      
+	    }else {
+				$this->Session->setFlash(__('Invalid operation', true));
+				$this->redirect(array('action'=>'registrationindex'));
+			}
+		}
+		function view($id){
+			if(!empty($id)){
+				$this->NregsRegistration->id=$id;
+	      if(empty($this->data)) {
+	        $registration_detail = $this->NregsRegistration->find('first', array(
+	        	'conditions' => array('NregsRegistration.id' => $id)
+					));
+					$hamlets = $this->Hamlet->find('all');
+					$this->set(compact('hamlets', 'registration_detail'));
+	      }//else{
+	        // if($this->NregsRegistration->save($this->data)){
+	          // $this->Session->setFlash(__('Registration updated successfully', true));    
+	          // $this->redirect(array('action'=>'registrationindex'));
+	        // }  
+				// }
 	    }else {
 				$this->Session->setFlash(__('Invalid operation', true));
 				$this->redirect(array('action'=>'registrationindex'));
@@ -124,6 +144,12 @@
 				$this->Session->setFlash(__('Invalid operation', true));
 				$this->redirect(array('action'=>'jobcardindex'));
 			}
+		}
+		function nmrrolls(){
+			
+		}
+		function rollentry(){
+			
 		}
 	}
 ?>

@@ -35,6 +35,9 @@
                 $actions = ' ' . $html->link(__('Edit', true), array(
                 	'action' => 'editregistration',
                 	$nregs['NregsRegistration']['id']));
+								$actions .= ' ' . $html->link(__('View', true), array(
+                	'action' => 'view',
+                	$nregs['NregsRegistration']['id']));
                 $actions .= ' ' . $html->link(__('Delete', true), array(
                   'action' => 'deleteregistration', $nregs['NregsRegistration']['id']),
                 	null, __('Are you sure?', true)
