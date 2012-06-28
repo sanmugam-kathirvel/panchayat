@@ -1,5 +1,6 @@
 <?php
 	class AccountsController extends AppController{
+		var $name = 'Accounts';
 		function beforeFilter(){
 			parent::beforeFilter();
 		}

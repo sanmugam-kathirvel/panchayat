@@ -50,5 +50,5 @@
  */
  global $accounting_year;
  $accounting_year =array('acc_opening_year' => '2012-04-01', 'acc_closing_year' => '2013-03-31');
- 
+
  ?>

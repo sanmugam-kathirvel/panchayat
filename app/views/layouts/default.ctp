@@ -80,6 +80,16 @@
   						</ul>
   					</li>
   				</ul>
+  				<ul class = "nav">
+  					<?php if($session->check('Auth.User.id')){
+  						$user = $session->read('Auth.User'); 
+  						echo '<li><a>You are logined as <b>'.$user['username'].'</b></a></li>';
+  						echo '<li>'.$this->Html->link("Logout", array('plugin' => false, "controller" => "users", "action" => "logout")).'</li>';
+  					}else{
+  						echo '<li>'.$this->Html->link("Login", array('plugin' => false, "controller" => "users", "action" => "login")).'</li>';
+							echo '<li>'.$this->Html->link("Register", array('plugin' => false, "controller" => "users", "action" => "register")).'</li>';
+  					}?>
+  				</ul>
   			</div>
   		</div>
   	</div>
