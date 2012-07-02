@@ -17,8 +17,8 @@
                 $paginator->sort('father_name'),
                 $paginator->sort('address'),
                 $paginator->sort('hamlet_id'),
-                $paginator->sort('wt_demand'),
-                $paginator->sort('pending_amount'),
+                $paginator->sort('wt_pending'),
+                $paginator->sort('wt_current'),
                 __('Actions', true),
             ));
             echo $tableHeaders;
@@ -40,8 +40,8 @@
                     $demand['WtDemand']['father_name'],
                     $demand['WtDemand']['address'],
                     $demand['Hamlet']['hamlet_code'],
-                    $demand['WtDemand']['wt_demand'],
-                    $demand['WtDemand']['pending_amount'],
+                    $demand['WtDemand']['wt_pending'],
+                    $demand['WtDemand']['wt_current'],
                     $actions,
                 );
             }

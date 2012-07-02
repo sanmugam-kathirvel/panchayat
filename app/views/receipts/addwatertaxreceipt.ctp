@@ -13,8 +13,17 @@
 	echo $form->input('father_name', array('class' => 'father_name', 'readonly' => 'readonly'));
 	echo $form->input('address', array('class' => 'address', 'readonly' => 'readonly'));
 	echo $form->input('hamlet_id', array('class' => 'hamlet_id', 'readonly' => 'readonly', 'type' => 'select','options'=> $hamlet_info, 'label' => 'Hamlet Code'));
-	echo $form->input('water_tax', array('class' => 'water_tax','label' => 'Water Tax Demand'));
-	echo $form->input('pending_amount', array('class' => 'pending_amount'));
+	echo "<div class='input inline'>";
+		echo "<table><tr>";
+			echo "<td></td>";
+			echo "<td>Pending</td>";
+			echo "<td>Current</td>";
+		echo "</tr><tr>";
+			echo "<td><label>Water Tax</label></td>";
+			echo '<td>'.$form->input('wt_pending', array('label' => false, 'class' => 'small wt_pending')).'</td>';
+			echo '<td>'.$form->input('wt_current', array('label' => false, 'class' => 'small wt_current')).'</td>';
+		echo '</tr></table>';
+	echo '</div>';
 	echo $form->input('total_amount', array('class' => 'total_amount', 'readonly' => 'readonly'));
 	echo $form->end('Submit');
 ?>
@@ -34,9 +43,9 @@ $(document).ready(function(){
 		  		$('.father_name').val(output.WtDemand.father_name);
 		  		$('.address').val(output.WtDemand.address);
 		  		$('.hamlet_id').val(output.WtDemand.hamlet_id);
-		  		$('.water_tax').val(output.WtDemand.wt_demand);
-		  		$('.pending_amount').val(output.WtDemand.pending_amount);
-		  		$('.total_amount').val(parseInt(output.WtDemand.wt_demand) + parseInt(output.WtDemand.pending_amount));
+		  		$('.wt_pending').val(output.WtDemand.wt_pending);
+		  		$('.wt_current').val(output.WtDemand.wt_current);
+		  		$('.total_amount').val(parseInt(output.WtDemand.wt_current) + parseInt(output.WtDemand.wt_pending));
 		  	}
 		  });
 	});

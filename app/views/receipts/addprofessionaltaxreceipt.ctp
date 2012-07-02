@@ -13,9 +13,28 @@
 	echo $form->input('father_name', array('class' => 'father_name', 'readonly' => 'readonly'));
 	echo $form->input('address', array('class' => 'address', 'readonly' => 'readonly'));
 	echo $form->input('hamlet_id', array('class' => 'hamlet_id', 'readonly' => 'readonly', 'type' => 'select','options'=> $hamlet_info, 'label' => 'Hamlet Code'));
-	echo $form->input('part_1_amount', array('class' => 'part_1_amount','label' => 'Part I Demand'));
-	echo $form->input('part_2_amount', array('class' => 'part_2_amount','label' => 'Part II Demand'));
-	echo $form->input('pending_amount', array('class' => 'pending_amount'));
+	echo "<div class='input inline'>";
+		echo "<table><tr>";
+			echo "<td></td>";
+			echo "<td>Pending</td>";
+			echo "<td>Current</td>";
+		echo "</tr><tr>";
+			echo "<td><label>Part I Demand</label></td>";
+			echo '<td>'.$form->input('part1_pending', array('label' => false, 'class' => 'small part1_pending')).'</td>';
+			echo '<td>'.$form->input('part1_current', array('label' => false, 'class' => 'small part1_current')).'</td>';
+		echo '</tr></table>';
+	echo '</div>';
+	echo "<div class='input inline'>";
+		echo "<table><tr>";
+			echo "<td></td>";
+			echo "<td>Pending</td>";
+			echo "<td>Current</td>";
+		echo "</tr><tr>";
+			echo "<td><label>Part II Demand</label></td>";
+			echo '<td>'.$form->input('part2_pending', array('label' => false, 'class' => 'small part2_pending')).'</td>';
+			echo '<td>'.$form->input('part2_current', array('label' => false, 'class' => 'small part2_current')).'</td>';
+		echo '</tr></table>';
+	echo '</div>';
 	echo $form->input('total_amount', array('class' => 'total_amount', 'readonly' => 'readonly'));
 	echo $form->end('Submit');
 ?>
@@ -35,10 +54,11 @@ $(document).ready(function(){
 		  		$('.father_name').val(output.PtDemand.father_name);
 		  		$('.address').val(output.PtDemand.address);
 		  		$('.hamlet_id').val(output.PtDemand.hamlet_id);
-		  		$('.part_1_amount').val(output.PtDemand.part_1_demand);
-		  		$('.part_2_amount').val(output.PtDemand.part_2_demand);
-		  		$('.pending_amount').val(output.PtDemand.pending_amount);
-		  		$('.total_amount').val(parseInt(output.PtDemand.part_1_demand) + parseInt(output.PtDemand.part_2_demand) + parseInt(output.PtDemand.pending_amount));
+		  		$('.part1_pending').val(output.PtDemand.part1_pending);
+		  		$('.part1_current').val(output.PtDemand.part1_current);
+		  		$('.part2_pending').val(output.PtDemand.part2_pending);
+		  		$('.part2_current').val(output.PtDemand.part2_current);
+		  		$('.total_amount').val(parseInt(output.PtDemand.part1_pending) + parseInt(output.PtDemand.part1_current) + parseInt(output.PtDemand.part2_pending) + parseInt(output.PtDemand.part2_current));
 		  	}
 		  });
 	});

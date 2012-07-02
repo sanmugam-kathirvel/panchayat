@@ -13,8 +13,17 @@
 	echo $form->input('father_name', array('class' => 'father_name', 'readonly' => 'readonly'));
 	echo $form->input('address', array('class' => 'address', 'readonly' => 'readonly'));
 	echo $form->input('hamlet_id', array('class' => 'hamlet_id', 'readonly' => 'readonly', 'type' => 'select','options'=> $hamlet_info, 'label' => 'Hamlet Code'));
-	echo $form->input('do_tax', array('class' => 'do_tax', 'label' => 'D&O Traders Demand'));
-	echo $form->input('pending_amount', array('class' => 'pending_amount'));
+	echo "<div class='input inline'>";
+		echo "<table><tr>";
+			echo "<td></td>";
+			echo "<td>Pending</td>";
+			echo "<td>Current</td>";
+		echo "</tr><tr>";
+			echo "<td><label>D&O Traders Demand</label></td>";
+			echo '<td>'.$form->input('do_pending', array('label' => false, 'class' => 'small do_pending')).'</td>';
+			echo '<td>'.$form->input('do_current', array('label' => false, 'class' => 'small do_current')).'</td>';
+		echo '</tr></table>';
+	echo '</div>';
 	echo $form->input('total_amount', array('class' => 'total_amount', 'readonly' => 'readonly'));
 	echo $form->end('Submit');
 ?>
@@ -34,9 +43,9 @@ $(document).ready(function(){
 		  		$('.father_name').val(output.DoDemand.father_name);
 		  		$('.address').val(output.DoDemand.address);
 		  		$('.hamlet_id').val(output.DoDemand.hamlet_id);
-		  		$('.do_tax').val(output.DoDemand.do_demand);
-		  		$('.pending_amount').val(output.DoDemand.pending_amount);
-		  		$('.total_amount').val(parseInt(output.DoDemand.do_demand) + parseInt(output.DoDemand.pending_amount));
+		  		$('.do_pending').val(output.DoDemand.do_pending);
+		  		$('.do_current').val(output.DoDemand.do_current);
+		  		$('.total_amount').val(parseInt(output.DoDemand.do_pending) + parseInt(output.DoDemand.do_current));
 		  	}
 		  });
 	});

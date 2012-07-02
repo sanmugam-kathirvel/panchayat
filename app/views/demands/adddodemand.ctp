@@ -12,7 +12,16 @@
 	echo $form->input('father_name');
 	echo $form->input('address');
 	echo $form->input('hamlet_id', array('type' => 'select','options'=> $hamlet_info, 'label' => 'Hamlet Code'));
-	echo $form->input('do_demand', array('label' => 'D&O Traders Demand'));
-	echo $form->input('pending_amount');
+	echo "<div class='input inline'>";
+		echo "<table><tr>";
+			echo "<td></td>";
+			echo "<td>Pending</td>";
+			echo "<td>Current</td>";
+		echo "</tr><tr>";
+			echo "<td><label>D&O Traders Demand</label></td>";
+			echo '<td>'.$form->input('do_pending', array('label' => false, 'class' => 'small do_pending')).'</td>';
+			echo '<td>'.$form->input('do_current', array('label' => false, 'class' => 'small do_current')).'</td>';
+		echo '</tr></table>';
+	echo '</div>';
 	echo $form->end('Submit');
 ?>

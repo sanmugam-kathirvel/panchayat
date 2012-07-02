@@ -11,9 +11,10 @@
 			$hamlet = $this->Hamlet->find('all');
 			$this->set(compact('hamlet'));
 			if(!empty($this->data)){
-				$this->HousetaxReceipt->save($this->data);
-				$this->Session->setFlash(__('Receipt added successfully', true));
-				$this->redirect(array('action'=>'index'));
+				if($this->HousetaxReceipt->save($this->data)){
+					$this->Session->setFlash(__('Receipt added successfully', true));
+					$this->redirect(array('action'=>'index'));					
+				}
 			}
 		}
 		function get_housetax_family_demand(){
@@ -52,9 +53,10 @@
 			$hamlet = $this->Hamlet->find('all');
 			$this->set(compact('hamlet'));
 			if(!empty($this->data)){
-				$this->WatertaxReceipt->save($this->data);
-				$this->Session->setFlash(__('Receipt added successfully', true));
-				$this->redirect(array('action'=>'index'));
+				if($this->ProfessionaltaxReceipt->save($this->data)){
+					$this->Session->setFlash(__('Receipt added successfully', true));
+					$this->redirect(array('action'=>'index'));
+				}
 			}
 		}
 		function get_professionaltax_family_demand(){

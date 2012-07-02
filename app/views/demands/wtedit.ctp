@@ -12,7 +12,16 @@
 	echo $form->input('father_name');
 	echo $form->input('address');
 	echo $form->input('hamlet_id', array('type' => 'select','options'=> $hamlet_info, 'label' => 'Hamlet Code'));
-	echo $form->input('wt_demand', array('label' => 'Water Tax Demand'));
-	echo $form->input('pending_amount', array('label' => 'Pending Amount'));
+	echo "<div class='input inline'>";
+		echo "<table><tr>";
+			echo "<td></td>";
+			echo "<td>Pending</td>";
+			echo "<td>Current</td>";
+		echo "</tr><tr>";
+			echo "<td><label>Water Tax</label></td>";
+			echo '<td>'.$form->input('wt_pending', array('label' => false, 'class' => 'small')).'</td>';
+			echo '<td>'.$form->input('wt_current', array('label' => false, 'class' => 'small')).'</td>';
+		echo '</tr></table>';
+	echo '</div>';
 	echo $form->end('Submit');
 ?>

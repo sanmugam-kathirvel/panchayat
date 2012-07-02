@@ -13,9 +13,33 @@
 	echo $form->input('father_name', array('class' => 'father_name', 'readonly' => 'readonly'));
 	echo $form->input('address', array('class' => 'address', 'readonly' => 'readonly'));
 	echo $form->input('hamlet_id', array('class' => 'hamlet_id', 'readonly' => 'readonly', 'type' => 'select','options'=> $hamlet_info, 'label' => 'Hamlet Code'));
-	echo $form->input('house_tax', array('class' =>'house_tax', 'label' => 'House Tax'));
-	echo $form->input('library_charge', array('class' =>'library_charge', 'label' => 'Library Charge'));
-	echo $form->input('pending_amount', array('class' =>'pending_amount', 'label' => 'Pending Amount'));
+	echo "<div class='input inline'>";
+		echo "<table><tr>";
+			echo "<td></td>";
+			echo "<td>Pending</td>";
+			echo "<td>Current</td>";
+		echo "</tr><tr>";
+			echo "<td><label>House Tax</label></td>";
+			echo '<td>'.$form->input('ht_pending', array('label' => false, 'class' => 'small ht_pending')).'</td>';
+			echo '<td>'.$form->input('ht_current', array('label' => false, 'class' => 'small ht_current')).'</td>';
+		echo '</tr></table>';
+	echo '</div>';
+	echo "<div class='input inline'>";
+		echo "<table><tr>";
+			echo "<td></td>";
+			echo "<td>Pending</td>";
+			echo "<td>Current</td>";
+		echo "</tr><tr>";
+			echo "<td><label>Libraray Tax</label></td>";
+
+		echo '<td>'.$form->input('lc_pending', array('label' => false, 'class' => 'small lc_pending')).'</td>';
+		echo '<td>'.$form->input('lc_current', array('label' => false, 'class' => 'small lc_current')).'</td>';
+		echo '</tr></table>';
+	echo '</div>';	
+	
+	//echo $form->input('house_tax', array('class' =>'house_tax', 'label' => 'House Tax'));
+	// echo $form->input('library_charge', array('class' =>'library_charge', 'label' => 'Library Charge'));
+	// echo $form->input('pending_amount', array('class' =>'pending_amount', 'label' => 'Pending Amount'));
 	echo $form->input('total_amount', array('class' => 'total_amount', 'readonly' => 'readonly'));
 	echo $form->end('Submit');
 ?>
@@ -35,10 +59,11 @@ $(document).ready(function(){
 		  		$('.father_name').val(output.HtDemand.father_name);
 		  		$('.address').val(output.HtDemand.address);
 		  		$('.hamlet_id').val(output.HtDemand.hamlet_id);
-		  		$('.house_tax').val(output.HtDemand.ht_demand);
-		  		$('.library_charge').val(output.HtDemand.lc_demand);
-		  		$('.pending_amount').val(output.HtDemand.pending_amount);
-		  		$('.total_amount').val(parseInt(output.HtDemand.ht_demand) + parseInt(output.HtDemand.lc_demand) + parseInt(output.HtDemand.pending_amount));
+		  		$('.ht_pending').val(output.HtDemand.ht_pending);
+		  		$('.ht_current').val(output.HtDemand.ht_current);
+		  		$('.lc_pending').val(output.HtDemand.lc_pending);
+		  		$('.lc_current').val(output.HtDemand.lc_current);
+		  		$('.total_amount').val(parseInt(output.HtDemand.ht_pending) + parseInt(output.HtDemand.ht_current) + parseInt(output.HtDemand.lc_pending) + parseInt(output.HtDemand.lc_current));
 		  	}
 		  });
 	});

@@ -3,7 +3,7 @@
     <h2><?php __('Professional Tax Demand'); ?></h2>
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('Add Water tax Demand', true), array('action'=>'addptdemand')); ?></li>
+            <li><?php echo $html->link(__('Add Professional tax Demand', true), array('action'=>'addptdemand')); ?></li>
         </ul>
     </div>
     
@@ -17,9 +17,10 @@
                 $paginator->sort('father_name'),
                 $paginator->sort('address'),
                 $paginator->sort('hamlet_id'),
-                $paginator->sort('part_1_demand'),
-                $paginator->sort('part_2_demand'),
-                $paginator->sort('pending_amount'),
+                $paginator->sort('part1_pending'),
+                $paginator->sort('part1_current'),
+                $paginator->sort('part2_pending'),
+                $paginator->sort('part2_current'),
                 __('Actions', true),
             ));
             echo $tableHeaders;
@@ -41,9 +42,10 @@
                     $demand['PtDemand']['father_name'],
                     $demand['PtDemand']['address'],
                     $demand['Hamlet']['hamlet_code'],
-                    $demand['PtDemand']['part_1_demand'],
-                    $demand['PtDemand']['part_2_demand'],
-                    $demand['PtDemand']['pending_amount'],
+                    $demand['PtDemand']['part1_pending'],
+                    $demand['PtDemand']['part1_current'],
+                    $demand['PtDemand']['part2_pending'],
+                    $demand['PtDemand']['part2_current'],
                     $actions,
                 );
             }

@@ -17,8 +17,8 @@
                 $paginator->sort('father_name'),
                 $paginator->sort('address'),
                 $paginator->sort('hamlet_id'),
-                $paginator->sort('do_demand'),
-                $paginator->sort('pending_amount'),
+                $paginator->sort('do_pending'),
+                $paginator->sort('do_current'),
                 __('Actions', true),
             ));
             echo $tableHeaders;
@@ -40,8 +40,8 @@
                     $demand['DoDemand']['father_name'],
                     $demand['DoDemand']['address'],
                     $demand['Hamlet']['hamlet_code'],
-                    $demand['DoDemand']['do_demand'],
-                    $demand['DoDemand']['pending_amount'],
+                    $demand['DoDemand']['do_pending'],
+                    $demand['DoDemand']['do_current'],
                     $actions,
                 );
             }

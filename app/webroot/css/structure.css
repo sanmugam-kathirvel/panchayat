@@ -3,6 +3,8 @@ body{margin-top:40px;}
 #wrapper #container .content div.submit{margin-left:285px;}
 #wrapper #container form div.new_field{margin-left:150px;}#wrapper #container form div.new_field div.input{margin-left:0px;float:left;}
 #wrapper #container form div.new_field table{width:70%;}
+#wrapper #container form div.input.inline{margin:0;margin-left:150px;}#wrapper #container form div.input.inline table{width:100px;margin-bottom:0;}#wrapper #container form div.input.inline table td{border:0;}#wrapper #container form div.input.inline table td div.input{margin:3px 0;}
+#wrapper #container form div.input.inline table td,#wrapper #container form div.input.inline table tr{padding:0;padding-right:10px;}
 #wrapper #container form#PurchasePurchaseForm,#wrapper #container form#SalarySalaryForm{position:relative;}#wrapper #container form#PurchasePurchaseForm div.submit,#wrapper #container form#SalarySalaryForm div.submit{top:190px;left:229px;position:absolute;}
 #wrapper #container form#PurchasePurchaseForm div.link,#wrapper #container form#SalarySalaryForm div.link{width:990px;text-align:right;}
 #wrapper #container form#PurchasePurchaseForm div.submit{top:227px;}
