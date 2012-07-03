@@ -1,6 +1,6 @@
 <?php
 	class NregsController extends AppController{
-		var $uses = array('NregsRegistration', 'Hamlet', 'Jobcard', 'NregsStock', 'NmrRoll'/*, 'NmrRollentry'*/);
+		var $uses = array('NregsRegistration', 'Hamlet', 'Jobcard', 'NregsStock', 'NmrRoll', 'NmrRollentry');
 		function beforeFilter(){
 			parent::beforeFilter();
 		}
@@ -146,10 +146,29 @@
 			}
 		}
 		function nmrrolls(){
-			
+			if(!empty($this->data)){
+				if($this->NmrRoll->save($this->data)){
+					$this->Session->setFlash(__('Nmr Rolls added', true));
+					$this->redirect(array('action'=>'nmr_roll_index'));
+				}
+			}
+		}
+		function nmr_roll_index(){
+			$this->paginate = array(
+				'order' => 'NmrRoll.role_date',
+			);
+			$nregs_rolls = $this->paginate('NmrRoll');
+			$this->set(compact('nregs_rolls'));
 		}
 		function rollentry(){
-			
+			$hamlets = $this->Hamlet->find('all');
+			$nmr_roll_no = $this->NmrRoll->findByRollEntryStatus('ongoing');
+			$this->set(compact('hamlets','nmr_roll_no'));
+			if(!empty($this->data)){
+				if($this->NmrRollentry->save($this->data)){
+					
+				}
+			}
 		}
 	}
 ?>
