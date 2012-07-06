@@ -13,5 +13,8 @@
       <ul>
             <li><?php echo $html->link(__('D & O Trader Receipts', true), array('action'=>'adddotaxreceipt')); ?></li>
       </ul>
+      <ul>
+            <li><?php echo $html->link(__('Other Receipts', true), array('action'=>'addothersreceipt')); ?></li>
+      </ul>
     </div>
 </div>

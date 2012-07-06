@@ -12,6 +12,8 @@
 	echo $form->input('father_name');
 	echo $form->input('address');
 	echo $form->input('hamlet_id', array('type' => 'select','options'=> $hamlet_info, 'label' => 'Hamlet Code'));
+	echo $form->input('company_name');
+	echo $form->input('half_yearly_income');
 	echo "<div class='input inline'>";
 		echo "<table><tr>";
 			echo "<td></td>";

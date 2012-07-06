@@ -25,10 +25,6 @@
 	echo '</div>';
 	echo "<div class='input inline'>";
 		echo "<table><tr>";
-			echo "<td></td>";
-			echo "<td>Pending</td>";
-			echo "<td>Current</td>";
-		echo "</tr><tr>";
 			echo "<td><label>Libraray Tax</label></td>";
 
 		echo '<td>'.$form->input('lc_pending', array('label' => false, 'class' => 'small')).'</td>';

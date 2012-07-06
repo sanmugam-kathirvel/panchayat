@@ -32,8 +32,6 @@
 			}
 		}
 		function adddodemand(){
-			$hamlet = $this->Hamlet->find('all');
-			$this->set(compact('hamlet'));
 			if(!empty($this->data)){
 				$this->DoDemand->save($this->data);
 				$this->Session->setFlash(__('Demand added successfully', true));

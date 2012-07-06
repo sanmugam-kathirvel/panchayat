@@ -8,11 +8,21 @@
 	echo $form->input('receipt_date', array('id' => 'datepicker', 'type' => 'text'));
 	echo $form->input('receipt_number');
 	echo $form->input('demand_number', array('class' => 'demand_number'));
-	echo $form->input('door_number', array('class' => 'door_number', 'readonly' => 'readonly'));
 	echo $form->input('name', array('class' => 'name', 'readonly' => 'readonly'));
 	echo $form->input('father_name', array('class' => 'father_name', 'readonly' => 'readonly'));
 	echo $form->input('address', array('class' => 'address', 'readonly' => 'readonly'));
-	echo $form->input('hamlet_id', array('class' => 'hamlet_id', 'readonly' => 'readonly', 'type' => 'select','options'=> $hamlet_info, 'label' => 'Hamlet Code'));
+	echo "<div class='input inline'>";
+		echo "<table><tr>";
+			echo "<td></td>";
+			echo "<td>Start Date</td>";
+			echo "<td>End Date</td>";
+		echo "</tr><tr>";
+			echo "<td><label>Period</label></td>";
+			echo '<td>'.$form->input('start_date', array('id' => 'datepicker1', 'label' => false, 'type' => 'text', 'class' => 'small')).'</td>';
+			echo '<td>'.$form->input('end_date', array('id' => 'datepicker2', 'label' => false, 'type' => 'text', 'class' => 'small')).'</td>';
+		echo '</tr></table>';
+	echo '</div>';
+	echo $form->input('emd', array('class' => 'emd', 'readonly' => 'readonly'));
 	echo "<div class='input inline'>";
 		echo "<table><tr>";
 			echo "<td></td>";
@@ -38,14 +48,13 @@ $(document).ready(function(){
 		  	data: {'demand_number':demand_number},
 		  	success: function(data){
 		  		output=JSON.parse(data);
-		  		$('.door_number').val(output.DoDemand.door_number);
 		  		$('.name').val(output.DoDemand.name);
 		  		$('.father_name').val(output.DoDemand.father_name);
 		  		$('.address').val(output.DoDemand.address);
-		  		$('.hamlet_id').val(output.DoDemand.hamlet_id);
+		  		$('.emd').val(output.DoDemand.emd);
 		  		$('.do_pending').val(output.DoDemand.do_pending);
 		  		$('.do_current').val(output.DoDemand.do_current);
-		  		$('.total_amount').val(parseInt(output.DoDemand.do_pending) + parseInt(output.DoDemand.do_current));
+		  		$('.total_amount').val(parseInt(output.DoDemand.do_pending) + parseInt(output.DoDemand.do_current) + parseInt(output.DoDemand.emd));
 		  	}
 		  });
 	});

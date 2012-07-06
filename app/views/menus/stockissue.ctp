@@ -9,6 +9,7 @@
 	echo $form->input('available_quantity', array('disabled' => true, 'class' => 'avail_stock'));
 	echo $form->input('issue_date', array('id' => 'datepicker', 'type' => 'text'));
 	echo $form->input('item_quantity', array('label' => 'Item Quantity'));
+	echo $form->input('hand_over_name');
 	echo $form->input('description');
 	echo $form->end('Submit');
 ?>

@@ -57,6 +57,7 @@
   							<li><?= $this->Html->link("Headers", array('plugin' => false, "controller" => "menus", "action" => "headerindex")); ?></li>
   							<li><?= $this->Html->link("Opening Stocks", array('plugin' => false, "controller" => "menus", "action" => "addopeningstock")); ?></li>
   							<li><?= $this->Html->link("Stock Issue", array('plugin' => false, "controller" => "menus", "action" => "stockissue")); ?></li>
+  							<li><?= $this->Html->link("Book Details", array('plugin' => false, "controller" => "menus", "action" => "bookindex")); ?></li>
   						</ul>
   					</li>
   					<li class = "dropdown" data-dropdown="dropdown">
@@ -104,6 +105,7 @@
     $(function() {
       $( "#datepicker" ).datepicker({dateFormat: "yy-mm-dd", showAnim: "show"});
       $( "#datepicker1" ).datepicker({dateFormat: "yy-mm-dd", showAnim: "show"});
+      $( "#datepicker2" ).datepicker({dateFormat: "yy-mm-dd", showAnim: "show"});
     });
   </script>
 </body>

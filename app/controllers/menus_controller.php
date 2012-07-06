@@ -1,6 +1,6 @@
 <?php
 	class MenusController extends AppController{
-		var $uses = array('Account', 'BankDetail', 'Header', 'Hamlet', 'Stock', 'StockIssue');
+		var $uses = array('Account', 'BankDetail', 'Header', 'Hamlet', 'Stock', 'StockIssue', 'Book', 'BookDetail');
 		function beforeFilter(){
 			parent::beforeFilter();
 		}
@@ -174,6 +174,59 @@
 				$this->Session->setFlash(__('Invalid operation', true));
 			}
 			$this->redirect(array('action'=>'balanceindex'));
+		}
+		function bookindex(){
+			$this->paginate = array(
+					'conditions' => array('BookDetail.purchase_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'order' => 'BookDetail.purchase_date DESC',
+					'contain' => array('Book')
+				);
+				$books = $this->paginate('BookDetail');
+				$this->set(compact('books'));
+		}
+		function addbook(){
+			$books = $this->Book->find('all');
+			$this->set(compact('books'));
+			if(!empty($this->data)){
+				if($this->BookDetail->save($this->data)){
+					$this->Session->setFlash(__('Book Details Saved Successfully.', true));
+					$this->redirect(array('action'=>'bookindex'));
+				}else{
+					$this->Session->setFlash(__('Error Saving Book Details!', true));
+					$this->redirect(array('action'=>'bookindex'));
+				}
+			}
+		}
+		function editbook($id){
+			if(!empty($id)){
+				$books = $this->Book->find('all');
+				$this->set(compact('books'));
+				$this->BookDetail->id=$id;
+	      if(empty($this->data)) {
+	        $this->data = $this->BookDetail->read();
+				}else{
+	        if($this->BookDetail->save($this->data)){
+	          $this->Session->setFlash(__('Book Details Updated Successfully.', true));
+						$this->redirect(array('action'=>'bookindex'));
+	        }else{
+						$this->Session->setFlash(__('Error Updating Book Details!', true));
+						$this->redirect(array('action'=>'bookindex'));
+					}
+	      }
+			}else{
+				$this->Session->setFlash(__('Invalid operation', true));
+				$this->redirect(array('action'=>'bookindex'));
+			}
+		}
+		function deletebook($id){
+			if(!empty($id)){
+				$this->BookDetail->delete($id);
+				$this->Session->setFlash(__('Book Details deleted successfully', true));
+				$this->redirect(array('action'=>'bookindex'));
+			}else{
+				$this->Session->setFlash(__('Invalid operation', true));
+				$this->redirect(array('action'=>'bookindex'));
+			}
 		}
 	}
 ?>

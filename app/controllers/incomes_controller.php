@@ -7,7 +7,7 @@
 		function addincome($acc_id){
 			if(!empty($acc_id)){
 				$header = $this->Header->find('all', array(
-					'conditions' => array('Header.account_id' => $acc_id, 'Header.header_type' => 'income')
+					'conditions' => array('Header.account_id' => $acc_id, 'Header.header_type' => 'income', 'Header.receipt' => 'no')
 				));
 				$this->set(compact('header', 'acc_id'));
 			}elseif(!empty($this->data)){
@@ -62,7 +62,7 @@
 	      if(empty($this->data)) {
 	        $this->data = $this->Income->read();
 					$header = $this->Header->find('all', array(
-						'conditions' => array('Header.account_id' => $this->data['Income']['account_id'], 'Header.header_type' => 'income')
+						'conditions' => array('Header.account_id' => $this->data['Income']['account_id'], 'Header.header_type' => 'income', 'Header.receipt' => 'no')
 					));
 					$this->set(compact('header'));
 	      }else{

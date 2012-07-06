@@ -13,6 +13,8 @@
 	echo $form->input('father_name', array('class' => 'father_name', 'readonly' => 'readonly'));
 	echo $form->input('address', array('class' => 'address', 'readonly' => 'readonly'));
 	echo $form->input('hamlet_id', array('class' => 'hamlet_id', 'readonly' => 'readonly', 'type' => 'select','options'=> $hamlet_info, 'label' => 'Hamlet Code'));
+	echo $form->input('survey_number');
+	echo $form->input('square_feet_estimation', array('label' => 'Sqr Feet Estimation'));
 	echo "<div class='input inline'>";
 		echo "<table><tr>";
 			echo "<td></td>";
@@ -26,10 +28,6 @@
 	echo '</div>';
 	echo "<div class='input inline'>";
 		echo "<table><tr>";
-			echo "<td></td>";
-			echo "<td>Pending</td>";
-			echo "<td>Current</td>";
-		echo "</tr><tr>";
 			echo "<td><label>Libraray Tax</label></td>";
 
 		echo '<td>'.$form->input('lc_pending', array('label' => false, 'class' => 'small lc_pending')).'</td>';

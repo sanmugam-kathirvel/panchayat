@@ -19,5 +19,8 @@
 			<ul>
       	<li><?php echo $html->link(__('Receipts', true), array('action'=>'../receipts/index')); ?></li>
       </ul>
+      <ul>
+      	<li><?php echo $html->link(__('Transfer Cash To Bank', true), array('action'=>'../receipts/cashtobank')); ?></li>
+      </ul>
     </div>
 </div>
