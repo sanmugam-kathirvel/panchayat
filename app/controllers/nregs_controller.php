@@ -1,6 +1,6 @@
 <?php
 	class NregsController extends AppController{
-		var $uses = array('NregsRegistration', 'Hamlet', 'Jobcard', 'NregsStock', 'NmrRoll', 'NmrRollentry');
+		var $uses = array('NregsRegistration', 'Hamlet', 'Jobcard', 'NregsStock', 'NmrRoll', 'NmrRollentry','Attendance','Workdetail','AttendanceRegister');
 		function beforeFilter(){
 			parent::beforeFilter();
 		}
@@ -127,7 +127,7 @@
 	          $this->redirect(array('action'=>'jobcardindex'));       
 	        }
 				}
-	    }else {
+	    }else{
 				$this->Session->setFlash(__('Invalid operation', true));
 				$this->redirect(array('action'=>'jobcardindex'));
 			}
@@ -182,6 +182,67 @@
 					}
 				}
 			}
+		}
+		function add_workdetails(){
+			if(!empty($this->data)){
+				if($this->Workdetail->save($this->data)){
+					$this->Session->setFlash(__('Work Details added', true));
+					$this->redirect(array('action'=>'index_workdetails'));
+				}
+			}
+		}
+		function edit_workdetails($id){
+			if(!empty($id)){
+				if(empty($this->data)){
+					$this->Workdetail->id = $id;
+					$this->data = $this->Workdetail->read();
+				}else{
+					if($this->Workdetail->save($this->data)){
+						$this->Session->setFlash(__('Work Details updated successfully', true));
+						$this->redirect(array('action'=>'index_workdetails'));
+					}
+				}
+			}else{
+				$this->Session->setFlash(__('Invalid operation', true));
+				$this->redirect(array('action'=>'index_workdetails'));
+			}
+		}
+		function delete_workdetails($id){
+			if(!empty($id)){
+				$this->Workdetail->delete($id);
+				$this->Session->setFlash(__('Work detail deleted successfully', true));
+				$this->redirect(array('action'=>'index_workdetails'));
+			}else {
+				$this->Session->setFlash(__('Invalid operation', true));
+				$this->redirect(array('action'=>'index_workdetails'));
+			}
+		}
+		function index_workdetails() {
+			$this->paginate = array(
+				'conditions' => array('Workdetail.year BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']),),
+				'order' => 'Workdetail.year DESC',
+			);
+			$workdetails = $this->paginate('Workdetail');
+			$this->set(compact('workdetails'));		
+		}
+		function attendance(){
+			if(empty($this->data)){
+				$work_details = $this->Workdetail->find('all');
+				$this->set(compact('work_details'));
+			}else{
+				if($this->AttendanceRegister->saveAll($this->data)){
+					$this->Session->setFlash(__('Invalid operation', true));
+					$this->redirect(array('action'=>'../accounts/account4'));
+				}
+			}
+		}
+		function autofill_attendance(){
+			$this->layout = false;
+			$details = $this->NregsRegistration->find('first', array(
+				'conditions' => array('NregsRegistration.job_card_number' => $_POST['jobcard_no'])
+			));
+			 echo json_encode($details);
+			 exit;	
 		}
 	}
 ?>

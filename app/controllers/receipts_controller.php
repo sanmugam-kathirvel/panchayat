@@ -21,6 +21,7 @@
 			if(!empty($this->data)){
 				if((int)($account_detail['BankDetail']['closing_cash_balance']) >= (int)($this->data['CashToBank']['transfer_amount'])){
 					if($this->CashToBank->save($this->data)){
+						$acc_bank_details['BankDetail']['value'] = 'no';
 						$account_detail['BankDetail']['closing_bank_balance'] = (int)($account_detail['BankDetail']['closing_bank_balance']) + (int)($this->data['CashToBank']['transfer_amount']);
 						$account_detail['BankDetail']['closing_cash_balance'] = (int)($account_detail['BankDetail']['closing_cash_balance']) - (int)($this->data['CashToBank']['transfer_amount']);
 						$this->BankDetail->save($account_detail);
@@ -46,6 +47,10 @@
 								'BankDetail.account_id' => 1
 							)
 					));
+					$acc_bank_details['BankDetail']['value'] = 'yes';
+					$acc_bank_details['BankDetail']['check_date'] = $this->data['OthersReceipt']['receipt_date'];
+					$acc_bank_details['BankDetail']['cash_balance'] = $acc_bank_details['BankDetail']['closing_cash_balance'];
+					$acc_bank_details['BankDetail']['bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'];
 					$acc_bank_details['BankDetail']['closing_cash_balance'] = (int)($acc_bank_details['BankDetail']['closing_cash_balance']) + (int)($this->data['OthersReceipt']['amount']);
 					$this->BankDetail->save($acc_bank_details);
 					$this->Session->setFlash(__('Receipt added successfully', true));
@@ -65,6 +70,10 @@
 								'BankDetail.account_id' => 1
 							)
 					));
+					$acc_bank_details['BankDetail']['value'] = 'yes';
+					$acc_bank_details['BankDetail']['check_date'] = $this->data['HousetaxReceipt']['receipt_date'];
+					$acc_bank_details['BankDetail']['cash_balance'] = $acc_bank_details['BankDetail']['closing_cash_balance'];
+					$acc_bank_details['BankDetail']['bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'];
 					$acc_bank_details['BankDetail']['closing_cash_balance'] = (int)($acc_bank_details['BankDetail']['closing_cash_balance']) + (int)($this->data['HousetaxReceipt']['total_amount']);
 					$this->BankDetail->save($acc_bank_details);
 					$this->Session->setFlash(__('Receipt added successfully', true));
@@ -95,6 +104,10 @@
 									'BankDetail.account_id' => 1
 								)
 					));
+					$acc_bank_details['BankDetail']['value'] = 'yes';
+					$acc_bank_details['BankDetail']['check_date'] = $this->data['WatertaxReceipt']['receipt_date'];
+					$acc_bank_details['BankDetail']['cash_balance'] = $acc_bank_details['BankDetail']['closing_cash_balance'];
+					$acc_bank_details['BankDetail']['bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'];
 					$acc_bank_details['BankDetail']['closing_cash_balance'] = (int)($acc_bank_details['BankDetail']['closing_cash_balance']) + (int)($this->data['WatertaxReceipt']['total_amount']);
 					$this->BankDetail->save($acc_bank_details);
 					$this->Session->setFlash(__('Receipt added successfully', true));
@@ -125,6 +138,10 @@
 									'BankDetail.account_id' => 1
 								)
 					));
+					$acc_bank_details['BankDetail']['value'] = 'yes';
+					$acc_bank_details['BankDetail']['check_date'] = $this->data['ProfessionaltaxReceipt']['receipt_date'];
+					$acc_bank_details['BankDetail']['cash_balance'] = $acc_bank_details['BankDetail']['closing_cash_balance'];
+					$acc_bank_details['BankDetail']['bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'];
 					$acc_bank_details['BankDetail']['closing_cash_balance'] = (int)($acc_bank_details['BankDetail']['closing_cash_balance']) + (int)($this->data['ProfessionaltaxReceipt']['total_amount']);
 					$this->BankDetail->save($acc_bank_details);
 					$this->Session->setFlash(__('Receipt added successfully', true));
@@ -155,6 +172,10 @@
 									'BankDetail.account_id' => 1
 								)
 					));
+					$acc_bank_details['BankDetail']['value'] = 'yes';
+					$acc_bank_details['BankDetail']['check_date'] = $this->data['DotaxReceipt']['receipt_date'];
+					$acc_bank_details['BankDetail']['cash_balance'] = $acc_bank_details['BankDetail']['closing_cash_balance'];
+					$acc_bank_details['BankDetail']['bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'];
 					$acc_bank_details['BankDetail']['closing_cash_balance'] = (int)($acc_bank_details['BankDetail']['closing_cash_balance']) + (int)($this->data['DotaxReceipt']['total_amount']);
 					$this->BankDetail->save($acc_bank_details);
 					$this->Session->setFlash(__('Receipt added successfully', true));

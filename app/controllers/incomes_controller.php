@@ -11,7 +11,7 @@
 				));
 				$this->set(compact('header', 'acc_id'));
 			}elseif(!empty($this->data)){
-				$this->Income->set($this->data);#data[Income][account_id]
+				$this->Income->set($this->data);
 				if($this->Income->validates()){
 					$acc_opening_date = strtotime($GLOBALS['accounting_year']['acc_opening_year']);
 					$acc_closing_date = strtotime($GLOBALS['accounting_year']['acc_closing_year']);
@@ -20,10 +20,14 @@
 						$acc_bank_details = $this->BankDetail->find('first', array(
 							'conditions' => array(
 								'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-								'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+								'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'],
 								'BankDetail.account_id' => $this->data['Income']['account_id']
 							)
 						));
+						$acc_bank_details['BankDetail']['value'] = 'yes';
+						$acc_bank_details['BankDetail']['check_date'] = $this->data['Income']['income_date'];
+						$acc_bank_details['BankDetail']['cash_balance'] = $acc_bank_details['BankDetail']['closing_cash_balance'];
+						$acc_bank_details['BankDetail']['bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance']; 
 						$acc_bank_details['BankDetail']['closing_bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'] + $this->data['Income']['income_amount'];
 						$this->BankDetail->save($acc_bank_details['BankDetail']);
 						$this->Income->save();
@@ -94,6 +98,7 @@
 							}else{
 								$acc_bank_details['BankDetail']['closing_bank_balance'] -= $amount_to_update;
 							}
+							$acc_bank_details['BankDetail']['value'] = 'no';
 							$this->BankDetail->save($acc_bank_details);
 						}
 		        if($this->Income->save($this->data)){
@@ -120,6 +125,7 @@
 					)
 				));
 				$acc_bank_details['BankDetail']['closing_bank_balance'] -=  $amount;
+				$acc_bank_details['BankDetail']['value'] = 'no';
 				$this->BankDetail->save($acc_bank_details);
 				$this->Income->delete($id);
 				$this->Session->setFlash(__('Record deleted successfully', true));

@@ -5,7 +5,7 @@
 		$book_names[$book['Book']['id']] =  $book['Book']['book_name'];
 	}
 	echo $form->create('BookDetail', array( 'url' => array('controller' => 'menus', 'action' => 'editbook')));
-	echo('id');
+	echo $form->input('id');
 	echo $form->input('book_id', array('type' => 'select', 'options' => $book_names, 'label' => 'Book Name'));
 	echo $form->input('purchase_date', array('id' => 'datepicker', 'type' => 'text'));
 	echo $form->input('company_name');

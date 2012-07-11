@@ -34,6 +34,10 @@
 								}
 							}
 						}
+						$acc_bank_details['BankDetail']['value'] = 'yes';
+						$acc_bank_details['BankDetail']['check_date'] = $this->data['Purchase']['purchase_date'];
+						$acc_bank_details['BankDetail']['cash_balance'] = $acc_bank_details['BankDetail']['closing_cash_balance'];
+						$acc_bank_details['BankDetail']['bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'];
 						$acc_bank_details['BankDetail']['closing_bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'] - $this->data['Purchase']['total_amt'];
 						$this->BankDetail->save($acc_bank_details['BankDetail']);
 						$this->Purchase->saveAll($datas);

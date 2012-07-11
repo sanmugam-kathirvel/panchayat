@@ -11,6 +11,7 @@
       <?php
 				if($acc_id > 1){
         	$tableHeaders = $html->tableHeaders(array(
+        		$paginator->sort('bill_date'),
             $paginator->sort('contractor_name'),
             $paginator->sort('address'),
             $paginator->sort('estimation_amt'),
@@ -33,6 +34,7 @@
           echo $tableHeaders;
 				}else{
 					$tableHeaders = $html->tableHeaders(array(
+						$paginator->sort('bill_date'),
             $paginator->sort('contractor_name'),
             $paginator->sort('address'),
             $paginator->sort('estimation_amt'),
@@ -62,6 +64,7 @@
 					);
 					if($acc_id > 1){
             $rows[] = array(
+            		$bill['ContractBillEstimation']['bill_date'],
             		$bill['ContractBillEstimation']['contractor_name'],
             		$bill['ContractBillEstimation']['address'],
                 $bill['ContractBillEstimation']['estimation_amt'],
@@ -83,6 +86,7 @@
             );
 					}else{
 						$rows[] = array(
+								$bill['ContractBillEstimation']['bill_date'],
             		$bill['ContractBillEstimation']['contractor_name'],
             		$bill['ContractBillEstimation']['address'],
                 $bill['ContractBillEstimation']['estimation_amt'],

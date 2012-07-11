@@ -3,6 +3,7 @@
 	echo $form->create('ContractBillEstimation', array( 'url' => array('controller' => 'bills', 'action' => 'edit')));
 	echo $form->input('id');
 	echo $form->input('account_id', array('type' => 'hidden'));
+	echo $form->input('bill_date', array('id' => 'datepicker', 'type' => 'text'));
 	echo $form->input('contractor_name');
 	echo $form->input('address');
 	echo $form->input('estimation_amt');

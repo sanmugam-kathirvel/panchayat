@@ -1,6 +1,11 @@
 <p>Salary</p>
 <?php
-  $stock_list = array();
+  $employee_name = array();
+	$employee_designation = array();
+	foreach($employees as $employee){
+		$employee_name[$employee['Employee']['name']] =  $employee['Employee']['name'];
+		$employee_designation[$employee['Employee']['designation']] =  $employee['Employee']['designation'];
+	}
 	echo $form->create('Salary', array( 'url' => array('controller' => 'salaries', 'action' => 'salary')));
 	echo $form->input('salary_date', array('type' => 'text', 'id' => 'datepicker'));
 	echo $form->input('drawee_name');
@@ -18,8 +23,8 @@
 					echo "</tr>";
 					for($i = 0; $i < 20 ; $i++){
 					  echo "<tr id ='new_field' class='new_field_".$i."'>";
-							echo '<td>'.$form->input('EmployeeSalary.'.$i.'.employee_name', array('options' => $stock_list, 'label' => false)).'</td>';
-							echo '<td>'.$form->input('EmployeeSalary.'.$i.'.employee_designation', array('label' => false, 'class' => 'quantity')).'</td>';
+							echo '<td>'.$form->input('EmployeeSalary.'.$i.'.employee_name', array('options' => $employee_name, 'label' => false, 'empty' => true)).'</td>';
+							echo '<td>'.$form->input('EmployeeSalary.'.$i.'.employee_designation', array('options' => $employee_designation, 'label' => false, 'class' => 'employee_designation', 'empty' => true)).'</td>';
 							echo '<td>'.$form->input('EmployeeSalary.'.$i.'.employee_pay', array('label' => false, 'class' => 'employee_pay', 'value' => 0, 'id' => 'employee_pay')).'</td>';
 						echo "</tr>";
 					}	

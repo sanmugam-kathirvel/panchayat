@@ -2,6 +2,7 @@
 <?php
 	echo $form->create('ContractBillEstimation', array( 'url' => array('controller' => 'bills', 'action' => 'addbill')));
 	echo $form->input('account_id', array('class' => 'account_id', 'type' => 'hidden', 'value' => $acc_id));
+	echo $form->input('bill_date', array('id' => 'datepicker', 'type' => 'text'));
 	echo $form->input('contractor_name');
 	echo $form->input('address');
 	echo $form->input('estimation_amt', array('label' => 'Estimation amount', 'value' => '0'));

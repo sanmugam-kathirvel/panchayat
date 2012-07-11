@@ -25,6 +25,10 @@
 							)
 						));
 						if($acc_bank_details['BankDetail']['closing_bank_balance'] >= $this->data['Expense']['expense_amount']){
+							$acc_bank_details['BankDetail']['value'] = 'yes';
+							$acc_bank_details['BankDetail']['check_date'] = $this->data['Expense']['expense_date'];
+							$acc_bank_details['BankDetail']['cash_balance'] = $acc_bank_details['BankDetail']['closing_cash_balance'];
+							$acc_bank_details['BankDetail']['bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'];
 							$acc_bank_details['BankDetail']['closing_bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'] - $this->data['Expense']['expense_amount'];
 							$this->BankDetail->save($acc_bank_details['BankDetail']);
 							$this->Expense->save();
@@ -98,6 +102,7 @@
 							}else{
 								$acc_bank_details['BankDetail']['closing_bank_balance'] += $amount_to_update;
 							}
+							$acc_bank_details['BankDetail']['value'] = 'no';
 							$this->BankDetail->save($acc_bank_details);
 						}
 		        if($this->Expense->save($this->data)){
@@ -124,6 +129,7 @@
 					)
 				));
 				$acc_bank_details['BankDetail']['closing_bank_balance'] +=  $amount;
+				$acc_bank_details['BankDetail']['value'] = 'no';
 				$this->BankDetail->save($acc_bank_details);
 				$this->Expense->delete($id);
 				$this->Session->setFlash(__('Record deleted successfully', true));

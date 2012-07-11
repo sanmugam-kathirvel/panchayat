@@ -1,6 +1,6 @@
 <?php
 	class SalariesController extends AppController{
-		var $uses = array('Account', 'BankDetail', 'Salary', 'EmployeeSalary');
+		var $uses = array('Account', 'BankDetail', 'Salary', 'Employee', 'EmployeeSalary');
 		function beforeFilter(){
 			parent::beforeFilter();
 		}
@@ -24,6 +24,10 @@
 							)
 						));
 						if($acc_bank_details['BankDetail']['closing_bank_balance'] >= $this->data['Salary']['cheque_amount']){
+							$acc_bank_details['BankDetail']['value'] = 'yes';
+							$acc_bank_details['BankDetail']['check_date'] = $this->data['Salary']['salary_date'];
+							$acc_bank_details['BankDetail']['cash_balance'] = $acc_bank_details['BankDetail']['closing_cash_balance'];
+							$acc_bank_details['BankDetail']['bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'];
 							$acc_bank_details['BankDetail']['closing_bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'] - $this->data['Salary']['cheque_amount'];
 							$this->BankDetail->save($acc_bank_details['BankDetail']);
 							$this->Salary->saveAll($datas);
@@ -35,6 +39,9 @@
 					}else{
 						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$GLOBALS['accounting_year']['acc_opening_year'].' and '.$GLOBALS['accounting_year']['acc_closing_year'], true));
 					}
+			}else{
+				$employees = $this->Employee->find('all');
+				$this->set(compact('employees'));
 			}
 		}
 	}
