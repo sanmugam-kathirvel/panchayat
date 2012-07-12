@@ -5,20 +5,20 @@
 		var $hasMany = array('CashToBank');
 		function beforeSave(){
 	    if($this->data['BankDetail']['value'] == 'yes'){
-	    	//var_dump($this->data); die;
 	      App::import('model', 'CashBook');
 				$this->CashBook = new CashBook();
-				$row = $this->CashBook->find('first',array(
-					'conditions' => array('MONTH(CashBook.opening_date)' => "MONTH($this->data['BankDetail']['check_date'])",
-													'YEAR(CashBook.opening_date)' => "YEAR($this->data['BankDetail']['check_date'])")
+				$tmp_date = date("Y", strtotime($this->data['BankDetail']['check_date'])).'-'.date("m", strtotime($this->data['BankDetail']['check_date'])).'-01';
+				$row = $this->CashBook->find('all',array(
+					'conditions' => array('CashBook.account_id' => $this->data['BankDetail']['account_id'],
+													'CashBook.opening_date' => $tmp_date)
 				));
 				if(empty($row)){
-					$rec = array();
-					$tmp_date = date("Y", strtotime($this->data['BankDetail']['check_date'])).'-'.date("m", strtotime($this->data['BankDetail']['check_date'])).'-01';
-					$rec['CashBook']['opening_date'] = $tmp_date;
-					$rec['CashBook']['opening_cash'] = $this->data['BankDetail']['cash_balance'];
-					$rec['CashBook']['opening_bank'] = $this->data['BankDetail']['bank_balance'];
-					$this->CashBook->save($rec);
+					$new_rec = array();
+					$new_rec['CashBook']['account_id'] = $this->data['BankDetail']['account_id'];
+					$new_rec['CashBook']['opening_date'] = $tmp_date;
+					$new_rec['CashBook']['opening_cash'] = $this->data['BankDetail']['cash_balance'];
+					$new_rec['CashBook']['opening_bank'] = $this->data['BankDetail']['bank_balance'];
+					$this->CashBook->save($new_rec);
 				}
 			}
 			return true;

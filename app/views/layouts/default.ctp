@@ -80,6 +80,7 @@
   							<li><?= $this->Html->link("Account 6", array('plugin' => false, "controller" => "accounts", "action" => "account6")); ?></li>
   						</ul>
   					</li>
+  					<li><?= $this->Html->link("Reports", array('plugin' => false, "controller" => "reports", "action" => "index")); ?></li>
   				</ul>
   				<ul class = "nav">
   					<?php if($session->check('Auth.User.id')){

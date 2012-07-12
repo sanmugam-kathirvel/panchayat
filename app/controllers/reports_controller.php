@@ -2,7 +2,7 @@
 	App::import('Vendor', 'Writer', array('file' => 'Spreadsheet'.DS.'Writer.php'));
 	class ReportsController extends AppController {
 
-		var $uses = array('HtDemand', 'HousetaxReceipt', 'PtDemand', 'ProfessionaltaxReceipt', 'WtDemand', 'WatertaxReceipt');
+		var $uses = array('CashBook', 'Income', 'HousetaxReceipt', 'WatertaxReceipt', 'ProfessionaltaxReceipt', 'DotaxReceipt', 'OthersReceipt', 'Expense', 'Purchase', 'Salary', 'ContractBillEstimation', 'HtDemand', 'HousetaxReceipt', 'PtDemand', 'ProfessionaltaxReceipt', 'WtDemand', 'WatertaxReceipt');
 		function index(){
 			
 		}
@@ -15,6 +15,7 @@
 			);
 			$workbook  = new Spreadsheet_Excel_Writer();
 			$workbook->setVersion(8);
+			$workbook->setTempDir('../temp');
 			$worksheet = $workbook->addWorksheet('Form_3');
 			$worksheet->setInputEncoding('UTF-8');
 			$fmt_left = $workbook->addFormat();
@@ -28,15 +29,15 @@
 			$fmt_center->setSize(12);
 			$fmt_center->setBold();
 			$fmt_center->setTextWrap();
-			$fmt_center->setFontFamily('Lohit Tamil');
+			$fmt_center->setFontFamily('TAMu_Maduram');
 			$fmt_left_title = $workbook->addFormat();
 			$fmt_left_title->setAlign('left');
 			$fmt_left_title->setSize(12);
-			$fmt_left_title->setFontFamily('Lohit Tamil');
+			$fmt_left_title->setFontFamily('TAMu_Maduram');
 			$fmt_right_title = $workbook->addFormat();
-			$fmt_right_title->setAlign('left');
+			$fmt_right_title->setAlign('right');
 			$fmt_right_title->setSize(12);
-			$fmt_right_title->setFontFamily('Lohit Tamil');
+			$fmt_right_title->setFontFamily('TAMu_Maduram');
 			$i = 0;
 			$worksheet->write($i, 0, 'ஊராட்சி படிவம் எண்: 3', $fmt_left_title);
 			$worksheet->setMerge($i, 0, $i, 10);
@@ -115,34 +116,34 @@
 					'order' => 'HousetaxReceipt.receipt_date ASC')
 				);
 				foreach($output as $rec){
-					$housetax_current += (int)($rec['HousetaxReceipt']['ht_current']);
-					$housetax_pending += (int)($rec['HousetaxReceipt']['ht_pending']);
-					$lc_current += (int)($rec['HousetaxReceipt']['lc_current']);
-					$lc_pending += (int)($rec['HousetaxReceipt']['lc_pending']);
+					$housetax_current += (double)($rec['HousetaxReceipt']['ht_current']);
+					$housetax_pending += (double)($rec['HousetaxReceipt']['ht_pending']);
+					$lc_current += (double)($rec['HousetaxReceipt']['lc_current']);
+					$lc_pending += (double)($rec['HousetaxReceipt']['lc_pending']);
 				}
-				$worksheet->write($i, $j++, $row['HtDemand']['demand_number'], $fmt_right);
-				$worksheet->write($i, $j++, $row['HtDemand']['door_number'], $fmt_right);
+				$worksheet->writeNumber($i, $j++, $row['HtDemand']['demand_number']);
+				$worksheet->writeNumber($i, $j++, $row['HtDemand']['door_number']);
 				$j++;
 				$worksheet->write($i, $j++, $row['HtDemand']['name'], $fmt_left);
 				$j++;
-				$worksheet->write($i, $j++, $row['HtDemand']['ht_pending'], $fmt_right);
-				$worksheet->write($i, $j++, $row['HtDemand']['ht_current'], $fmt_right);
-				$worksheet->write($i, $j++, $row['HtDemand']['lc_pending'], $fmt_right);
-				$worksheet->write($i, $j++, $row['HtDemand']['lc_current'], $fmt_right);
-				$worksheet->write($i, $j++, ($row['HtDemand']['ht_pending'] + $row['HtDemand']['lc_pending']), $fmt_right);
-				$worksheet->write($i, $j++, ($row['HtDemand']['ht_current'] + $row['HtDemand']['lc_current']), $fmt_right);
-				$worksheet->write($i, $j++, $housetax_pending, $fmt_right);
-				$worksheet->write($i, $j++, $housetax_current, $fmt_right);
-				$worksheet->write($i, $j++, $lc_pending, $fmt_right);
-				$worksheet->write($i, $j++, $lc_current, $fmt_right);
-				$worksheet->write($i, $j++, ($housetax_pending + $lc_pending), $fmt_right);
-				$worksheet->write($i, $j++, ($housetax_current + $lc_current), $fmt_right);
-				$worksheet->write($i, $j++, ((int)($row['HtDemand']['ht_pending']) - $housetax_pending), $fmt_right);
-				$worksheet->write($i, $j++, ((int)($row['HtDemand']['ht_current']) - $housetax_current), $fmt_right);
-				$worksheet->write($i, $j++, ((int)($row['HtDemand']['lc_pending']) - $lc_pending), $fmt_right);
-				$worksheet->write($i, $j++, ((int)($row['HtDemand']['lc_current']) - $lc_current), $fmt_right);
-				$worksheet->write($i, $j++, (((int)($row['HtDemand']['ht_pending']) - $housetax_pending) + ((int)($row['HtDemand']['lc_pending']) - $lc_pending)), $fmt_right);
-				$worksheet->write($i, $j++, (((int)($row['HtDemand']['ht_current']) - $housetax_current) + ((int)($row['HtDemand']['lc_current']) - $lc_current)), $fmt_right);
+				$worksheet->writeNumber($i, $j++, $row['HtDemand']['ht_pending']);
+				$worksheet->writeNumber($i, $j++, $row['HtDemand']['ht_current']);
+				$worksheet->writeNumber($i, $j++, $row['HtDemand']['lc_pending']);
+				$worksheet->writeNumber($i, $j++, $row['HtDemand']['lc_current']);
+				$worksheet->writeNumber($i, $j++, ($row['HtDemand']['ht_pending'] + $row['HtDemand']['lc_pending']));
+				$worksheet->writeNumber($i, $j++, ($row['HtDemand']['ht_current'] + $row['HtDemand']['lc_current']));
+				$worksheet->writeNumber($i, $j++, $housetax_pending);
+				$worksheet->writeNumber($i, $j++, $housetax_current);
+				$worksheet->writeNumber($i, $j++, $lc_pending);
+				$worksheet->writeNumber($i, $j++, $lc_current);
+				$worksheet->writeNumber($i, $j++, ($housetax_pending + $lc_pending));
+				$worksheet->writeNumber($i, $j++, ($housetax_current + $lc_current));
+				$worksheet->writeNumber($i, $j++, ((double)($row['HtDemand']['ht_pending']) - $housetax_pending));
+				$worksheet->writeNumber($i, $j++, ((double)($row['HtDemand']['ht_current']) - $housetax_current));
+				$worksheet->writeNumber($i, $j++, ((double)($row['HtDemand']['lc_pending']) - $lc_pending));
+				$worksheet->writeNumber($i, $j++, ((double)($row['HtDemand']['lc_current']) - $lc_current));
+				$worksheet->writeNumber($i, $j++, (((double)($row['HtDemand']['ht_pending']) - $housetax_pending) + ((double)($row['HtDemand']['lc_pending']) - $lc_pending)));
+				$worksheet->writeNumber($i, $j++, (((double)($row['HtDemand']['ht_current']) - $housetax_current) + ((double)($row['HtDemand']['lc_current']) - $lc_current)));
 				$i++;
 			}
 			$workbook->send('Form_3.xls');
@@ -159,6 +160,7 @@
 			);
 			$workbook  = new Spreadsheet_Excel_Writer();
 			$workbook->setVersion(8);
+			$workbook->setTempDir('../temp');
 			$worksheet = $workbook->addWorksheet('Form_5');
 			$worksheet->setInputEncoding('UTF-8');
 			$fmt_left = $workbook->addFormat();
@@ -172,15 +174,15 @@
 			$fmt_center->setSize(12);
 			$fmt_center->setBold();
 			$fmt_center->setTextWrap();
-			$fmt_center->setFontFamily('Lohit Tamil');
+			$fmt_center->setFontFamily('TAMu_Maduram');
 			$fmt_left_title = $workbook->addFormat();
 			$fmt_left_title->setAlign('left');
 			$fmt_left_title->setSize(12);
-			$fmt_left_title->setFontFamily('Lohit Tamil');
+			$fmt_left_title->setFontFamily('TAMu_Maduram');
 			$fmt_right_title = $workbook->addFormat();
-			$fmt_right_title->setAlign('left');
+			$fmt_right_title->setAlign('right');
 			$fmt_right_title->setSize(12);
-			$fmt_right_title->setFontFamily('Lohit Tamil');
+			$fmt_right_title->setFontFamily('TAMu_Maduram');
 			$i = 0;
 			$worksheet->write($i, 0, 'ஊராட்சி படிவம் எண்  5', $fmt_left_title);
 			$worksheet->setMerge($i, 0, $i, 7);
@@ -236,28 +238,28 @@
 					'order' => 'ProfessionaltaxReceipt.receipt_date ASC')
 				);
 				foreach($output as $rec){
-					$p1_current += (int)($rec['ProfessionaltaxReceipt']['part1_current']);
-					$p1_pending += (int)($rec['ProfessionaltaxReceipt']['part1_pending']);
-					$p2_current += (int)($rec['ProfessionaltaxReceipt']['part2_current']);
-					$p2_pending += (int)($rec['ProfessionaltaxReceipt']['part2_pending']);
+					$p1_current += (double)($rec['ProfessionaltaxReceipt']['part1_current']);
+					$p1_pending += (double)($rec['ProfessionaltaxReceipt']['part1_pending']);
+					$p2_current += (double)($rec['ProfessionaltaxReceipt']['part2_current']);
+					$p2_pending += (double)($rec['ProfessionaltaxReceipt']['part2_pending']);
 				}
-				$worksheet->write($i, $j++, $sno++, $fmt_right);
-				$worksheet->write($i, $j++, $row['PtDemand']['demand_number'], $fmt_right);
+				$worksheet->writeNumber($i, $j++, $sno++);
+				$worksheet->writeNumber($i, $j++, $row['PtDemand']['demand_number']);
 				$worksheet->write($i, $j++, $row['PtDemand']['company_name'], $fmt_left);
 				$worksheet->write($i, $j++, $row['PtDemand']['name'], $fmt_left);
-				$worksheet->write($i, $j++, $row['PtDemand']['half_yearly_income'], $fmt_right);
+				$worksheet->writeNumber($i, $j++, $row['PtDemand']['half_yearly_income']);
 				$j += 2;
-				$worksheet->write($i, $j++, (((int)$row['PtDemand']['part1_pending'] + (int)$row['PtDemand']['part2_pending']) - ($p1_pending + $p2_pending)), $fmt_right);
-				$worksheet->write($i, $j++, $row['PtDemand']['part1_current'], $fmt_right);
-				$worksheet->write($i, $j++, $p1_current, $fmt_right);
-				$worksheet->write($i, $j++, ((int)$row['PtDemand']['part1_current'] - $p1_current), $fmt_right);
-				$worksheet->write($i, $j++, ($row['PtDemand']['part2_current']), $fmt_right);
-				$worksheet->write($i, $j++, $p2_current, $fmt_right);
-				$worksheet->write($i, $j++, ((int)$row['PtDemand']['part2_current'] - $p2_current), $fmt_right);
-				$tmp = (((int)$row['PtDemand']['part1_pending'] + (int)$row['PtDemand']['part2_pending']) - ($p1_pending + $p2_pending));
-				$tmp += ((int)$row['PtDemand']['part1_current'] - $p1_current);
-				$tmp += ((int)$row['PtDemand']['part2_current'] - $p2_current);
-				$worksheet->write($i, $j++, $tmp, $fmt_right);
+				$worksheet->writeNumber($i, $j++, (((double)$row['PtDemand']['part1_pending'] + (double)$row['PtDemand']['part2_pending']) - ($p1_pending + $p2_pending)));
+				$worksheet->writeNumber($i, $j++, $row['PtDemand']['part1_current']);
+				$worksheet->writeNumber($i, $j++, $p1_current);
+				$worksheet->writeNumber($i, $j++, ((double)$row['PtDemand']['part1_current'] - $p1_current));
+				$worksheet->writeNumber($i, $j++, ($row['PtDemand']['part2_current']));
+				$worksheet->writeNumber($i, $j++, $p2_current);
+				$worksheet->writeNumber($i, $j++, ((double)$row['PtDemand']['part2_current'] - $p2_current));
+				$tmp = (((double)$row['PtDemand']['part1_pending'] + (double)$row['PtDemand']['part2_pending']) - ($p1_pending + $p2_pending));
+				$tmp += ((double)$row['PtDemand']['part1_current'] - $p1_current);
+				$tmp += ((double)$row['PtDemand']['part2_current'] - $p2_current);
+				$worksheet->writeNumber($i, $j++, $tmp);
 				$i++;
 			}
 			$workbook->send('Form_5.xls');
@@ -273,7 +275,8 @@
 				'order' => 'WtDemand.demand_number ASC')
 			);
 			$workbook  = new Spreadsheet_Excel_Writer();
-			$workbook->setVersion(8); 
+			$workbook->setVersion(8);
+			$workbook->setTempDir('../temp');
 			$worksheet = $workbook->addWorksheet('Form_6');
 			$worksheet->setInputEncoding('UTF-8');
 			$fmt_left = $workbook->addFormat();
@@ -287,15 +290,15 @@
 			$fmt_center->setSize(12);
 			$fmt_center->setBold();
 			$fmt_center->setTextWrap();
-			$fmt_center->setFontFamily('Lohit Tamil');
+			$fmt_center->setFontFamily('TAMu_Maduram');
 			$fmt_left_title = $workbook->addFormat();
 			$fmt_left_title->setAlign('left');
 			$fmt_left_title->setSize(12);
-			$fmt_left_title->setFontFamily('Lohit Tamil');
+			$fmt_left_title->setFontFamily('TAMu_Maduram');
 			$fmt_right_title = $workbook->addFormat();
 			$fmt_right_title->setAlign('right');
 			$fmt_right_title->setSize(12);
-			$fmt_right_title->setFontFamily('Lohit Tamil');
+			$fmt_right_title->setFontFamily('TAMu_Maduram');
 			$i = 0;
 			$worksheet->write($i, 0, 'ஊராட்சி படிவம் எண்: 6', $fmt_left_title);
 			$worksheet->setMerge($i, 0, $i, 5);
@@ -340,91 +343,313 @@
 					'order' => 'WatertaxReceipt.receipt_date ASC')
 				);
 				foreach($output as $rec){
-					$watertax_current += (int)($rec['WatertaxReceipt']['wt_current']);
-					$watertax_pending += (int)($rec['WatertaxReceipt']['wt_pending']);
+					$watertax_current += (double)($rec['WatertaxReceipt']['wt_current']);
+					$watertax_pending += (double)($rec['WatertaxReceipt']['wt_pending']);
 				}
-				$worksheet->write($i, $j++, $row['WtDemand']['demand_number'], $fmt_right);
+				$worksheet->writeNumber($i, $j++, $row['WtDemand']['demand_number']);
 				$worksheet->write($i, $j++, $row['WtDemand']['name'], $fmt_left);
 				$worksheet->write($i, $j++, $row['WtDemand']['address'], $fmt_left);
-				$worksheet->write($i, $j++, $row['WtDemand']['wt_pending'], $fmt_right);
-				$worksheet->write($i, $j++, $row['WtDemand']['wt_current'], $fmt_right);
-				$worksheet->write($i, $j++, ((int)($row['WtDemand']['wt_pending']) + (int)$row['WtDemand']['wt_current']), $fmt_right);
-				$worksheet->write($i, $j++, $watertax_pending, $fmt_right);
-				$worksheet->write($i, $j++, $watertax_current, $fmt_right);
-				$worksheet->write($i, $j++, ($watertax_current + $watertax_pending), $fmt_right);
-				$worksheet->write($i, $j++, ((int)($row['WtDemand']['wt_pending']) - $watertax_pending), $fmt_right);
-				$worksheet->write($i, $j++, ((int)($row['WtDemand']['wt_current']) - $watertax_current), $fmt_right);
-				$worksheet->write($i, $j++, (((int)($row['WtDemand']['wt_pending']) - $watertax_pending) + ((int)($row['WtDemand']['wt_current']) - $watertax_current)), $fmt_right);
+				$worksheet->writeNumber($i, $j++, $row['WtDemand']['wt_pending']);
+				$worksheet->writeNumber($i, $j++, $row['WtDemand']['wt_current']);
+				$worksheet->writeNumber($i, $j++, ((double)($row['WtDemand']['wt_pending']) + (double)$row['WtDemand']['wt_current']));
+				$worksheet->writeNumber($i, $j++, $watertax_pending);
+				$worksheet->writeNumber($i, $j++, $watertax_current);
+				$worksheet->writeNumber($i, $j++, ($watertax_current + $watertax_pending));
+				$worksheet->writeNumber($i, $j++, ((double)($row['WtDemand']['wt_pending']) - $watertax_pending));
+				$worksheet->writeNumber($i, $j++, ((double)($row['WtDemand']['wt_current']) - $watertax_current));
+				$worksheet->writeNumber($i, $j++, (((double)($row['WtDemand']['wt_pending']) - $watertax_pending) + ((double)($row['WtDemand']['wt_current']) - $watertax_current)));
 				$i++;
 			}
 			$workbook->send('Form_6.xls');
 			$workbook->close();
 			$this->redirect(array('action'=>'index'));
 		}
-		function form11_reoprt(){
-			$workbook  = new Spreadsheet_Excel_Writer();
-			$workbook->setVersion(8);
-			$worksheet = $workbook->addWorksheet('Form_11');
-			$worksheet->setInputEncoding('UTF-8');
-			$fmt_left = $workbook->addFormat();
-			$fmt_left->setAlign('left');
-			$fmt_left->setSize(12);
-			$fmt_right = $workbook->addFormat();
-			$fmt_right->setAlign('right');
-			$fmt_right->setSize(12);
-			$fmt_center = $workbook->addFormat();
-			$fmt_center->setAlign('center');
-			$fmt_center->setSize(12);
-			$fmt_center->setBold();
-			$fmt_center->setTextWrap();
-			$fmt_center->setFontFamily('Lohit Tamil');
-			$fmt_left_title = $workbook->addFormat();
-			$fmt_left_title->setAlign('left');
-			$fmt_left_title->setSize(12);
-			$fmt_left_title->setFontFamily('Lohit Tamil');
-			$fmt_right_title = $workbook->addFormat();
-			$fmt_right_title->setAlign('left');
-			$fmt_right_title->setSize(12);
-			$fmt_right_title->setFontFamily('Lohit Tamil');
-			$i = 0;
-			$worksheet->write($i, 0, 'ஊராட்சி படிவம் எண்: 11', $fmt_left_title);
-			$worksheet->setMerge($i, 0, $i++, 12);
-			$worksheet->write($i, 0, 'ரொக்கப் பதிவேடு', $fmt_center);
-			$worksheet->setMerge($i, 0, ++$i, 12);
-			$worksheet->write(++$i, 0, 'வரவு பெற்றுக்கொண்ட தேதி', $fmt_center);
-			$worksheet->setColumn(0,0,10.00);
-			$worksheet->setMerge($i, 0, ($i + 1), 0);
-			$worksheet->write($i, 1, 'வரவுகள்', $fmt_center);
-			$worksheet->setMerge($i, 1, $i, 4);
-			$worksheet->write($i, 5, 'செலவுகள்', $fmt_center);
-			$worksheet->setMerge($i, 5, $i, 8);
-			$worksheet->write($i, 9, 'வங்கி அல்லது கருவூலம்', $fmt_center);
-			$worksheet->setMerge($i, 9, $i, 11);
-			$worksheet->write($i, 12, 'குறிப்புகள்', $fmt_center);
-			$worksheet->setColumn(12,12,14.00);
-			$worksheet->setMerge($i, 12, ($i+ 1), 12);
-			$worksheet->write(++$i, 1, 'விபரங்கள்', $fmt_center);
-			$worksheet->setColumn(1,1,40.00);
-			$worksheet->write($i, 2, 'ரொக்கம்', $fmt_center);
-			$worksheet->setColumn(2,2,12.00);
-			$worksheet->write($i, 3, 'வங்கி', $fmt_center);
-			$worksheet->write($i, 4, 'குறிப்புகள்', $fmt_center);
-			$worksheet->setColumn(4,4,14.00);
-			$worksheet->write($i, 5, 'தொகை கொடுத்த தேதி', $fmt_center);
-			$worksheet->setColumn(5,5,12.00);
-			$worksheet->write($i, 6, 'செலவு சீட்டு எண்', $fmt_center);
-			$worksheet->setColumn(6,6,11.00);
-			$worksheet->write($i, 7, 'விபரங்கள்', $fmt_center);
-			$worksheet->setColumn(7,7,40.00);
-			$worksheet->write($i, 8, 'ரொக்கம்', $fmt_center);
-			$worksheet->setColumn(8,8,12.00);
-			$worksheet->write($i, 9, 'வங்கி', $fmt_center);
-			$worksheet->write($i, 10, 'காசோலை எண்', $fmt_center);
-			$worksheet->setColumn(10,11,14.00);
-			$worksheet->write($i, 11, 'காசோலை நாள்', $fmt_center);
-			$workbook->send('Form_11.xls');
-			$workbook->close();
-			$this->redirect(array('action'=>'index'));
+		function form11_reoprt($start_date, $end_date){
+			if(!empty($start_date) && !empty($end_date)){
+				$workbook  = new Spreadsheet_Excel_Writer();
+				$workbook->setVersion(8);
+				$workbook->setTempDir('../temp');
+				$worksheet = $workbook->addWorksheet('Form_11');
+				$worksheet->setInputEncoding('UTF-8');
+				$fmt_left = $workbook->addFormat();
+				$fmt_left->setAlign('left');
+				$fmt_left->setSize(12);
+				$fmt_left->setTextWrap();
+				$fmt_right = $workbook->addFormat();
+				$fmt_right->setAlign('right');
+				$fmt_right->setSize(12);
+				$fmt_right->setTextWrap();
+				$fmt_center = $workbook->addFormat();
+				$fmt_center->setAlign('center');
+				$fmt_center->setSize(12);
+				$fmt_center->setBold();
+				$fmt_center->setTextWrap();
+				$fmt_center->setFontFamily('TAMu_Maduram');
+				$fmt_center_spl = $workbook->addFormat();
+				$fmt_center_spl->setAlign('center');
+				$fmt_center_spl->setSize(12);
+				$fmt_center_spl->setBold();
+				$fmt_center_spl->setTextWrap();
+				$fmt_center_spl->setBottom(2);
+				$fmt_center_spl->setFontFamily('TAMu_Maduram');
+				$fmt_left_title = $workbook->addFormat();
+				$fmt_left_title->setAlign('left');
+				$fmt_left_title->setSize(12);
+				$fmt_left_title->setTextWrap();
+				$fmt_left_title->setFontFamily('TAMu_Maduram');
+				$fmt_right_title = $workbook->addFormat();
+				$fmt_right_title->setAlign('right');
+				$fmt_right_title->setSize(12);
+				$fmt_right_title->setTextWrap();
+				$fmt_right_title->setFontFamily('TAMu_Maduram');
+				$i = 0;
+				$worksheet->write($i, 0, 'ஊராட்சி படிவம் எண்: 11', $fmt_left_title);
+				$worksheet->setMerge($i, 0, $i++, 12);
+				$worksheet->write($i, 0, 'ரொக்கப் பதிவேடு', $fmt_center);
+				$worksheet->setMerge($i, 0, ++$i, 12);
+				$worksheet->write(++$i, 0, 'வரவு பெற்றுக் கொண்ட தேதி', $fmt_center_spl);
+				$worksheet->setColumn(0,0,12.00);
+				$worksheet->setMerge($i, 0, ($i + 1), 0);
+				$worksheet->write($i, 1, 'வரவுகள்', $fmt_center);
+				$worksheet->setMerge($i, 1, $i, 4);
+				$worksheet->write($i, 5, 'செலவுகள்', $fmt_center);
+				$worksheet->setMerge($i, 5, $i, 8);
+				$worksheet->write($i, 9, 'வங்கி அல்லது கருவூலம்', $fmt_center);
+				$worksheet->setMerge($i, 9, $i, 11);
+				$worksheet->write($i, 12, 'குறிப்புகள்', $fmt_center_spl);
+				$worksheet->setColumn(12,12,30.00);
+				$worksheet->setMerge($i, 12, ($i+ 1), 12);
+				$worksheet->write(++$i, 1, 'விபரங்கள்', $fmt_center_spl);
+				$worksheet->setColumn(1,1,40.00);
+				$worksheet->write($i, 2, 'ரொக்கம்', $fmt_center_spl);
+				$worksheet->setColumn(2,2,12.00);
+				$worksheet->write($i, 3, 'வங்கி தொகை', $fmt_center_spl);
+				$worksheet->write($i, 4, 'குறிப்புகள்', $fmt_center_spl);
+				$worksheet->setColumn(4,4,30.00);
+				$worksheet->write($i, 5, 'தொகை கொடுத்த தேதி', $fmt_center_spl);
+				$worksheet->setColumn(5,5,12.00);
+				$worksheet->write($i, 6, 'செலவு சீட்டு எண்', $fmt_center_spl);
+				$worksheet->setColumn(6,6,15.00);
+				$worksheet->write($i, 7, 'விபரங்கள்', $fmt_center_spl);
+				$worksheet->setColumn(7,7,40.00);
+				$worksheet->write($i, 8, 'ரொக்கம்', $fmt_center_spl);
+				$worksheet->setColumn(8,8,12.00);
+				$worksheet->write($i, 9, 'வங்கி தொகை', $fmt_center_spl);
+				$worksheet->write($i, 10, 'காசோலை எண்', $fmt_center_spl);
+				$worksheet->setColumn(10,11,14.00);
+				$worksheet->write($i++, 11, 'காசோலை நாள்', $fmt_center_spl);
+				$i_copy = $i;
+				$income_cash = 0;
+				$income_bank = 0;
+				$expense_cash = 0;
+				$expense_bank = 0;
+				$worksheet->write($i, 0, $start_date, $fmt_left);
+				$records = $this->CashBook->find('first',array(
+					'conditions' => array('CashBook.account_id' => 1, 'CashBook.Opening_date' => $start_date)
+				));
+				$worksheet->write($i, 1, 'இம்மாத ஆரம்ப இருப்பு', $fmt_left_title);
+				$worksheet->writeNumber($i, 2, $records['CashBook']['opening_cash']);
+				$worksheet->writeNumber($i++, 3, $records['CashBook']['opening_bank']);
+				$income_cash = (double)$records['CashBook']['opening_cash'];
+				$income_bank = (double)$records['CashBook']['opening_bank'];
+				$i++;
+				$records = $this->Income->find('all', array(
+					'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($start_date, $end_date), 'Income.account_id' => 1),
+					'contain' => array('Account','Header')
+				));
+				foreach($records as $record){
+					$j = 0;
+					$worksheet->write($i, $j++, $record['Income']['income_date'], $fmt_left);
+					$worksheet->write($i, $j++, $record['Header']['header_name'], $fmt_left);
+					$j++;
+					$worksheet->writeNumber($i, $j++, $record['Income']['income_amount']);
+					$worksheet->write($i, $j++, $record['Income']['description'], $fmt_left);
+					$income_bank += (double)$record['Income']['income_amount'];
+					$i++;
+				}
+				$records = $this->HousetaxReceipt->find('all', array(
+					'conditions' => array('HousetaxReceipt.receipt_date BETWEEN ? AND ?' => array($start_date, $end_date)),
+					'order' => 'HousetaxReceipt.receipt_date ASC'
+				));
+				$tax1 = 0;
+				$tax2 = 0;
+				$redeipt_date = '';
+				foreach($records as $record){
+					$tax1 += (double)$record['HousetaxReceipt']['ht_pending'] + (double)$record['HousetaxReceipt']['ht_current'];
+					$tax2 += (double)$record['HousetaxReceipt']['lc_pending'] + (double)$record['HousetaxReceipt']['lc_current'];
+					$redeipt_date = $record['HousetaxReceipt']['receipt_date'];
+				}
+				if($tax1 > 0 || $tax2 > 0){
+					$worksheet->write($i, 0, $redeipt_date, $fmt_left);
+					$worksheet->write($i, 1, 'வீட்டு வரி', $fmt_left_title);
+					$worksheet->writeNumber($i++, 2, $tax1);
+					$worksheet->write($i, 0, $redeipt_date, $fmt_left);
+					$worksheet->write($i, 1, 'நூல் நிலைய வரி', $fmt_left_title);
+					$worksheet->writeNumber($i++, 2, $tax2);
+					$income_cash += $tax1 + $tax2;
+				}
+				$records = $this->ProfessionaltaxReceipt->find('all', array(
+					'conditions' => array('ProfessionaltaxReceipt.receipt_date BETWEEN ? AND ?' => array($start_date, $end_date)),
+					'order' => 'ProfessionaltaxReceipt.receipt_date ASC'
+				));
+				$tax1 = 0;
+				$redeipt_date = '';
+				foreach($records as $record){
+					$tax1 += (double)$record['ProfessionaltaxReceipt']['part1_pending'] + (double)$record['ProfessionaltaxReceipt']['part1_current'];
+					$tax1 += (double)$record['ProfessionaltaxReceipt']['part2_pending'] + (double)$record['ProfessionaltaxReceipt']['part2_current'];
+					$redeipt_date = $record['ProfessionaltaxReceipt']['receipt_date'];
+				}
+				if($tax1 > 0){
+					$worksheet->write($i, 0, $redeipt_date, $fmt_left);
+					$worksheet->write($i, 1, 'தொழில் வரி', $fmt_left_title);
+					$worksheet->writeNumber($i++, 2, $tax1);
+					$income_cash += $tax1;
+				}
+				$records = $this->WatertaxReceipt->find('all', array(
+					'conditions' => array('WatertaxReceipt.receipt_date BETWEEN ? AND ?' => array($start_date, $end_date)),
+					'order' => 'WatertaxReceipt.receipt_date ASC'
+				));
+				$tax1 = 0;
+				$redeipt_date = '';
+				foreach($records as $record){
+					$tax1 += (double)$record['WatertaxReceipt']['wt_pending'] + (double)$record['WatertaxReceipt']['wt_current'];
+					$redeipt_date = $record['WatertaxReceipt']['receipt_date'];
+				}
+				if($tax1 > 0){
+					$worksheet->write($i, 0, $redeipt_date, $fmt_left);
+					$worksheet->write($i, 1, 'குடிநீர் வரி', $fmt_left_title);
+					$worksheet->writeNumber($i++, 2, $tax1);
+					$income_cash += $tax1;
+				}
+				$records = $this->DotaxReceipt->find('all', array(
+					'conditions' => array('DotaxReceipt.receipt_date BETWEEN ? AND ?' => array($start_date, $end_date)),
+					'order' => 'DotaxReceipt.receipt_date ASC'
+				));
+				$tax1 = 0;
+				$redeipt_date = '';
+				foreach($records as $record){
+					$tax1 += (double)$record['DotaxReceipt']['do_pending'] + (double)$record['DotaxReceipt']['do_current'];
+					$redeipt_date = $record['DotaxReceipt']['receipt_date'];
+				}
+				if($tax1 > 0){
+					$worksheet->write($i, 0, $redeipt_date, $fmt_left);
+					$worksheet->write($i, 1, 'டி & ஓ வியாபாரிகள் வரி', $fmt_left_title);
+					$worksheet->writeNumber($i++, 2, $tax1);
+					$income_cash += $tax1;
+				}
+				$records = $this->OthersReceipt->find('all', array(
+					'conditions' => array('OthersReceipt.receipt_date BETWEEN ? AND ?' => array($start_date, $end_date)),
+					'contain' => array('Account','Header')
+				));
+				foreach($records as $record){
+					$j = 0;
+					$worksheet->write($i, $j++, $record['OthersReceipt']['receipt_date'], $fmt_left);
+					$worksheet->write($i, $j++, $record['Header']['header_name'], $fmt_left);
+					$worksheet->writeNumber($i, $j++, $record['OthersReceipt']['amount']);
+					$income_cash += (double)$record['OthersReceipt']['amount'];
+					$i++;
+				}
+				$records = $this->Expense->find('all', array(
+					'conditions' => array('Expense.expense_date BETWEEN ? AND ?' => array($start_date, $end_date), 'Expense.account_id' => 1),
+					'contain' => array('Account','Header')
+				));
+				foreach($records as $record){
+					$j = 5;
+					$worksheet->write($i_copy, $j++, $record['Expense']['expense_date'], $fmt_left);
+					$worksheet->write($i_copy, $j++, $record['Expense']['voucher_number'], $fmt_left);
+					$worksheet->write($i_copy, $j++, $record['Header']['header_name'], $fmt_left);
+					$j++;
+					$worksheet->writeNumber($i_copy, $j++, $record['Expense']['expense_amount']);
+					$worksheet->writeNumber($i_copy, $j++, $record['Expense']['cheque_number']);
+					$worksheet->write($i_copy, $j++, $record['Expense']['cheque_date'], $fmt_left);
+					$worksheet->write($i_copy, $j++, $record['Expense']['description'], $fmt_left);
+					$expense_bank += (double)$record['Expense']['expense_amount'];
+					$i_copy++;
+				}
+				$records = $this->Purchase->find('all', array(
+					'conditions' => array('Purchase.purchase_date BETWEEN ? AND ?' => array($start_date, $end_date)),
+				));
+				if(!empty($records)){
+					$worksheet->write($i_copy++, 7, 'கொள்முதல்:', $fmt_left_title);
+				}
+				foreach($records as $record){
+					$j = 5;
+					$worksheet->write($i_copy, $j++, $record['Purchase']['purchase_date'], $fmt_left);
+					$worksheet->write($i_copy, $j++, $record['Purchase']['voucher_number'], $fmt_left);
+					$worksheet->write($i_copy, $j++, "......".$record['Purchase']['company_name'], $fmt_left);
+					$j++;
+					$worksheet->writeNumber($i_copy, $j++, $record['Purchase']['total_amt']);
+					$worksheet->writeNumber($i_copy, $j++, $record['Purchase']['cheque_number']);
+					$worksheet->write($i_copy, $j++, $record['Purchase']['cheque_date'], $fmt_left);
+					$expense_bank += (double)$record['Purchase']['total_amt'];
+					$i_copy++;
+				}
+				$records = $this->Salary->find('all', array(
+					'conditions' => array('Salary.salary_date BETWEEN ? AND ?' => array($start_date, $end_date)),
+				));
+				foreach($records as $record){
+					$j = 5;
+					$worksheet->write($i_copy, $j++, $record['Salary']['salary_date'], $fmt_left);
+					$worksheet->write($i_copy, $j++, $record['Salary']['voucher_number'], $fmt_left);
+					$worksheet->write($i_copy, $j++, 'ஊத்தியம்', $fmt_left_title);
+					$j++;
+					$worksheet->writeNumber($i_copy, $j++, $record['Salary']['cheque_amount']);
+					$worksheet->writeNumber($i_copy, $j++, $record['Salary']['cheque_number']);
+					$worksheet->write($i_copy, $j++, $record['Salary']['cheque_date'], $fmt_left);
+					$expense_bank += (double)$record['Salary']['cheque_amount'];
+					$i_copy++;
+				}
+				$records = $this->ContractBillEstimation->find('all', array(
+					'conditions' => array('ContractBillEstimation.bill_date BETWEEN ? AND ?' => array($start_date, $end_date),
+													'ContractBillEstimation.account_id' => 1),
+				));
+				if(!empty($records)){
+					$worksheet->write($i_copy++, 7, 'வரைவு மதிப்பீடு:', $fmt_left_title);
+				}
+				foreach($records as $record){
+					$j = 5;
+					$worksheet->write($i_copy, $j++, $record['ContractBillEstimation']['bill_date'], $fmt_left);
+					$worksheet->write($i_copy, $j++, $record['ContractBillEstimation']['voucher_number'], $fmt_left);
+					$worksheet->write($i_copy, $j++, "......".$record['ContractBillEstimation']['contractor_name'], $fmt_left);
+					$j++;
+					$worksheet->writeNumber($i_copy, $j++, $record['ContractBillEstimation']['cheque_amt']);
+					$worksheet->writeNumber($i_copy, $j++, $record['ContractBillEstimation']['cheque_number']);
+					$worksheet->write($i_copy, $j++, $record['ContractBillEstimation']['cheque_date'], $fmt_left);
+					$expense_bank += (double)$record['ContractBillEstimation']['cheque_amt'];
+					$i_copy++;
+				}
+				if($i > $i_copy){
+					$i++;
+					$i_copy = $i;
+				}else{
+					$i_copy++;
+					$i = $i_copy;
+				}
+				$worksheet->write($i_copy, 5, $end_date, $fmt_left);
+				$worksheet->write($i_copy, 7, 'இம்மாத இறுதி இருப்பு', $fmt_left_title);
+				$worksheet->writeNumber($i_copy, 8, ($income_cash - $expense_cash));
+				$worksheet->writeNumber($i_copy++, 9, ($income_bank - $expense_bank));
+				$special = $workbook->addFormat();
+				$special->setBottom(2);
+				$worksheet->write($i_copy, 2, '', $special);
+				$worksheet->write($i_copy, 3, '', $special);
+				$worksheet->write($i_copy, 8, '', $special);
+				$worksheet->write($i_copy++, 9, '', $special);
+				$worksheet->writeNumber(++$i_copy, 2, $income_cash);
+				$worksheet->writeNumber($i_copy, 3, $income_bank);
+				$worksheet->writeNumber($i_copy, 8, $income_cash);
+				$worksheet->writeNumber($i_copy++, 9, $income_bank);
+				$worksheet->write($i_copy, 2, '', $special);
+				$worksheet->write($i_copy, 3, '', $special);
+				$worksheet->write($i_copy, 8, '', $special);
+				$worksheet->write($i_copy, 9, '', $special);
+				$workbook->send('Form_11.xls');
+				$workbook->close();
+				$this->redirect(array('action'=>'index'));
+			}else{
+				$this->Session->setFlash(__('Invalid operation', true));
+				$this->redirect(array('action'=>'../reports/index'));
+			}
 		}
 	}
 ?>

@@ -12,6 +12,9 @@
 				if($acc_id > 1){
         	$tableHeaders = $html->tableHeaders(array(
         		$paginator->sort('bill_date'),
+        		$paginator->sort('cheque_date'),
+        		$paginator->sort('cheque_number'),
+        		$paginator->sort('voucher_number'),
             $paginator->sort('contractor_name'),
             $paginator->sort('address'),
             $paginator->sort('estimation_amt'),
@@ -28,13 +31,16 @@
             $paginator->sort('vat'),
             $paginator->sort('lwf'),
             $paginator->sort('deduction_amt'),
-            $paginator->sort('total_amt'),
+            $paginator->sort('cheque_amt'),
             __('Actions', true),
           ));
           echo $tableHeaders;
 				}else{
 					$tableHeaders = $html->tableHeaders(array(
 						$paginator->sort('bill_date'),
+						$paginator->sort('cheque_date'),
+        		$paginator->sort('cheque_number'),
+        		$paginator->sort('voucher_number'),
             $paginator->sort('contractor_name'),
             $paginator->sort('address'),
             $paginator->sort('estimation_amt'),
@@ -46,7 +52,7 @@
             $paginator->sort('vat'),
             $paginator->sort('lwf'),
             $paginator->sort('deduction_amt'),
-            $paginator->sort('total_amt'),
+            $paginator->sort('cheque_amt'),
             __('Actions', true),
           ));
           echo $tableHeaders;
@@ -59,12 +65,15 @@
 					);
           $actions .= ' ' . $html->link(__('Delete', true), array(
               'action' => 'delete',
-              $bill['ContractBillEstimation']['id'])
+              $bill['ContractBillEstimation']['id'], $bill['ContractBillEstimation']['account_id'], $bill['ContractBillEstimation']['cheque_amt'])
              , null, __('Are you sure?', true)
 					);
 					if($acc_id > 1){
             $rows[] = array(
             		$bill['ContractBillEstimation']['bill_date'],
+            		$bill['ContractBillEstimation']['cheque_date'],
+            		$bill['ContractBillEstimation']['cheque_number'],
+            		$bill['ContractBillEstimation']['voucher_number'],
             		$bill['ContractBillEstimation']['contractor_name'],
             		$bill['ContractBillEstimation']['address'],
                 $bill['ContractBillEstimation']['estimation_amt'],
@@ -81,12 +90,15 @@
                 $bill['ContractBillEstimation']['vat'],
                 $bill['ContractBillEstimation']['lwf'],
                 $bill['ContractBillEstimation']['deduction_amt'],
-                $bill['ContractBillEstimation']['total_amt'],
+                $bill['ContractBillEstimation']['cheque_amt'],
                 $actions,
             );
 					}else{
 						$rows[] = array(
 								$bill['ContractBillEstimation']['bill_date'],
+								$bill['ContractBillEstimation']['cheque_date'],
+            		$bill['ContractBillEstimation']['cheque_number'],
+            		$bill['ContractBillEstimation']['voucher_number'],
             		$bill['ContractBillEstimation']['contractor_name'],
             		$bill['ContractBillEstimation']['address'],
                 $bill['ContractBillEstimation']['estimation_amt'],
@@ -98,7 +110,7 @@
                 $bill['ContractBillEstimation']['vat'],
                 $bill['ContractBillEstimation']['lwf'],
                 $bill['ContractBillEstimation']['deduction_amt'],
-                $bill['ContractBillEstimation']['total_amt'],
+                $bill['ContractBillEstimation']['cheque_amt'],
                 $actions,
             );
 					}

@@ -11,7 +11,7 @@
         <li><?php echo $html->link(__('Form 6 (Water tax)', true), array('action'=>'form6_report')); ?></li>
       </ul>
       <ul>
-      	<li><?php echo $html->link(__('Cash Book (Account I)', true), array('action'=>'form11_reoprt')); ?></li>
+      	<li><?php echo $html->link(__('Cash Book (Account I)', true), array('action'=>'form11_reoprt', '2012-07-01', '2012-07-31')); ?></li>
       </ul>
     </div>
 </div>

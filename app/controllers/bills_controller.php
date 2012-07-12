@@ -1,22 +1,49 @@
 <?php
 	class BillsController extends AppController{
-		var $uses = array('ContractBillEstimation');
+		var $uses = array('ContractBillEstimation', 'BankDetail');
 		function beforeFilter(){
 			parent::beforeFilter();
 		}
 		function addbill($acc_id){
-			if(!empty($acc_id)){
+			if(!empty($acc_id) && empty($this->data)){
 				$this->set(compact('acc_id'));
 			}elseif(!empty($this->data)){
-					$this->ContractBillEstimation->set($this->data);
-					if($this->ContractBillEstimation->validates()){
-						$this->ContractBillEstimation->save();
-						$this->Session->setFlash(__('Contract bill saved', true));
+				$this->ContractBillEstimation->set($this->data);
+				if($this->ContractBillEstimation->validates()){
+					$acc_opening_date = strtotime($GLOBALS['accounting_year']['acc_opening_year']);
+					$acc_closing_date = strtotime($GLOBALS['accounting_year']['acc_closing_year']);
+					$bill_date = strtotime($this->data['ContractBillEstimation']['bill_date']);
+					if($acc_closing_date >= $bill_date && $acc_opening_date <= $bill_date){
+						$acc_bank_details = $this->BankDetail->find('first', array(
+							'conditions' => array(
+								'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
+								'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'],
+								'BankDetail.account_id' => $this->data['ContractBillEstimation']['account_id']
+							)
+						));
+						if($acc_bank_details['BankDetail']['closing_bank_balance'] >= $this->data['ContractBillEstimation']['cheque_amt']){
+							$acc_bank_details['BankDetail']['value'] = 'yes';
+							$acc_bank_details['BankDetail']['check_date'] = $this->data['ContractBillEstimation']['bill_date'];
+							$acc_bank_details['BankDetail']['cash_balance'] = $acc_bank_details['BankDetail']['closing_cash_balance'];
+							$acc_bank_details['BankDetail']['bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance']; 
+							$acc_bank_details['BankDetail']['closing_bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'] - $this->data['ContractBillEstimation']['cheque_amt'];
+							$this->BankDetail->save($acc_bank_details['BankDetail']);
+							if($this->ContractBillEstimation->save()){
+								$this->Session->setFlash(__('Contract bill saved', true));
+								$this->redirect(array('action'=>'index', $this->data['ContractBillEstimation']['account_id']));
+							}else{
+								$this->Session->setFlash(__('Contract bill could not be saved', true));
+								$this->redirect(array('action'=>'index', $this->data['ContractBillEstimation']['account_id']));
+							}
+						}else{
+							$this->Session->setFlash(__('Insufficient balance in account, available balance is '.$acc_bank_details['BankDetail']['closing_bank_balance'], true));
+							$this->redirect($this->referer());
+						}
+					}else{
+						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$GLOBALS['accounting_year']['acc_opening_year'].' and '.$GLOBALS['accounting_year']['acc_closing_year'], true));
+						$this->redirect($this->referer());
 					}
-					else{
-						$this->Session->setFlash(__('Could not save', true));
-					}
-					$this->redirect(array('action'=>'index', $this->data['ContractBillEstimation']['account_id']));
+				}
 			}else {
 				$this->Session->setFlash(__('Invalid operation', true));
 				$this->redirect(array('action'=>'../accounts/index'));
@@ -38,22 +65,70 @@
 	      if(empty($this->data)) {
 	        $this->data = $this->ContractBillEstimation->read();
 	      }else{
-	        if($this->ContractBillEstimation->save($this->data)){
-	          $this->Session->setFlash(__('Bill estimation saved', true));    
-	        }
-					$this->redirect(array('action' => 'index', $this->data['ContractBillEstimation']['account_id']));
+	      	$this->ContractBillEstimation->set($this->data);
+					$acc_opening_date = strtotime($GLOBALS['accounting_year']['acc_opening_year']);
+					$acc_closing_date = strtotime($GLOBALS['accounting_year']['acc_closing_year']);
+					$bill_date = strtotime($this->data['ContractBillEstimation']['bill_date']);
+					if($acc_closing_date >= $bill_date && $acc_opening_date <= $bill_date){
+						$old_data = $this->ContractBillEstimation->findById($this->data['ContractBillEstimation']['id']);
+						$amount_to_update = 0;
+						$flag = 0;
+						if(((int)$this->data['ContractBillEstimation']['cheque_amt']) > ((int)$old_data['ContractBillEstimation']['cheque_amt'])){
+							$amount_to_update = ((int)$this->data['ContractBillEstimation']['expense_amount']) - ((int)$old_data['ContractBillEstimation']['cheque_amt']);
+						}elseif(((int)$this->data['ContractBillEstimation']['cheque_amt']) < ((int)$old_data['ContractBillEstimation']['cheque_amt'])){
+							$amount_to_update =  ((int)$old_data['ContractBillEstimation']['cheque_amt']) - ((int)$this->data['ContractBillEstimation']['cheque_amt']);
+							$flag = 1;
+						}else{
+							$amount_to_update = 0;
+						}
+						if($amount_to_update != 0){
+							$acc_bank_details = $this->BankDetail->find('first', array(
+								'conditions' => array(
+									'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
+									'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+									'BankDetail.account_id' => $this->data['ContractBillEstimation']['account_id']
+								)
+							));
+							if($flag == 0){
+								$acc_bank_details['BankDetail']['closing_bank_balance'] -= $amount_to_update;
+							}else{
+								$acc_bank_details['BankDetail']['closing_bank_balance'] += $amount_to_update;
+							}
+							$acc_bank_details['BankDetail']['value'] = 'no';
+							$this->BankDetail->save($acc_bank_details);
+						}
+						if($this->ContractBillEstimation->save()){
+							$this->Session->setFlash(__('Contract bill updated', true));
+							$this->redirect(array('action'=>'index', $this->data['ContractBillEstimation']['account_id']));
+						}else{
+							$this->Session->setFlash(__('Contract bill could not be updated', true));
+							$this->redirect(array('action'=>'index', $this->data['ContractBillEstimation']['account_id']));
+						}
+					}else{
+						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$GLOBALS['accounting_year']['acc_opening_year'].' and '.$GLOBALS['accounting_year']['acc_closing_year'], true));
+						$this->redirect($this->referer());
+					}
 	      }
 			}else {
 				$this->Session->setFlash(__('Invalid operation', true));
 				$this->redirect(array('action'=>'../accounts/index'));
 			}
 		}
-		function delete($id){
-			if(!empty($id)){
-				$old_data = $this->ContractBillEstimation->findById($id);
+		function delete($id, $account_id, $amount){
+			if(!empty($id) && !empty($account_id) && !empty($amount)){
+				$acc_bank_details = $this->BankDetail->find('first', array(
+					'conditions' => array(
+						'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
+						'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+						'BankDetail.account_id' => $account_id
+					)
+				));
+				$acc_bank_details['BankDetail']['closing_bank_balance'] +=  $amount;
+				$acc_bank_details['BankDetail']['value'] = 'no';
+				$this->BankDetail->save($acc_bank_details);
 				$this->ContractBillEstimation->delete($id);
 				$this->Session->setFlash(__('Record deleted successfully', true));
-				$this->redirect(array('action'=>'index', $old_data['ContractBillEstimation']['account_id']));
+				$this->redirect(array('action'=>'index', $account_id));
 			}else {
 				$this->Session->setFlash(__('Invalid operation', true));
 				$this->redirect(array('action'=>'../accounts/index'));
