@@ -13,5 +13,11 @@
       <ul>
       	<li><?php echo $html->link(__('Cash Book (Account I)', true), array('action'=>'form11_reoprt', '2012-07-01', '2012-07-31')); ?></li>
       </ul>
+      <ul>
+      	<li><?php echo $html->link(__('Cash Book (Account II)', true), array('action'=>'form23_reoprt', '2012-07-01', '2012-07-31')); ?></li>
+      </ul>
+      <ul>
+      	<li><?php echo $html->link(__('Cash Book (Account III)', true), array('action'=>'form26_reoprt', '2012-07-01', '2012-07-31')); ?></li>
+      </ul>
     </div>
 </div>

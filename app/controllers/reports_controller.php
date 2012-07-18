@@ -648,7 +648,334 @@
 				$this->redirect(array('action'=>'index'));
 			}else{
 				$this->Session->setFlash(__('Invalid operation', true));
-				$this->redirect(array('action'=>'../reports/index'));
+				$this->redirect(array('action'=>'index'));
+			}
+		}
+		function form23_reoprt($start_date, $end_date){
+			if(!empty($start_date) && !empty($end_date)){
+				$workbook  = new Spreadsheet_Excel_Writer();
+				$workbook->setVersion(8);
+				$workbook->setTempDir('../temp');
+				$worksheet = $workbook->addWorksheet('Form_11');
+				$worksheet->setInputEncoding('UTF-8');
+				$fmt_left = $workbook->addFormat();
+				$fmt_left->setAlign('left');
+				$fmt_left->setSize(12);
+				$fmt_left->setTextWrap();
+				$fmt_right = $workbook->addFormat();
+				$fmt_right->setAlign('right');
+				$fmt_right->setSize(12);
+				$fmt_right->setTextWrap();
+				$fmt_center = $workbook->addFormat();
+				$fmt_center->setAlign('center');
+				$fmt_center->setSize(12);
+				$fmt_center->setBold();
+				$fmt_center->setTextWrap();
+				$fmt_center->setFontFamily('TAMu_Maduram');
+				$fmt_center_spl = $workbook->addFormat();
+				$fmt_center_spl->setAlign('center');
+				$fmt_center_spl->setSize(12);
+				$fmt_center_spl->setBold();
+				$fmt_center_spl->setTextWrap();
+				$fmt_center_spl->setBottom(2);
+				$fmt_center_spl->setFontFamily('TAMu_Maduram');
+				$fmt_left_title = $workbook->addFormat();
+				$fmt_left_title->setAlign('left');
+				$fmt_left_title->setSize(12);
+				$fmt_left_title->setTextWrap();
+				$fmt_left_title->setFontFamily('TAMu_Maduram');
+				$fmt_right_title = $workbook->addFormat();
+				$fmt_right_title->setAlign('right');
+				$fmt_right_title->setSize(12);
+				$fmt_right_title->setTextWrap();
+				$fmt_right_title->setFontFamily('TAMu_Maduram');
+				$i = 0;
+				$worksheet->write($i, 0, 'ஊராட்சி படிவம் எண்: 11', $fmt_left_title);
+				$worksheet->setMerge($i, 0, $i++, 12);
+				$worksheet->write($i, 0, 'ரொக்கப் பதிவேடு', $fmt_center);
+				$worksheet->setMerge($i, 0, ++$i, 12);
+				$worksheet->write(++$i, 0, 'வரவு பெற்றுக் கொண்ட தேதி', $fmt_center_spl);
+				$worksheet->setColumn(0,0,12.00);
+				$worksheet->setMerge($i, 0, ($i + 1), 0);
+				$worksheet->write($i, 1, 'வரவுகள்', $fmt_center);
+				$worksheet->setMerge($i, 1, $i, 4);
+				$worksheet->write($i, 5, 'செலவுகள்', $fmt_center);
+				$worksheet->setMerge($i, 5, $i, 8);
+				$worksheet->write($i, 9, 'வங்கி அல்லது கருவூலம்', $fmt_center);
+				$worksheet->setMerge($i, 9, $i, 11);
+				$worksheet->write($i, 12, 'குறிப்புகள்', $fmt_center_spl);
+				$worksheet->setColumn(12,12,30.00);
+				$worksheet->setMerge($i, 12, ($i+ 1), 12);
+				$worksheet->write(++$i, 1, 'விபரங்கள்', $fmt_center_spl);
+				$worksheet->setColumn(1,1,40.00);
+				$worksheet->write($i, 2, 'ரொக்கம்', $fmt_center_spl);
+				$worksheet->setColumn(2,2,12.00);
+				$worksheet->write($i, 3, 'வங்கி தொகை', $fmt_center_spl);
+				$worksheet->write($i, 4, 'குறிப்புகள்', $fmt_center_spl);
+				$worksheet->setColumn(4,4,30.00);
+				$worksheet->write($i, 5, 'தொகை கொடுத்த தேதி', $fmt_center_spl);
+				$worksheet->setColumn(5,5,12.00);
+				$worksheet->write($i, 6, 'செலவு சீட்டு எண்', $fmt_center_spl);
+				$worksheet->setColumn(6,6,15.00);
+				$worksheet->write($i, 7, 'விபரங்கள்', $fmt_center_spl);
+				$worksheet->setColumn(7,7,40.00);
+				$worksheet->write($i, 8, 'ரொக்கம்', $fmt_center_spl);
+				$worksheet->setColumn(8,8,12.00);
+				$worksheet->write($i, 9, 'வங்கி தொகை', $fmt_center_spl);
+				$worksheet->write($i, 10, 'காசோலை எண்', $fmt_center_spl);
+				$worksheet->setColumn(10,11,14.00);
+				$worksheet->write($i++, 11, 'காசோலை நாள்', $fmt_center_spl);
+				$i_copy = $i;
+				$income_cash = 0;
+				$income_bank = 0;
+				$expense_cash = 0;
+				$expense_bank = 0;
+				$worksheet->write($i, 0, $start_date, $fmt_left);
+				$records = $this->CashBook->find('first',array(
+					'conditions' => array('CashBook.account_id' => 2, 'CashBook.Opening_date' => $start_date)
+				));
+				$worksheet->write($i, 1, 'இம்மாத ஆரம்ப இருப்பு', $fmt_left_title);
+				$worksheet->writeNumber($i, 2, $records['CashBook']['opening_cash']);
+				$worksheet->writeNumber($i++, 3, $records['CashBook']['opening_bank']);
+				$income_cash = (double)$records['CashBook']['opening_cash'];
+				$income_bank = (double)$records['CashBook']['opening_bank'];
+				$i++;
+				$records = $this->Income->find('all', array(
+					'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($start_date, $end_date), 'Income.account_id' => 2),
+					'contain' => array('Account','Header')
+				));
+				foreach($records as $record){
+					$j = 0;
+					$worksheet->write($i, $j++, $record['Income']['income_date'], $fmt_left);
+					$worksheet->write($i, $j++, $record['Header']['header_name'], $fmt_left);
+					$j++;
+					$worksheet->writeNumber($i, $j++, $record['Income']['income_amount']);
+					$worksheet->write($i, $j++, $record['Income']['description'], $fmt_left);
+					$income_bank += (double)$record['Income']['income_amount'];
+					$i++;
+				}
+				$records = $this->Expense->find('all', array(
+					'conditions' => array('Expense.expense_date BETWEEN ? AND ?' => array($start_date, $end_date), 'Expense.account_id' => 2),
+					'contain' => array('Account','Header')
+				));
+				foreach($records as $record){
+					$j = 5;
+					$worksheet->write($i_copy, $j++, $record['Expense']['expense_date'], $fmt_left);
+					$worksheet->write($i_copy, $j++, $record['Expense']['voucher_number'], $fmt_left);
+					$worksheet->write($i_copy, $j++, $record['Header']['header_name'], $fmt_left);
+					$j++;
+					$worksheet->writeNumber($i_copy, $j++, $record['Expense']['expense_amount']);
+					$worksheet->writeNumber($i_copy, $j++, $record['Expense']['cheque_number']);
+					$worksheet->write($i_copy, $j++, $record['Expense']['cheque_date'], $fmt_left);
+					$worksheet->write($i_copy, $j++, $record['Expense']['description'], $fmt_left);
+					$expense_bank += (double)$record['Expense']['expense_amount'];
+					$i_copy++;
+				}
+				if($i > $i_copy){
+					$i++;
+					$i_copy = $i;
+				}else{
+					$i_copy++;
+					$i = $i_copy;
+				}
+				$worksheet->write($i_copy, 5, $end_date, $fmt_left);
+				$worksheet->write($i_copy, 7, 'இம்மாத இறுதி இருப்பு', $fmt_left_title);
+				$worksheet->writeNumber($i_copy, 8, ($income_cash - $expense_cash));
+				$worksheet->writeNumber($i_copy++, 9, ($income_bank - $expense_bank));
+				$special = $workbook->addFormat();
+				$special->setBottom(2);
+				$worksheet->write($i_copy, 2, '', $special);
+				$worksheet->write($i_copy, 3, '', $special);
+				$worksheet->write($i_copy, 8, '', $special);
+				$worksheet->write($i_copy++, 9, '', $special);
+				$worksheet->writeNumber(++$i_copy, 2, $income_cash);
+				$worksheet->writeNumber($i_copy, 3, $income_bank);
+				$worksheet->writeNumber($i_copy, 8, $income_cash);
+				$worksheet->writeNumber($i_copy++, 9, $income_bank);
+				$worksheet->write($i_copy, 2, '', $special);
+				$worksheet->write($i_copy, 3, '', $special);
+				$worksheet->write($i_copy, 8, '', $special);
+				$worksheet->write($i_copy, 9, '', $special);
+				$workbook->send('Form_23.xls');
+				$workbook->close();
+				$this->redirect(array('action'=>'index'));
+			}else{
+				$this->Session->setFlash(__('Invalid operation', true));
+				$this->redirect(array('action'=>'index'));
+			}
+		}
+		function form26_reoprt($start_date, $end_date){
+			if(!empty($start_date) && !empty($end_date)){
+				$workbook  = new Spreadsheet_Excel_Writer();
+				$workbook->setVersion(8);
+				$workbook->setTempDir('../temp');
+				$worksheet = $workbook->addWorksheet('Form_11');
+				$worksheet->setInputEncoding('UTF-8');
+				$fmt_left = $workbook->addFormat();
+				$fmt_left->setAlign('left');
+				$fmt_left->setSize(12);
+				$fmt_left->setTextWrap();
+				$fmt_right = $workbook->addFormat();
+				$fmt_right->setAlign('right');
+				$fmt_right->setSize(12);
+				$fmt_right->setTextWrap();
+				$fmt_center = $workbook->addFormat();
+				$fmt_center->setAlign('center');
+				$fmt_center->setSize(12);
+				$fmt_center->setBold();
+				$fmt_center->setTextWrap();
+				$fmt_center->setFontFamily('TAMu_Maduram');
+				$fmt_center_spl = $workbook->addFormat();
+				$fmt_center_spl->setAlign('center');
+				$fmt_center_spl->setSize(12);
+				$fmt_center_spl->setBold();
+				$fmt_center_spl->setTextWrap();
+				$fmt_center_spl->setBottom(1);
+				$fmt_center_spl->setFontFamily('TAMu_Maduram');
+				$fmt_left_title = $workbook->addFormat();
+				$fmt_left_title->setAlign('left');
+				$fmt_left_title->setSize(12);
+				$fmt_left_title->setTextWrap();
+				$fmt_left_title->setFontFamily('TAMu_Maduram');
+				$fmt_right_title = $workbook->addFormat();
+				$fmt_right_title->setAlign('right');
+				$fmt_right_title->setSize(12);
+				$fmt_right_title->setTextWrap();
+				$fmt_right_title->setFontFamily('TAMu_Maduram');
+				$i = 0;
+				$worksheet->write($i, 0, 'ஊராட்சி படிவம் எண்: 11', $fmt_left_title);
+				$worksheet->setMerge($i, 0, $i++, 12);
+				$worksheet->write($i, 0, 'ரொக்கப் பதிவேடு', $fmt_center);
+				$worksheet->setMerge($i, 0, ++$i, 12);
+				$worksheet->write(++$i, 0, 'வரவு பெற்றுக் கொண்ட தேதி', $fmt_center_spl);
+				$worksheet->write(($i + 1), 0, '', $fmt_center_spl);
+				$worksheet->setColumn(0,0,12.00);
+				$worksheet->setMerge($i, 0, ($i + 1), 0);
+				$worksheet->write($i, 1, 'வரவுகள்', $fmt_center);
+				$worksheet->setMerge($i, 1, $i, 4);
+				$worksheet->write($i, 5, 'செலவுகள்', $fmt_center);
+				$worksheet->setMerge($i, 5, $i, 8);
+				$worksheet->write($i, 9, 'வங்கி அல்லது கருவூலம்', $fmt_center);
+				$worksheet->setMerge($i, 9, $i, 11);
+				$worksheet->write($i, 12, 'குறிப்புகள்', $fmt_center_spl);
+				$worksheet->write(($i + 1), 12, '', $fmt_center_spl);
+				$worksheet->setColumn(12,12,30.00);
+				$worksheet->setMerge($i, 12, ($i+ 1), 12);
+				$worksheet->write(++$i, 1, 'விபரங்கள்', $fmt_center_spl);
+				$worksheet->setColumn(1,1,40.00);
+				$worksheet->write($i, 2, 'ரொக்கம்', $fmt_center_spl);
+				$worksheet->setColumn(2,2,12.00);
+				$worksheet->write($i, 3, 'வங்கி தொகை', $fmt_center_spl);
+				$worksheet->write($i, 4, 'குறிப்புகள்', $fmt_center_spl);
+				$worksheet->setColumn(4,4,30.00);
+				$worksheet->write($i, 5, 'தொகை கொடுத்த தேதி', $fmt_center_spl);
+				$worksheet->setColumn(5,5,12.00);
+				$worksheet->write($i, 6, 'செலவு சீட்டு எண்', $fmt_center_spl);
+				$worksheet->setColumn(6,6,15.00);
+				$worksheet->write($i, 7, 'விபரங்கள்', $fmt_center_spl);
+				$worksheet->setColumn(7,7,40.00);
+				$worksheet->write($i, 8, 'ரொக்கம்', $fmt_center_spl);
+				$worksheet->setColumn(8,8,12.00);
+				$worksheet->write($i, 9, 'வங்கி தொகை', $fmt_center_spl);
+				$worksheet->write($i, 10, 'காசோலை எண்', $fmt_center_spl);
+				$worksheet->setColumn(10,11,14.00);
+				$worksheet->write($i++, 11, 'காசோலை நாள்', $fmt_center_spl);
+				$i_copy = $i;
+				$income_cash = 0;
+				$income_bank = 0;
+				$expense_cash = 0;
+				$expense_bank = 0;
+				$worksheet->write($i, 0, $start_date, $fmt_left);
+				$records = $this->CashBook->find('first',array(
+					'conditions' => array('CashBook.account_id' => 1, 'CashBook.Opening_date' => $start_date)
+				));
+				$worksheet->write($i, 1, 'இம்மாத ஆரம்ப இருப்பு', $fmt_left_title);
+				$worksheet->writeNumber($i, 2, $records['CashBook']['opening_cash']);
+				$worksheet->writeNumber($i++, 3, $records['CashBook']['opening_bank']);
+				$income_cash = (double)$records['CashBook']['opening_cash'];
+				$income_bank = (double)$records['CashBook']['opening_bank'];
+				$i++;
+				$records = $this->Income->find('all', array(
+					'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($start_date, $end_date), 'Income.account_id' => 3),
+					'contain' => array('Account','Header')
+				));
+				foreach($records as $record){
+					$j = 0;
+					$worksheet->write($i, $j++, $record['Income']['income_date'], $fmt_left);
+					$worksheet->write($i, $j++, $record['Header']['header_name'], $fmt_left);
+					$j++;
+					$worksheet->writeNumber($i, $j++, $record['Income']['income_amount']);
+					$worksheet->write($i, $j++, $record['Income']['description'], $fmt_left);
+					$income_bank += (double)$record['Income']['income_amount'];
+					$i++;
+				}
+				$records = $this->Expense->find('all', array(
+					'conditions' => array('Expense.expense_date BETWEEN ? AND ?' => array($start_date, $end_date), 'Expense.account_id' => 3),
+					'contain' => array('Account','Header')
+				));
+				foreach($records as $record){
+					$j = 5;
+					$worksheet->write($i_copy, $j++, $record['Expense']['expense_date'], $fmt_left);
+					$worksheet->write($i_copy, $j++, $record['Expense']['voucher_number'], $fmt_left);
+					$worksheet->write($i_copy, $j++, $record['Header']['header_name'], $fmt_left);
+					$j++;
+					$worksheet->writeNumber($i_copy, $j++, $record['Expense']['expense_amount']);
+					$worksheet->writeNumber($i_copy, $j++, $record['Expense']['cheque_number']);
+					$worksheet->write($i_copy, $j++, $record['Expense']['cheque_date'], $fmt_left);
+					$worksheet->write($i_copy, $j++, $record['Expense']['description'], $fmt_left);
+					$expense_bank += (double)$record['Expense']['expense_amount'];
+					$i_copy++;
+				}
+				$records = $this->ContractBillEstimation->find('all', array(
+					'conditions' => array('ContractBillEstimation.bill_date BETWEEN ? AND ?' => array($start_date, $end_date),
+													'ContractBillEstimation.account_id' => 3),
+				));
+				if(!empty($records)){
+					$worksheet->write($i_copy++, 7, 'வரைவு மதிப்பீடு:', $fmt_left_title);
+				}
+				foreach($records as $record){
+					$j = 5;
+					$worksheet->write($i_copy, $j++, $record['ContractBillEstimation']['bill_date'], $fmt_left);
+					$worksheet->write($i_copy, $j++, $record['ContractBillEstimation']['voucher_number'], $fmt_left);
+					$worksheet->write($i_copy, $j++, "......".$record['ContractBillEstimation']['contractor_name'], $fmt_left);
+					$j++;
+					$worksheet->writeNumber($i_copy, $j++, $record['ContractBillEstimation']['cheque_amt']);
+					$worksheet->writeNumber($i_copy, $j++, $record['ContractBillEstimation']['cheque_number']);
+					$worksheet->write($i_copy, $j++, $record['ContractBillEstimation']['cheque_date'], $fmt_left);
+					$expense_bank += (double)$record['ContractBillEstimation']['cheque_amt'];
+					$i_copy++;
+				}
+				if($i > $i_copy){
+					$i++;
+					$i_copy = $i;
+				}else{
+					$i_copy++;
+					$i = $i_copy;
+				}
+				$worksheet->write($i_copy, 5, $end_date, $fmt_left);
+				$worksheet->write($i_copy, 7, 'இம்மாத இறுதி இருப்பு', $fmt_left_title);
+				$worksheet->writeNumber($i_copy, 8, ($income_cash - $expense_cash));
+				$worksheet->writeNumber($i_copy++, 9, ($income_bank - $expense_bank));
+				$special = $workbook->addFormat();
+				$special->setBottom(2);
+				$worksheet->write($i_copy, 2, '', $special);
+				$worksheet->write($i_copy, 3, '', $special);
+				$worksheet->write($i_copy, 8, '', $special);
+				$worksheet->write($i_copy++, 9, '', $special);
+				$worksheet->writeNumber(++$i_copy, 2, $income_cash);
+				$worksheet->writeNumber($i_copy, 3, $income_bank);
+				$worksheet->writeNumber($i_copy, 8, $income_cash);
+				$worksheet->writeNumber($i_copy++, 9, $income_bank);
+				$worksheet->write($i_copy, 2, '', $special);
+				$worksheet->write($i_copy, 3, '', $special);
+				$worksheet->write($i_copy, 8, '', $special);
+				$worksheet->write($i_copy, 9, '', $special);
+				$workbook->send('Form_26.xls');
+				$workbook->close();
+				$this->redirect(array('action'=>'index'));
+			}else{
+				$this->Session->setFlash(__('Invalid operation', true));
+				$this->redirect(array('action'=>'index'));
 			}
 		}
 	}
