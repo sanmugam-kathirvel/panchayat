@@ -30,36 +30,6 @@
 
 <script>
 $(document).ready(function(){
-	$('.emd').focusout(function(){
-		if($('.emd').val() == ''){
-			$('.emd').val('0');
-		}
-	});
-	$('.it').focusout(function(){
-		if($('.it').val() == ''){
-			$('.it').val('0');
-		}
-	});
-	$('.scst').focusout(function(){
-		if($('.scst').val() == ''){
-			$('.scst').val('0');
-		}
-	});
-	$('.ec').focusout(function(){
-		if($('.ec').val() == ''){
-			$('.ec').val('0');
-		}
-	});
-	$('.vat').focusout(function(){
-		if($('.vat').val() == ''){
-			$('.vat').val('0');
-		}
-	});
-	$('.lwf').focusout(function(){
-		if($('.lwf').val() == ''){
-			$('.lwf').val('0');
-		}
-	});
 	$('.workdone_amt').focusout(function(){
 		var deduction_amount = 0;
 	  var workdone_amount = 0;
@@ -79,116 +49,77 @@ $(document).ready(function(){
 		  deduction_amount += parseInt($('.vat').val());
 		  $('.lwf').val(workdone_amount * 3 / 100)
 		  deduction_amount += parseInt($('.lwf').val());
-		  if(parseInt($('.cement').val() >= 0)){
+		  if(parseInt($('.cement').val()) >= 0){
 			  deduction_amount += parseInt($('.cement').val());
 			}
-			if(parseInt($('.steel').val() >= 0)){
+			if(parseInt($('.steel').val()) >= 0){
 				deduction_amount += parseInt($('.steel').val());
 			}
-			if(parseInt($('.door').val() >= 0)){
+			if(parseInt($('.door').val()) >= 0){
 				deduction_amount += parseInt($('.door').val());
 			}
-			if(parseInt($('.windows').val() >= 0)){
+			if(parseInt($('.windows').val()) >= 0){
 				deduction_amount += parseInt($('.windows').val());
 			}
-			if(parseInt($('.toilet_basin').val() >= 0)){
+			if(parseInt($('.toilet_basin').val()) >= 0){
 				deduction_amount += parseInt($('.toilet_basin').val());
 			}
 		  $('.deduction_amt').val(deduction_amount);
 		  $('.total_amt').val(workdone_amount - deduction_amount);
 		}
 	});
-	$('.cement').focusout(function(){
+	
+	$('.cement, .steel, .door, .windows, .toilet_basin, .emd, .it, .scst, .ec, .vat, .lwf').focusout(function(){
 		if($('.cement').val() == ''){
 			$('.cement').val('0');
 		}
-		var deduction_amount = 0;
-		var workdone_amount = parseInt($('.workdone_amt').val());
-		deduction_amount += parseInt($('.cement').val());
-		deduction_amount += parseInt($('.steel').val());
-		deduction_amount += parseInt($('.door').val());
-		deduction_amount += parseInt($('.windows').val());
-		deduction_amount += parseInt($('.toilet_basin').val());
-		deduction_amount += parseInt($('.emd').val());
-		deduction_amount += parseInt($('.it').val());
-		deduction_amount += parseInt($('.scst').val());
-		deduction_amount += parseInt($('.ec').val());
-		deduction_amount += parseInt($('.vat').val());
-		deduction_amount += parseInt($('.lwf').val());
-	  $('.deduction_amt').val(deduction_amount);
-	  $('.total_amt').val(workdone_amount - deduction_amount);
-	});
-	$('.steel').focusout(function(){
 		if($('.steel').val() == ''){
 			$('.steel').val('0');
 		}
-		var deduction_amount = 0;
-		var workdone_amount = parseInt($('.workdone_amt').val());
-		deduction_amount += parseInt($('.cement').val());
-		deduction_amount += parseInt($('.steel').val());
-		deduction_amount += parseInt($('.door').val());
-		deduction_amount += parseInt($('.windows').val());
-		deduction_amount += parseInt($('.toilet_basin').val());
-		deduction_amount += parseInt($('.emd').val());
-		deduction_amount += parseInt($('.it').val());
-		deduction_amount += parseInt($('.scst').val());
-		deduction_amount += parseInt($('.ec').val());
-		deduction_amount += parseInt($('.vat').val());
-		deduction_amount += parseInt($('.lwf').val());
-	  $('.deduction_amt').val(deduction_amount);
-	  $('.total_amt').val(workdone_amount - deduction_amount);
-	});
-	$('.door').focusout(function(){
 		if($('.door').val() == ''){
 			$('.door').val('0');
 		}
-		var deduction_amount = 0;
-		var workdone_amount = parseInt($('.workdone_amt').val());
-		deduction_amount += parseInt($('.cement').val());
-		deduction_amount += parseInt($('.steel').val());
-		deduction_amount += parseInt($('.door').val());
-		deduction_amount += parseInt($('.windows').val());
-		deduction_amount += parseInt($('.toilet_basin').val());
-		deduction_amount += parseInt($('.emd').val());
-		deduction_amount += parseInt($('.it').val());
-		deduction_amount += parseInt($('.scst').val());
-		deduction_amount += parseInt($('.ec').val());
-		deduction_amount += parseInt($('.vat').val());
-		deduction_amount += parseInt($('.lwf').val());
-	  $('.deduction_amt').val(deduction_amount);
-	  $('.total_amt').val(workdone_amount - deduction_amount);
-	});
-	$('.windows').focusout(function(){
 		if($('.windows').val() == ''){
 			$('.windows').val('0');
 		}
-		var deduction_amount = 0;
-		var workdone_amount = parseInt($('.workdone_amt').val());
-		deduction_amount += parseInt($('.cement').val());
-		deduction_amount += parseInt($('.steel').val());
-		deduction_amount += parseInt($('.door').val());
-		deduction_amount += parseInt($('.windows').val());
-		deduction_amount += parseInt($('.toilet_basin').val());
-		deduction_amount += parseInt($('.emd').val());
-		deduction_amount += parseInt($('.it').val());
-		deduction_amount += parseInt($('.scst').val());
-		deduction_amount += parseInt($('.ec').val());
-		deduction_amount += parseInt($('.vat').val());
-		deduction_amount += parseInt($('.lwf').val());
-	  $('.deduction_amt').val(deduction_amount);
-	  $('.total_amt').val(workdone_amount - deduction_amount);
-	});
-	$('.toilet_basin').focusout(function(){
 		if($('.toilet_basin').val() == ''){
 			$('.toilet_basin').val('0');
 		}
+		if($('.end').val() == ''){
+			$('.end').val('0');
+		}
+		if($('.it').val() == ''){
+			$('.it').val('0');
+		}
+		if($('.scst').val() == ''){
+			$('.scst').val('0');
+		}
+		if($('.ec').val() == ''){
+			$('.ec').val('0');
+		}
+		if($('.vat').val() == ''){
+			$('.vat').val('0');
+		}
+		if($('.lwf').val() == ''){
+			$('.lwf').val('0');
+		}
 		var deduction_amount = 0;
 		var workdone_amount = parseInt($('.workdone_amt').val());
-		deduction_amount += parseInt($('.cement').val());
-		deduction_amount += parseInt($('.steel').val());
-		deduction_amount += parseInt($('.door').val());
-		deduction_amount += parseInt($('.windows').val());
-		deduction_amount += parseInt($('.toilet_basin').val());
+		if(parseInt($('.cement').val()) >= 0){
+			  deduction_amount += parseInt($('.cement').val());
+		}
+		if(parseInt($('.steel').val()) >= 0){
+			deduction_amount += parseInt($('.steel').val());
+		}
+		if(parseInt($('.door').val()) >= 0){
+			deduction_amount += parseInt($('.door').val());
+		}
+		if(parseInt($('.windows').val()) >= 0){
+			deduction_amount += parseInt($('.windows').val());
+		}
+		if(parseInt($('.toilet_basin').val()) >= 0){
+			deduction_amount += parseInt($('.toilet_basin').val());
+		}
 		deduction_amount += parseInt($('.emd').val());
 		deduction_amount += parseInt($('.it').val());
 		deduction_amount += parseInt($('.scst').val());
