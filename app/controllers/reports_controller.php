@@ -1015,7 +1015,7 @@
 			$worksheet->write($i, 2, 'வரி ரசீது எண்', $fmt_center);
 			$worksheet->setColumn(2,2,10.00);
 			$worksheet->setMerge($i, 2, ($i + 1), 2);
-			$worksheet->setColumn(3,16,12.00);
+			$worksheet->setColumn(3,13,12.00);
 			$worksheet->write($i, 3, 'வீட்டு வரி', $fmt_center);
 			$worksheet->setMerge($i, 3, $i, 4);
 			$worksheet->write($i, 5, 'நூல் நிலைய வரி', $fmt_center);
@@ -1042,7 +1042,9 @@
 			$worksheet->write($i, 14, 'நபரின் பெயர்', $fmt_center);
 			$worksheet->setColumn(14,14,35.00);
 			$worksheet->write($i, 15, 'வரவின் வகை', $fmt_center);
+			$worksheet->setColumn(15,15,12.00);
 			$worksheet->write($i, 16, 'செலுத்திய தொகை', $fmt_center);
+			$worksheet->setColumn(16,16,12.00);
 			$workbook->send('Form_7.xls');
 			$workbook->close();
 			$this->redirect(array('action'=>'index'));
