@@ -8,7 +8,6 @@
 		}
 		function form3_report() {
 			$this->layout = false;
-			$this->BookDetail->recursive = 1;
 			$data = $this->HtDemand->find('all', array(
 				'conditions' => array('HtDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
 				'order' => 'HtDemand.demand_number ASC')
@@ -85,7 +84,6 @@
 			$worksheet->write($i, 21, 'மொத்தம்', $fmt_center);
 			$worksheet->setMerge($i, 21, $i++, 22);
 			$worksheet->setColumn(5,22,11.00);
-			$worksheet->setColumn(5,22,10.00);
 			$worksheet->write($i, 5, 'நிலுவை', $fmt_center);
 			$worksheet->write($i, 6, 'நடப்பு', $fmt_center);
 			$worksheet->write($i, 7, 'நிலுவை', $fmt_center);
@@ -153,7 +151,6 @@
 
 		function form5_report() {
 			$this->layout = false;
-			$this->BookDetail->recursive = 1;
 			$data = $this->PtDemand->find('all', array(
 				'conditions' => array('PtDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
 				'order' => 'PtDemand.demand_number ASC')
@@ -269,7 +266,6 @@
 
 		function form6_report() {
 			$this->layout = false;
-			$this->BookDetail->recursive = 1;
 			$data = $this->WtDemand->find('all', array(
 				'conditions' => array('WtDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
 				'order' => 'WtDemand.demand_number ASC')
@@ -977,6 +973,79 @@
 				$this->Session->setFlash(__('Invalid operation', true));
 				$this->redirect(array('action'=>'index'));
 			}
+		}
+		function form7_report() {
+			$this->layout = false;
+			$workbook  = new Spreadsheet_Excel_Writer();
+			$workbook->setVersion(8);
+			$workbook->setTempDir('../temp');
+			$worksheet = $workbook->addWorksheet('Form_3');
+			$worksheet->setInputEncoding('UTF-8');
+			$fmt_left = $workbook->addFormat();
+			$fmt_left->setAlign('left');
+			$fmt_left->setSize(12);
+			$fmt_right = $workbook->addFormat();
+			$fmt_right->setAlign('right');
+			$fmt_right->setSize(12);
+			$fmt_center = $workbook->addFormat();
+			$fmt_center->setAlign('center');
+			$fmt_center->setSize(12);
+			$fmt_center->setBold();
+			$fmt_center->setTextWrap();
+			$fmt_center->setFontFamily('TAMu_Maduram');
+			$fmt_left_title = $workbook->addFormat();
+			$fmt_left_title->setAlign('left');
+			$fmt_left_title->setSize(12);
+			$fmt_left_title->setFontFamily('TAMu_Maduram');
+			$fmt_right_title = $workbook->addFormat();
+			$fmt_right_title->setAlign('right');
+			$fmt_right_title->setSize(12);
+			$fmt_right_title->setFontFamily('TAMu_Maduram');
+			$i = 0;
+			$worksheet->write($i, 0, 'ஊராட்சி படிவம் எண்: 7', $fmt_left_title);
+			$worksheet->setMerge($i, 0, $i, 16);
+			$worksheet->write($i, 0, 'ஊராட்சி வரிகள் மற்றும் பல்வகை வரவு வசூல் பதிவேடு', $fmt_center);
+			$worksheet->setMerge($i, 0, ++$i, 16);
+			$worksheet->write(++$i, 0, 'தேதி மாதம் ஆண்டு', $fmt_center);
+			$worksheet->setColumn(0,0,10.00);
+			$worksheet->setMerge($i, 0, ($i + 1), 0);
+			$worksheet->write($i, 1, 'வரி விதிப்பு எண்', $fmt_center);
+			$worksheet->setColumn(1,1,10.00);
+			$worksheet->setMerge($i, 1, ($i + 1), 1);
+			$worksheet->write($i, 2, 'வரி ரசீது எண்', $fmt_center);
+			$worksheet->setColumn(2,2,10.00);
+			$worksheet->setMerge($i, 2, ($i + 1), 2);
+			$worksheet->setColumn(3,16,12.00);
+			$worksheet->write($i, 3, 'வீட்டு வரி', $fmt_center);
+			$worksheet->setMerge($i, 3, $i, 4);
+			$worksheet->write($i, 5, 'நூல் நிலைய வரி', $fmt_center);
+			$worksheet->setMerge($i, 5, $i, 6);
+			$worksheet->write($i, 7, 'தண்ணீர் தீர்வை', $fmt_center);
+			$worksheet->setMerge($i, 7, $i, 8);
+			$worksheet->write($i, 9, 'தண்ணீர் கட்டணம்', $fmt_center);
+			$worksheet->setMerge($i, 9, $i, 10);
+			$worksheet->write($i, 11, 'தொழில் வரி', $fmt_center);
+			$worksheet->setMerge($i, 11, $i, 12);
+			$worksheet->write($i, 13, 'பலவகை வரவினம்', $fmt_center);
+			$worksheet->setMerge($i, 13, $i++, 16);
+			$worksheet->write($i, 3, 'நிலுவை', $fmt_center);
+			$worksheet->write($i, 4, 'நடப்பு', $fmt_center);
+			$worksheet->write($i, 5, 'நிலுவை', $fmt_center);
+			$worksheet->write($i, 6, 'நடப்பு', $fmt_center);
+			$worksheet->write($i, 7, 'நிலுவை', $fmt_center);
+			$worksheet->write($i, 8, 'நடப்பு', $fmt_center);
+			$worksheet->write($i, 9, 'நிலுவை', $fmt_center);
+			$worksheet->write($i, 10, 'நடப்பு', $fmt_center);
+			$worksheet->write($i, 11, 'நிலுவை', $fmt_center);
+			$worksheet->write($i, 12, 'நடப்பு', $fmt_center);
+			$worksheet->write($i, 13, 'ரசீது எண்', $fmt_center);
+			$worksheet->write($i, 14, 'நபரின் பெயர்', $fmt_center);
+			$worksheet->setColumn(14,14,35.00);
+			$worksheet->write($i, 15, 'வரவின் வகை', $fmt_center);
+			$worksheet->write($i, 16, 'செலுத்திய தொகை', $fmt_center);
+			$workbook->send('Form_7.xls');
+			$workbook->close();
+			$this->redirect(array('action'=>'index'));
 		}
 	}
 ?>
