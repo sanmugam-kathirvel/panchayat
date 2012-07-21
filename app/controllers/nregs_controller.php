@@ -226,12 +226,11 @@
 			$this->set(compact('workdetails'));		
 		}
 		function attendance(){
-			if(empty($this->data)){
-				$work_details = $this->Workdetail->find('list', array(
-					'fields' => array('Workdetail.name_of_work')
-				));
-				$this->set(compact('work_details'));
-			}else{
+			$work_details = $this->Workdetail->find('list', array(
+				'fields' => array('Workdetail.name_of_work')
+			));
+			$this->set(compact('work_details'));
+		  if(!empty($this->data)){
 				if($this->AttendanceRegister->saveAll($this->data)){
 					$this->Session->setFlash(__('Attendance Register Saved', true));
 					$this->redirect(array('action'=>'attendance_index'));
@@ -288,7 +287,6 @@
         ));
         $this->set(compact('attendance'));
       }else{
-        var_dump($this->data);
 				$attendance = $this->AttendanceRegister->find('first', array(
 					'conditions' => array('AttendanceRegister.id' => $this->data['Payment']['attendance_register_id']),
 					'contain' => false,

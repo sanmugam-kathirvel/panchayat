@@ -48,56 +48,50 @@
        
       $('.add_new_field').append(new_field);
       $('.family_number').focusout(function(){
-        var family_id = $(this).val();
-        var this_data = $(this);
-        $.ajax({
-          type: 'POST',
-          url: Webroot+"/nregs/get_jobcard/",
-          data: {'family_id': family_id},
-          success: function(data){
-            output=JSON.parse(data);
-            if(output){
-               options_html = "<option value></option>";
-               for(i=0;i < output.length;i++){
-                  options_html += '<option value="'+output[i].NregsRegistration.job_card_number+'">'+output[i].NregsRegistration.job_card_number+'</option>';
-               }
-               console.log(options_html);
-               $(this_data).parent().parent().next().find('.job_card_number').html(options_html);
-            }else{
-              alert('Please choose valid family number');
-            }
-          }
-        });
-      });
-      $('.job_card_number').change(function(){
-       var this_data = $(this);
-       var jobcard_no = $(this).val();
-         $.ajax({
-          type: 'POST',
-          url: Webroot+"/nregs/autofill_attendance/",
-          data: {'jobcard_no':jobcard_no},
-          success: function(data){
-            output=JSON.parse(data);
-            if(output){
-              $(this_data).parent().parent().next().find('.name').val(output.NregsRegistration.name);
-              $(this_data).parent().parent().next().next().find('.father_or_husband_name').val(output.NregsRegistration.father_or_husband_name);
-            }else{
-              alert('Please choose valid Jobcard number');
-            }
-          }
-        });
-      });
-     i++;
-     return false;
+			  getJobCard($(this));
+			});
+			$('.job_card_number').blur(function(){
+		     autoFill($(this));
+	    });
+	    $('.no_of_working_days').focusout(function(){
+	    	checkWorkedDays($(this));      
+	    });
+	    $('.family_number').focusout(function(){
+	    	checkField($(this));
+	    });
+	    $('.no_of_working_days').focusout(function(){
+	    	checkField($(this));
+	    });
+      i++;
+      console.log(i);
+      return false;
     });
     $('a.remove_field').click(function(){
     	$('#new_field_'+(i-1)).remove();
-    	i=i-1;
+    	console.log(i);
+    	if(i != 1){
+    		i=i-1;
+    	}
     	return false;
     });
     $('.family_number').focusout(function(){
-		  var family_id = $(this).val();
-		  var this_data = $(this);
+		  getJobCard($(this));
+		});
+		$('.job_card_number').blur(function(){
+	     autoFill($(this));
+    });
+    $('.no_of_working_days').focusout(function(){
+    	checkWorkedDays($(this));      
+    });
+    $('.family_number').focusout(function(){
+    	checkField($(this));
+    });
+    $('.no_of_working_days').focusout(function(){
+    	checkField($(this));
+    });
+    function getJobCard(this_data){
+    	var family_id = $(this_data).val();
+		  var this_data = $(this_data);
 		  $.ajax({
 		  	type: 'POST',
 		  	url: Webroot+"/nregs/get_jobcard/",
@@ -106,20 +100,19 @@
 		  		output=JSON.parse(data);
 		  		if(output){
 		  		   options_html = "<option value></option>";
-		  		   for(i=0;i < output.length;i++){
-		  		      options_html += '<option value="'+output[i].NregsRegistration.job_card_number+'">'+output[i].NregsRegistration.job_card_number+'</option>';
+		  		   for(j=0;j < output.length;j++){
+		  		      options_html += '<option value="'+output[j].NregsRegistration.job_card_number+'">'+output[j].NregsRegistration.job_card_number+'</option>';
 		  		   }
-		  		   console.log(options_html);
-		  		   $('.job_card_number').html(options_html);
+		  		   this_data.parent().parent().next().find('.job_card_number').html(options_html);
 		  		}else{
 		  			alert('Please choose valid family number');
 		  		}
 		  	}
 		  });
-		});
-		$('.job_card_number').change(function(){
-	     var this_data = $(this);
-	     var jobcard_no = $(this).val();
+    }
+    function autoFill(this_data){
+    	var this_data = $(this_data);
+	    var jobcard_no = $(this_data).val();
        $.ajax({
         type: 'POST',
         url: Webroot+"/nregs/autofill_attendance/",
@@ -135,11 +128,11 @@
           }
         }
       });
-    });
-    $('.no_of_working_days').focusout(function(){
-      var this_data = $(this);
-    	var family_id = $(this).parent().parent().prev().prev().prev().prev().find('.family_number').val();
-    	var add_no_of_days_worked = $(this).val();
+    }
+    function checkWorkedDays(this_data){
+    	var this_data = $(this_data);
+    	var family_id = $(this_data).parent().parent().prev().prev().prev().prev().find('.family_number').val();
+    	var add_no_of_days_worked = $(this_data).val();
     	$.ajax({
         type: 'POST',
         url: Webroot+"/nregs/hundred_days_check/",
@@ -156,5 +149,11 @@
           }
         }
       });
-    });
+    }
+    function checkField(this_data){
+    	var data = $(this_data).val();
+    	if(data == '' || data == 0){
+    		$(this_data).focus();
+    	}
+    }
 </script>
