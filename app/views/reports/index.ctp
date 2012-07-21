@@ -10,6 +10,12 @@
         <dd>&nbsp;&nbsp;&nbsp;&nbsp;- குடிநீர் வரி (நிலுவை மற்றும் நடப்பு) கேட்பு பதிவேடு</dd>
         <dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 7', true), array('action'=>'form7_report')); ?></li></dt>
       	<dd>&nbsp;&nbsp;&nbsp;&nbsp;- ஊராட்சி வரிகள் மற்றும் பல்வகை வரவு வசூல் பதிவேடு</dd>
+      	<dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 8', true), array('action'=>'form8_report')); ?></li></dt>
+      	<dd>&nbsp;&nbsp;&nbsp;&nbsp;- ஊராட்சிக்கு வரப்பெற்ற அரசு மானியங்கள் மற்றும் ஒதுக்கீடு செயப்பட்ட வரவினங்கள்</dd>
+      	<dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 9', true), array('action'=>'form9_report')); ?></li></dt>
+      	<dd>&nbsp;&nbsp;&nbsp;&nbsp;- சிட்டா</dd>
+      	<dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 10', true), array('action'=>'form10_report')); ?></li></dt>
+      	<dd>&nbsp;&nbsp;&nbsp;&nbsp;- ஊராட்சியின் பல்வகை கேட்பு, வசூல் மற்றும் நிலுவைப் பதிவேடு</dd>
       	<dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 11', true), array('action'=>'form11_reoprt', '2012-07-01', '2012-07-31')); ?></li></dt>
       	<dd>&nbsp;&nbsp;&nbsp;&nbsp;- ரொக்கப் பதிவேடு (கணக்கு எண் I)</dd>
       	<dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 23', true), array('action'=>'form23_reoprt', '2012-07-01', '2012-07-31')); ?></li></dt>
