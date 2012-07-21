@@ -13,5 +13,11 @@
       <ul>
         <li><?php echo $html->link(__('Roll Entry', true), array('action'=>'')); ?></li>
       </ul>
+      <ul>
+        <li><?php echo $html->link(__('Work details', true), array('controller' => 'nregs', 'action'=>'index_workdetails')); ?></li>
+      </ul>
+      <ul>
+        <li><?php echo $html->link(__('Attendance', true), array('controller' => 'nregs', 'action'=>'attendance_index')); ?></li>
+      </ul>
     </div>
 </div>

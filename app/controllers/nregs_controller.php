@@ -227,15 +227,36 @@
 		}
 		function attendance(){
 			if(empty($this->data)){
-				$work_details = $this->Workdetail->find('all');
+				$work_details = $this->Workdetail->find('list', array(
+					'fields' => array('Workdetail.name_of_work')
+				));
 				$this->set(compact('work_details'));
 			}else{
 				if($this->AttendanceRegister->saveAll($this->data)){
-					$this->Session->setFlash(__('Invalid operation', true));
-					$this->redirect(array('action'=>'../accounts/account4'));
+					$this->Session->setFlash(__('Attendance Register Saved', true));
+					$this->redirect(array('action'=>'attendance_index'));
 				}
 			}
 		}
+    function attendance_index(){
+      $this->paginate = array(
+        'conditions' => array('AttendanceRegister.to_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']),),
+        'order' => 'AttendanceRegister.id DESC',
+        //'contain' => 'Workdetail',
+      );
+      
+      $attendances = $this->paginate('AttendanceRegister');
+      $this->set(compact('attendances'));   
+    }
+    function get_jobcard(){
+      $this->layout = false;
+      $jobcard = $this->NregsRegistration->find('all', array(
+        'fields' => array('NregsRegistration.job_card_number'),
+        'conditions' => array('NregsRegistration.family_number' => $_POST['family_id']),
+      ));
+       echo json_encode($jobcard);
+       exit;  
+    }
 		function autofill_attendance(){
 			$this->layout = false;
 			$details = $this->NregsRegistration->find('first', array(
@@ -244,5 +265,41 @@
 			 echo json_encode($details);
 			 exit;	
 		}
+		function hundred_days_check(){
+			$this->layout = false;
+			$no_of_days = $this->Attendance->find('first', array(
+				'conditions' => array('Attendance.family_number' => $_POST['family_id']),
+				'fields' => array(
+					'SUM(Attendance.no_of_days_worked) AS no_of_days_worked'
+				),
+			));
+			echo json_encode($no_of_days);
+			exit;
+		}
+    function payment(){
+      if(empty($this->data)){
+        $attendance = $this->AttendanceRegister->find('all', array(
+          'conditions' => array('AttendanceRegister.id' => $this->params['named']['attendance_id']),
+          'contain' => array('Attendance' => array(
+              'fields' => array(
+                'SUM(Attendance.no_of_days_worked) AS no_of_days_worked'
+              ),
+            ))
+        ));
+        $this->set(compact('attendance'));
+      }else{
+        var_dump($this->data);
+				$attendance = $this->AttendanceRegister->find('first', array(
+					'conditions' => array('AttendanceRegister.id' => $this->data['Payment']['attendance_register_id']),
+					'contain' => false,
+				));
+				$attendance['AttendanceRegister']['payment_status'] = $this->data['Payment']['payment_status'];
+				$attendance['AttendanceRegister']['amount_paid'] = $this->data['Payment']['amount_paid'];
+				$this->AttendanceRegister->save($attendance);
+				$this->Session->setFlash(__('Amount paid', true));
+				$this->redirect(array('action'=>'attendance_index'));
+        
+      }
+    }
 	}
 ?>
