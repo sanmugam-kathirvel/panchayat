@@ -30,22 +30,34 @@
 
 <script>
 $(document).ready(function(){
+	c=1;
 	$('.demand_number').focusout(function(){
 	  var demand_number = $('.demand_number').val();
+	    this_data = $(this);
 		  $.ajax({
 		  	type: 'POST',
 		  	url: Webroot+"/receipts/get_watertax_family_demand/",
 		  	data: {'demand_number':demand_number},
 		  	success: function(data){
 		  		output=JSON.parse(data);
-		  		$('.door_number').val(output.WtDemand.door_number);
-		  		$('.name').val(output.WtDemand.name);
-		  		$('.father_name').val(output.WtDemand.father_name);
-		  		$('.address').val(output.WtDemand.address);
-		  		$('.hamlet_id').val(output.WtDemand.hamlet_id);
-		  		$('.wt_pending').val(output.WtDemand.wt_pending);
-		  		$('.wt_current').val(output.WtDemand.wt_current);
-		  		$('.total_amount').val(parseInt(output.WtDemand.wt_current) + parseInt(output.WtDemand.wt_pending));
+		  		if(output){
+			  		$('.door_number').val(output.WtDemand.door_number);
+			  		$('.name').val(output.WtDemand.name);
+			  		$('.father_name').val(output.WtDemand.father_name);
+			  		$('.address').val(output.WtDemand.address);
+			  		$('.hamlet_id').val(output.WtDemand.hamlet_id);
+			  		$('.wt_pending').val(output.WtDemand.wt_pending);
+			  		$('.wt_current').val(output.WtDemand.wt_current);
+			  		$('.total_amount').val(parseInt(output.WtDemand.wt_current) + parseInt(output.WtDemand.wt_pending));
+		  		}else{
+		  			if(c==1){
+		  				this_data.parent().append('<div class="error-message">This Demand number not found</div>');
+			  			$('div.error-message').delay(5000).hide(1000);
+			  			c++;
+		  			}
+		  			this_data.val('');
+			  		this_data.focus();
+		  		}
 		  	}
 		  });
 	});

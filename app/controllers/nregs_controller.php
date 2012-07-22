@@ -5,16 +5,22 @@
 			parent::beforeFilter();
 		}
 		function newregistration(){
-			if(empty($this->data)){
-				$hamlets = $this->Hamlet->find('all');
-				$this->set(compact('hamlets'));
-			}else {
-				if($this->NregsRegistration->save($this->data)){
-					$stock = $this->NregsStock->findById('1');
-					$stock['NregsStock']['item_quantity'] = (int)($stock['NregsStock']['item_quantity']) - 1;
-					$this->NregsStock->save($stock);
-					$this->Session->setFlash(__('Registration completed successfully', true));    
-	        $this->redirect(array('action'=>'registrationindex'));
+			$hamlet_op = $this->Hamlet->find('list', array(
+				'fields' => array('Hamlet.hamlet_code')
+			));
+			$this->set(compact('hamlet_op'));
+			if(!empty($this->data)){
+				$this->NregsRegistration->set($this->data);
+				if($this->NregsRegistration->validates()){
+					if($this->NregsRegistration->save($this->data)){
+						$stock = $this->NregsStock->findById('1');
+						$stock['NregsStock']['item_quantity'] = (int)($stock['NregsStock']['item_quantity']) - 1;
+						$this->NregsStock->save($stock);
+						$this->Session->setFlash(__('Registration completed successfully', true));    
+		        $this->redirect(array('action'=>'registrationindex'));
+					}
+				}else{
+					$this->Session->setFlash(__('Registration cound not be saved, Please check form for error', true)); 
 				}
 			}
 		}

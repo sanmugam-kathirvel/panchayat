@@ -4,10 +4,85 @@
 		var $belongsTo = array('Hamlet');
 		var $validate = array(
 				'family_number' => array(
+					'rule' => 'numeric',
+					'allowEmpty' => false,
+					'message' => 'Enter valied input'
+				),
+				'serial_number' => array(
+					'rule' => 'numeric',
+					'allowEmpty' => false,
+					'message' => 'Enter valied input'
+				),
+				'job_card_number' => array(
+					'rule' => 'numeric',
+					'allowEmpty' => false,
+					'message' => 'Enter valied input'
+				),
+				'name' => array(
 					'rule' => 'notEmpty',
 					'allowEmpty' => false,
 					'message' => 'This Field Not Empty'
-				)
+				),
+				'father_or_husband_name' => array(
+					'rule' => 'notEmpty',
+					'allowEmpty' => false,
+					'message' => 'This Field Not Empty'
+				),
+				'hamlet_id' => array(
+					'rule' => 'notEmpty',
+					'allowEmpty' => false,
+					'message' => 'This Field Not Empty'
+				),
+				'sex' => array(
+					'rule' => 'notEmpty',
+					'allowEmpty' => false,
+					'message' => 'This Field Not Empty'
+				),
+				'age' => array(
+					'rule' => 'numeric',
+					'allowEmpty' => false,
+					'message' => 'Enter valied input'
+				),
+				'community' => array(
+					'rule' => 'notEmpty',
+					'allowEmpty' => false,
+					'message' => 'This Field Not Empty'
+				),
+				'ration_card_number' => array(
+					'rule' => 'numeric',
+					'allowEmpty' => false,
+					'message' => 'Enter valied input'
+				),
+				'voter_id_number' => array(
+					'rule' => 'numeric',
+					'allowEmpty' => false,
+					'message' => 'Enter valied input'
+				),
+				'bank_account_number' => array(
+					'rule' => 'numeric',
+					'allowEmpty' => false,
+					'message' => 'Enter valied input'
+				),
+				'bank_name' => array(
+					'rule' => 'notEmpty',
+					'allowEmpty' => false,
+					'message' => 'This Field Not Empty'
+				),
+				'bank_branch' => array(
+					'rule' => 'notEmpty',
+					'allowEmpty' => false,
+					'message' => 'This Field Not Empty'
+				),
+				'application_date' => array(
+					'rule' => 'date',
+					'allowEmpty' => false,
+					'message' => 'This Field Not Empty'
+				),
+				'job_card_issue_date' => array(
+					'rule' => 'date',
+					'allowEmpty' => false,
+					'message' => 'This Field Not Empty'
+				),
 			);
 		function afterSave(){
 	    if($this->data['NregsRegistration']['photo']['size'] > 0){

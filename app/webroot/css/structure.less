@@ -1,18 +1,46 @@
 body{
 	margin-top: 40px;
 }
+form{
+  div.input{
+    clear: left;
+    padding: 10px 0;
+    height: 30px;
+    padding-top: 0;
+    margin: 0;
+    input,select,textarea{
+      float: left;
+    }
+    div.error-message{
+      float: left;
+      line-height: 26px;
+      padding-left: 10px;
+      color: red;
+    }
+  }
+  div.input.textarea{
+    height: 80px;
+    padding-bottom: 10px;
+    textarea{
+      height: 70px;
+    }
+  }
+  div.submit{
+    clear: left;
+    padding: 10px 0;
+  }
+}
 #wrapper{
   #container{
     .content{
       div.input{
-        margin: 10px 0;
         margin-left: 150px;
         label{
           margin-right: 5px;
         }
       }
       div.submit{
-        margin-left: 285px;
+        margin-left: 305px;
       }
     }
     form{ 
@@ -59,7 +87,7 @@ body{
 	  }
 	  form#PurchasePurchaseForm{
 	  	div.submit{
-	  			top: 227px;
+	  			top: 230px;
 	  	}
 	  }
   }

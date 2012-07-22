@@ -4,10 +4,14 @@
 		function beforeFilter(){
 			parent::beforeFilter();
 		}
-		function addbill($acc_id){
-			if(!empty($acc_id) && empty($this->data)){
-				$this->set(compact('acc_id'));
-			}elseif(!empty($this->data)){
+		function addbill($acc_id = null){
+			if(!$acc_id){
+				if(isset($this->params['data']['ContractBillEstimation']['account_id'])){
+					$acc_id = $this->params['data']['ContractBillEstimation']['account_id'];
+				}
+			}
+			$this->set(compact('acc_id'));
+			if(!empty($this->data)){
 				$this->ContractBillEstimation->set($this->data);
 				if($this->ContractBillEstimation->validates()){
 					$acc_opening_date = strtotime($GLOBALS['accounting_year']['acc_opening_year']);
@@ -44,10 +48,10 @@
 						$this->redirect($this->referer());
 					}
 				}
-			}else {
-				$this->Session->setFlash(__('Invalid operation', true));
-				$this->redirect(array('action'=>'../accounts/index'));
-			}
+			}//else {
+				//$this->Session->setFlash(__('Invalid operation', true));
+				//$this->redirect(array('action'=>'../accounts/index'));
+			//}
 		}
 		function index($acc_id){
 			if(!empty($acc_id)){

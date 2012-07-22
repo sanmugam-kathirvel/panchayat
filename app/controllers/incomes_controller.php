@@ -37,7 +37,7 @@
 						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$GLOBALS['accounting_year']['acc_opening_year'].' and '.$GLOBALS['accounting_year']['acc_closing_year'], true));
 					}
 				}else{
-					$this->Session->setFlash(__('Income could not be saved', true));
+					$this->Session->setFlash(__('Income could not be saved, Please fill all Required Fields', true));
 				}
 				$this->redirect($this->referer());
 			}else {

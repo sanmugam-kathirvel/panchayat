@@ -1,9 +1,5 @@
 <p>New Registration</p>
 <?php
-	$hamlet_op = array();
-	foreach($hamlets as $hamlet){
-		$hamlet_op[$hamlet['Hamlet']['id']] =  $hamlet['Hamlet']['hamlet_code'];
-	}
 	echo $form->create('NregsRegistration', array( 'url' => array('controller' => 'nregs', 'action' => 'newregistration'), 'type' => 'file'));
 	echo $form->input('family_number');
 	echo $form->input('serial_number');

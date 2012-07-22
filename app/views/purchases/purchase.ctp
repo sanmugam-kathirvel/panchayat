@@ -5,8 +5,8 @@
 		$stock_list[$stock['Stock']['id']] = $stock['Stock']['item_name'];
 	}
 	echo $form->create('Purchase', array( 'url' => array('controller' => 'purchases', 'action' => 'purchase')));
-	echo $form->input('purchase_date', array('type' => 'text', 'id' => 'datepicker1'));
 	echo $form->input('company_name');
+	echo $form->input('purchase_date', array('type' => 'text', 'id' => 'datepicker1'));
 	echo $form->input('voucher_number');
 	echo $form->input('cheque_number');
 	echo $form->input('cheque_date', array('type' => 'text', 'id' => 'datepicker'));

@@ -5,32 +5,48 @@
 			parent::beforeFilter();
 		}
 		function addopeningbals(){
-			$account = $this->Account->find('all');
-			$this->set(compact('account'));
+			$account_op = $this->Account->find('list', array(
+				'fields' => 'Account.account_name'
+			));
+			$this->set(compact('account_op'));
 			if(!empty($this->data)){
-				$this->data['BankDetail']['closing_cash_balance'] = $this->data['BankDetail']['opening_cash_balance'];
-				$this->data['BankDetail']['closing_bank_balance'] = $this->data['BankDetail']['opening_bank_balance']; 
-				$this->BankDetail->save($this->data);
+				$this->BankDetail->set($this->data);
+				if($this->BankDetail->validates()){
+					$this->data['BankDetail']['closing_cash_balance'] = $this->data['BankDetail']['opening_cash_balance'];
+					$this->data['BankDetail']['closing_bank_balance'] = $this->data['BankDetail']['opening_bank_balance']; 
+					$this->BankDetail->save($this->data);
+				}
 			}
 		}
 		function addheader(){
-			$account = $this->Account->find('all');
-			$this->set(compact('account'));
+			$account_op = $this->Account->find('list', array(
+				'fields' => 'Account.account_name'
+			));
+			$this->set(compact('account_op'));
 			if(!empty($this->data)){
-				if($this->Header->save($this->data)){
-					$this->redirect(array('action'=>'headerindex'));
+				$this->Header->set($this->data);
+				if($this->Header->validates()){
+					if($this->Header->save($this->data)){
+						$this->redirect(array('action'=>'headerindex'));
+					}
 				}
 			}
 		}
 		function addopeningstock(){
 			if(!empty($this->data)){
-				$this->Stock->save($this->data);
+				$this->Stock->set($this->data);
+				if($this->Stock->validates()){
+					$this->Stock->save($this->data);
+				}
 			}
 		}
 		function addhamlet(){
 			if(!empty($this->data)){
-				if($this->Hamlet->save($this->data)){
-					$this->redirect(array('action'=>'hamletindex'));
+				$this->Hamlet->set($this->data);
+				if($this->Hamlet->validates()){
+					if($this->Hamlet->save($this->data)){
+						$this->redirect(array('action'=>'hamletindex'));
+					}
 				}
 			}
 		}
@@ -188,12 +204,15 @@
 			$books = $this->Book->find('all');
 			$this->set(compact('books'));
 			if(!empty($this->data)){
-				if($this->BookDetail->save($this->data)){
-					$this->Session->setFlash(__('Book Details Saved Successfully.', true));
-					$this->redirect(array('action'=>'bookindex'));
-				}else{
-					$this->Session->setFlash(__('Error Saving Book Details!', true));
-					$this->redirect(array('action'=>'bookindex'));
+				$this->BookDetail->set($this->data);
+				if($this->BookDetail->validates()){
+					if($this->BookDetail->save($this->data)){
+						$this->Session->setFlash(__('Book Details Saved Successfully.', true));
+						$this->redirect(array('action'=>'bookindex'));
+					}else{
+						$this->Session->setFlash(__('Error Saving Book Details!', true));
+						$this->redirect(array('action'=>'bookindex'));
+					}
 				}
 			}
 		}

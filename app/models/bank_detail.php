@@ -3,6 +3,34 @@
 		var $name = 'BankDetail';
 		var $belongsTo = array('Account');
 		var $hasMany = array('CashToBank');
+		var $validate = array(
+			'account_number' => array(
+				'rule' => 'numeric',
+				'allowEmpty' => false,
+				'message' => 'Enter valied input'
+			),
+			'bank_name' => array(
+				'rule' => 'notEmpty',
+				'allowEmpty' => false,
+				'message' => 'Enter valied input'
+			),
+			'branch' => array(
+				'rule' => 'notEmpty',
+				'allowEmpty' => false,
+				'message' => 'Enter valied input'
+			),
+			'opening_cash_balance' => array(
+				'rule' => 'numeric',
+				'allowEmpty' => false,
+				'message' => 'Enter valied input'
+			),
+			'opening_bank_balance' => array(
+				'rule' => 'numeric',
+				'allowEmpty' => false,
+				'message' => 'Enter valied input'
+			),
+		);
+		
 		function beforeSave(){
 	    if($this->data['BankDetail']['value'] == 'yes'){
 	      App::import('model', 'CashBook');

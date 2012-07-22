@@ -1,5 +1,5 @@
 <p><h3><?php __('Account-'.$acc_id.' Income'); ?></h3></p>
-<p>இந்த தலைப்புகளின் விளக்க்கள்</p>
+<!-- <p>இந்த தலைப்புகளின் விளக்க்கள்</p> -->
 <?php
 	$header_op = array();
 	foreach($header as $head){

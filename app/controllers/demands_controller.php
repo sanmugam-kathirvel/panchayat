@@ -5,37 +5,55 @@
 			parent::beforeFilter();
 		}
 		function addhtdemand(){
-			$hamlet = $this->Hamlet->find('all');
+			$hamlet = $this->Hamlet->find('list', array(
+				'fields' => 'Hamlet.hamlet_code'
+			));
 			$this->set(compact('hamlet'));
 			if(!empty($this->data)){
-				$this->HtDemand->save($this->data);
-				$this->Session->setFlash(__('Demand added successfully', true));
-				$this->redirect(array('action'=>'htindex'));
+				$this->HtDemand->set($this->data);
+				if($this->HtDemand->validates()){
+					$this->HtDemand->save($this->data);
+					$this->Session->setFlash(__('Demand added successfully', true));
+					$this->redirect(array('action'=>'htindex'));
+				}
 			}
 		}
 		function addwtdemand(){
-			$hamlet = $this->Hamlet->find('all');
+			$hamlet = $this->Hamlet->find('list', array(
+				'fields' => 'Hamlet.hamlet_code'
+			));
 			$this->set(compact('hamlet'));
 			if(!empty($this->data)){
-				$this->WtDemand->save($this->data);
-				$this->Session->setFlash(__('Demand added successfully', true));
-				$this->redirect(array('action'=>'wtindex'));
+				$this->WtDemand->set($this->data);
+				if($this->WtDemand->validates()){
+					$this->WtDemand->save($this->data);
+					$this->Session->setFlash(__('Demand added successfully', true));
+					$this->redirect(array('action'=>'wtindex'));
+				}
 			}
 		}
 		function addptdemand(){
-			$hamlet = $this->Hamlet->find('all');
+			$hamlet = $this->Hamlet->find('list', array(
+				'fields' => 'Hamlet.hamlet_code'
+			));
 			$this->set(compact('hamlet'));
 			if(!empty($this->data)){
-				$this->PtDemand->save($this->data);
-				$this->Session->setFlash(__('Demand added successfully', true));
-				$this->redirect(array('action'=>'ptindex'));
+				$this->PtDemand->set($this->data);
+				if($this->PtDemand->validates()){
+					$this->PtDemand->save($this->data);
+					$this->Session->setFlash(__('Demand added successfully', true));
+					$this->redirect(array('action'=>'ptindex'));
+				}
 			}
 		}
 		function adddodemand(){
 			if(!empty($this->data)){
-				$this->DoDemand->save($this->data);
-				$this->Session->setFlash(__('Demand added successfully', true));
-				$this->redirect(array('action'=>'doindex'));
+				$this->DoDemand->set($this->data);
+				if($this->DoDemand->validates()){
+					$this->DoDemand->save($this->data);
+					$this->Session->setFlash(__('Demand added successfully', true));
+					$this->redirect(array('action'=>'doindex'));
+				}
 			}
 		}
 		function htindex(){

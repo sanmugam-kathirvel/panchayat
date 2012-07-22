@@ -1,6 +1,6 @@
 <?php
 	class ExpensesController extends AppController{
-		var $uses = array('Account', 'BankDetail', 'Purchase', 'Salary', 'EmployeeSalary', 'PurchaseItem', 'Header', 'Expense');
+		var $uses = array('Expense', 'Account', 'BankDetail', 'Purchase', 'Salary', 'EmployeeSalary', 'PurchaseItem', 'Header');
 		function beforeFilter(){
 			parent::beforeFilter();
 		}
@@ -41,7 +41,7 @@
 						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$GLOBALS['accounting_year']['acc_opening_year'].' and '.$GLOBALS['accounting_year']['acc_closing_year'], true));
 					}
 				}else{
-					$this->Session->setFlash(__('Expense could not be saved', true));
+					$this->Session->setFlash(__('Expense could not be saved, Please fill all Required Fields', true));
 				}
 				$this->redirect($this->referer());
 			}else{

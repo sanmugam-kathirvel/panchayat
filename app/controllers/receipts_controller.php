@@ -62,22 +62,27 @@
 			$hamlet = $this->Hamlet->find('all');
 			$this->set(compact('hamlet'));
 			if(!empty($this->data)){
-				if($this->HousetaxReceipt->save($this->data)){
-					$acc_bank_details = $this->BankDetail->find('first', array(
-							'conditions' => array(
-								'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-								'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
-								'BankDetail.account_id' => 1
-							)
-					));
-					$acc_bank_details['BankDetail']['value'] = 'yes';
-					$acc_bank_details['BankDetail']['check_date'] = $this->data['HousetaxReceipt']['receipt_date'];
-					$acc_bank_details['BankDetail']['cash_balance'] = $acc_bank_details['BankDetail']['closing_cash_balance'];
-					$acc_bank_details['BankDetail']['bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'];
-					$acc_bank_details['BankDetail']['closing_cash_balance'] = (int)($acc_bank_details['BankDetail']['closing_cash_balance']) + (int)($this->data['HousetaxReceipt']['total_amount']);
-					$this->BankDetail->save($acc_bank_details);
-					$this->Session->setFlash(__('Receipt added successfully', true));
-					$this->redirect(array('action'=>'index'));					
+				$this->HousetaxReceipt->set($this->data);
+				if($this->HousetaxReceipt->validates()){
+					if($this->HousetaxReceipt->save($this->data)){
+						$acc_bank_details = $this->BankDetail->find('first', array(
+								'conditions' => array(
+									'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
+									'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+									'BankDetail.account_id' => 1
+								)
+						));
+						$acc_bank_details['BankDetail']['value'] = 'yes';
+						$acc_bank_details['BankDetail']['check_date'] = $this->data['HousetaxReceipt']['receipt_date'];
+						$acc_bank_details['BankDetail']['cash_balance'] = $acc_bank_details['BankDetail']['closing_cash_balance'];
+						$acc_bank_details['BankDetail']['bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'];
+						$acc_bank_details['BankDetail']['closing_cash_balance'] = (int)($acc_bank_details['BankDetail']['closing_cash_balance']) + (int)($this->data['HousetaxReceipt']['total_amount']);
+						$this->BankDetail->save($acc_bank_details);
+						$this->Session->setFlash(__('Receipt added successfully', true));
+						$this->redirect(array('action'=>'index'));					
+					}
+				}else{
+					$this->Session->setFlash(__('Receipt could not be saved, Please check form for error', true));
 				}
 			}
 		}
@@ -130,22 +135,27 @@
 			$hamlet = $this->Hamlet->find('all');
 			$this->set(compact('hamlet'));
 			if(!empty($this->data)){
-				if($this->ProfessionaltaxReceipt->save($this->data)){
-					$acc_bank_details = $this->BankDetail->find('first', array(
-								'conditions' => array(
-									'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-									'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
-									'BankDetail.account_id' => 1
-								)
-					));
-					$acc_bank_details['BankDetail']['value'] = 'yes';
-					$acc_bank_details['BankDetail']['check_date'] = $this->data['ProfessionaltaxReceipt']['receipt_date'];
-					$acc_bank_details['BankDetail']['cash_balance'] = $acc_bank_details['BankDetail']['closing_cash_balance'];
-					$acc_bank_details['BankDetail']['bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'];
-					$acc_bank_details['BankDetail']['closing_cash_balance'] = (int)($acc_bank_details['BankDetail']['closing_cash_balance']) + (int)($this->data['ProfessionaltaxReceipt']['total_amount']);
-					$this->BankDetail->save($acc_bank_details);
-					$this->Session->setFlash(__('Receipt added successfully', true));
-					$this->redirect(array('action'=>'index'));
+				$this->ProfessionaltaxReceipt->set($this->data);
+				if($this->ProfessionaltaxReceipt->validates()){
+					if($this->ProfessionaltaxReceipt->save($this->data)){
+						$acc_bank_details = $this->BankDetail->find('first', array(
+									'conditions' => array(
+										'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
+										'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+										'BankDetail.account_id' => 1
+									)
+						));
+						$acc_bank_details['BankDetail']['value'] = 'yes';
+						$acc_bank_details['BankDetail']['check_date'] = $this->data['ProfessionaltaxReceipt']['receipt_date'];
+						$acc_bank_details['BankDetail']['cash_balance'] = $acc_bank_details['BankDetail']['closing_cash_balance'];
+						$acc_bank_details['BankDetail']['bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'];
+						$acc_bank_details['BankDetail']['closing_cash_balance'] = (int)($acc_bank_details['BankDetail']['closing_cash_balance']) + (int)($this->data['ProfessionaltaxReceipt']['total_amount']);
+						$this->BankDetail->save($acc_bank_details);
+						$this->Session->setFlash(__('Receipt added successfully', true));
+						$this->redirect(array('action'=>'index'));
+					}
+				}else{
+					$this->Session->setFlash(__('Receipt could not be added, Please check form for error', true));
 				}
 			}
 		}
@@ -164,22 +174,27 @@
 			$hamlet = $this->Hamlet->find('all');
 			$this->set(compact('hamlet'));
 			if(!empty($this->data)){
-				if($this->DotaxReceipt->save($this->data)){
-					$acc_bank_details = $this->BankDetail->find('first', array(
-								'conditions' => array(
-									'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-									'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
-									'BankDetail.account_id' => 1
-								)
-					));
-					$acc_bank_details['BankDetail']['value'] = 'yes';
-					$acc_bank_details['BankDetail']['check_date'] = $this->data['DotaxReceipt']['receipt_date'];
-					$acc_bank_details['BankDetail']['cash_balance'] = $acc_bank_details['BankDetail']['closing_cash_balance'];
-					$acc_bank_details['BankDetail']['bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'];
-					$acc_bank_details['BankDetail']['closing_cash_balance'] = (int)($acc_bank_details['BankDetail']['closing_cash_balance']) + (int)($this->data['DotaxReceipt']['total_amount']);
-					$this->BankDetail->save($acc_bank_details);
-					$this->Session->setFlash(__('Receipt added successfully', true));
-					$this->redirect(array('action'=>'index'));
+				$this->DotaxReceipt->set($this->data);
+				if($this->DotaxReceipt->validates()){
+					if($this->DotaxReceipt->save($this->data)){
+						$acc_bank_details = $this->BankDetail->find('first', array(
+									'conditions' => array(
+										'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
+										'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+										'BankDetail.account_id' => 1
+									)
+						));
+						$acc_bank_details['BankDetail']['value'] = 'yes';
+						$acc_bank_details['BankDetail']['check_date'] = $this->data['DotaxReceipt']['receipt_date'];
+						$acc_bank_details['BankDetail']['cash_balance'] = $acc_bank_details['BankDetail']['closing_cash_balance'];
+						$acc_bank_details['BankDetail']['bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'];
+						$acc_bank_details['BankDetail']['closing_cash_balance'] = (int)($acc_bank_details['BankDetail']['closing_cash_balance']) + (int)($this->data['DotaxReceipt']['total_amount']);
+						$this->BankDetail->save($acc_bank_details);
+						$this->Session->setFlash(__('Receipt added successfully', true));
+						$this->redirect(array('action'=>'index'));
+					}
+				}else{
+					$this->Session->setFlash(__('Receipt could not be added, Please check form for error', true));
 				}
 			}
 		}

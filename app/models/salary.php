@@ -4,11 +4,30 @@
 		var $hasMany = array('EmployeeSalary' => array('className' => 'EmployeeSalary', 'foreignKey' => 'salary_id','dependent'=> true));
 		
 		var $validate = array(
-				'drawee_name' => array(
-					'rule' => 'notEmpty',
-					'allowEmpty' => false,
-					'message' => 'This Field Not Empty'
-				)
-			);
+			'salary_date' => array(
+				'rule' => 'date',
+				'message' => 'This Field should be a date Farmat'
+			),
+			'drawee_name' => array(
+				'rule' => 'notEmpty',
+				'message' => 'This Field Not Empty'
+			),
+			'voucher_number' => array(
+				'rule' => 'alphaNumeric',
+				'message' => 'Enter Valied Number'
+			),
+			'cheque_number' => array(
+				'rule' => 'alphaNumeric',
+				'message' => 'Enter Valied Number'
+			),
+			'cheque_date' => array(
+				'rule' => 'notEmpty',
+				'message' => 'This Field should be a date Farmat'
+			),
+			'cheque_amount' => array(
+				'rule' => 'numeric',
+				'message' => 'This Field Not Empty'
+			),
+		);
 	}
 ?>

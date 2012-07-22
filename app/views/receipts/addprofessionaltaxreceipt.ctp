@@ -40,26 +40,38 @@
 
 <script>
 $(document).ready(function(){
+	c=1;
 	$('.demand_number').focusout(function(){
 	  var demand_number = $('.demand_number').val();
+	  var this_data = $(this);
 		  $.ajax({
 		  	type: 'POST',
 		  	url: Webroot+"/receipts/get_professionaltax_family_demand/",
 		  	data: {'demand_number':demand_number},
 		  	success: function(data){
 		  		output=JSON.parse(data);
-		  		$('.door_number').val(output.PtDemand.door_number);
-		  		$('.name').val(output.PtDemand.name);
-		  		$('.father_name').val(output.PtDemand.father_name);
-		  		$('.address').val(output.PtDemand.address);
-		  		$('.hamlet_id').val(output.PtDemand.hamlet_id);
-		  		$('.company_name').val(output.PtDemand.company_name);
-		  		$('.half_yearly_income').val(output.PtDemand.half_yearly_income);
-		  		$('.part1_pending').val(output.PtDemand.part1_pending);
-		  		$('.part1_current').val(output.PtDemand.part1_current);
-		  		$('.part2_pending').val(output.PtDemand.part2_pending);
-		  		$('.part2_current').val(output.PtDemand.part2_current);
-		  		$('.total_amount').val(parseInt(output.PtDemand.part1_pending) + parseInt(output.PtDemand.part1_current) + parseInt(output.PtDemand.part2_pending) + parseInt(output.PtDemand.part2_current));
+		  		if(output){
+			  		$('.door_number').val(output.PtDemand.door_number);
+			  		$('.name').val(output.PtDemand.name);
+			  		$('.father_name').val(output.PtDemand.father_name);
+			  		$('.address').val(output.PtDemand.address);
+			  		$('.hamlet_id').val(output.PtDemand.hamlet_id);
+			  		$('.company_name').val(output.PtDemand.company_name);
+			  		$('.half_yearly_income').val(output.PtDemand.half_yearly_income);
+			  		$('.part1_pending').val(output.PtDemand.part1_pending);
+			  		$('.part1_current').val(output.PtDemand.part1_current);
+			  		$('.part2_pending').val(output.PtDemand.part2_pending);
+			  		$('.part2_current').val(output.PtDemand.part2_current);
+			  		$('.total_amount').val(parseInt(output.PtDemand.part1_pending) + parseInt(output.PtDemand.part1_current) + parseInt(output.PtDemand.part2_pending) + parseInt(output.PtDemand.part2_current));
+		  		}else{
+		  			if(c==1){
+		  				this_data.parent().append('<div class="error-message">This Demand number not found</div>');
+			  			$('div.error-message').delay(5000).hide(1000);
+			  			c++;
+		  			}
+		  			this_data.val('');
+			  		this_data.focus();
+		  		}
 		  	}
 		  });
 	});

@@ -2,10 +2,14 @@
 	class SalariesController extends AppController{
 		var $uses = array('Account', 'BankDetail', 'Salary', 'Employee', 'EmployeeSalary');
 		function beforeFilter(){
-			parent::beforeFilter();
+			//parent::beforeFilter();
 		}
 		function salary(){
+			$employees = $this->Employee->find('all');
+			$this->set(compact('employees'));
 			if(!empty($this->data)){
+				$this->Salary->set($this->data);
+				if($this->Salary->validates()){
 				  $datas = $this->data;
 					foreach ($datas['EmployeeSalary'] as $key => $value){
 						if($value['employee_pay'] == '0'){
@@ -39,6 +43,9 @@
 					}else{
 						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$GLOBALS['accounting_year']['acc_opening_year'].' and '.$GLOBALS['accounting_year']['acc_closing_year'], true));
 					}
+				}else{
+					$this->Session->setFlash(__('Salary could not be saved, Please fill all Required Fields', true));
+				}
 			}else{
 				$employees = $this->Employee->find('all');
 				$this->set(compact('employees'));

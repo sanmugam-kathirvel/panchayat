@@ -41,7 +41,7 @@
   <div id ="wrapper">
   	<div id = "header-container">
   		<div id = "header">
-  			<?= $this->Html->image("logo.png"); ?>
+  			<?php //echo $this->Html->image("logo.png"); ?>
   		</div>
   	</div>
   	<div class="topbar">
@@ -103,6 +103,9 @@
   	</div>
   </div>
   <script>
+  $('.required').children('label').append('<span style = "color:red">*</span>');
+  $('div#flashMessage.message').delay(10000).toggle(1000);
+  //$('div.error-message').delay(5000).hide(1000);
     $(function() {
       $( "#datepicker" ).datepicker({dateFormat: "yy-mm-dd", showAnim: "show"});
       $( "#datepicker1" ).datepicker({dateFormat: "yy-mm-dd", showAnim: "show"});

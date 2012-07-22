@@ -44,24 +44,36 @@
 
 <script>
 $(document).ready(function(){
+	c = 1;
 	$('.demand_number').focusout(function(){
 	  var demand_number = $('.demand_number').val();
+	  var this_data = $(this);
 		  $.ajax({
 		  	type: 'POST',
 		  	url: Webroot+"/receipts/get_housetax_family_demand/",
 		  	data: {'demand_number':demand_number},
 		  	success: function(data){
 		  		var output=JSON.parse(data);
-		  		$('.door_number').val(output.HtDemand.door_number);
-		  		$('.name').val(output.HtDemand.name);
-		  		$('.father_name').val(output.HtDemand.father_name);
-		  		$('.address').val(output.HtDemand.address);
-		  		$('.hamlet_id').val(output.HtDemand.hamlet_id);
-		  		$('.ht_pending').val(output.HtDemand.ht_pending);
-		  		$('.ht_current').val(output.HtDemand.ht_current);
-		  		$('.lc_pending').val(output.HtDemand.lc_pending);
-		  		$('.lc_current').val(output.HtDemand.lc_current);
-		  		$('.total_amount').val(parseInt(output.HtDemand.ht_pending) + parseInt(output.HtDemand.ht_current) + parseInt(output.HtDemand.lc_pending) + parseInt(output.HtDemand.lc_current));
+		  		if(output){
+			  		$('.door_number').val(output.HtDemand.door_number);
+			  		$('.name').val(output.HtDemand.name);
+			  		$('.father_name').val(output.HtDemand.father_name);
+			  		$('.address').val(output.HtDemand.address);
+			  		$('.hamlet_id').val(output.HtDemand.hamlet_id);
+			  		$('.ht_pending').val(output.HtDemand.ht_pending);
+			  		$('.ht_current').val(output.HtDemand.ht_current);
+			  		$('.lc_pending').val(output.HtDemand.lc_pending);
+			  		$('.lc_current').val(output.HtDemand.lc_current);
+			  		$('.total_amount').val(parseInt(output.HtDemand.ht_pending) + parseInt(output.HtDemand.ht_current) + parseInt(output.HtDemand.lc_pending) + parseInt(output.HtDemand.lc_current));
+		  		}else{
+		  			if(c==1){
+		  				this_data.parent().append('<div class="error-message">This Demand number not found</div>');
+			  			$('div.error-message').delay(5000).hide(1000);
+			  			c++;
+		  			}
+		  			this_data.val('');
+			  		this_data.focus();
+		  		}
 		  	}
 		  });
 	});

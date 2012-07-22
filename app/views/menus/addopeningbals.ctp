@@ -1,9 +1,5 @@
 <p>Add Opening Balance</p>
 <?php
-	$account_op = array();
-	foreach($account as $acc){
-		$account_op[$acc['Account']['id']] =  $acc['Account']['account_name'];
-	}
 	echo $form->create('BankDetail', array( 'url' => array('controller' => 'menus', 'action' => 'addopeningbals')));
 	echo $form->input('account_id',array('type'=>'select','options'=> $account_op));
 	echo $form->input('acc_openning_year', array('type' => 'hidden', 'value' => $GLOBALS['accounting_year']['acc_opening_year']));
