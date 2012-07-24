@@ -12,8 +12,8 @@
                 $paginator->sort('role_date'),
                 $paginator->sort('starting_roll_no'),
                 $paginator->sort('ending_roll_no'),
-                $paginator->sort('currently_available_roll_no'),
-                $paginator->sort('roll_entry_status'),
+                // $paginator->sort('currently_available_roll_no'),
+                // $paginator->sort('roll_entry_status'),
                 __('Actions', true),
             ));
             echo $tableHeaders;
@@ -21,18 +21,14 @@
             $rows = array();
             foreach ($nregs_rolls AS $nregs_roll) {
                 $actions = ' ' . $html->link(__('Edit', true), array(
-                	'action' => 'editregistration',
+                	'action' => 'edit_nmrrolls',
                 	$nregs_roll['NmrRoll']['id']));
-                $actions .= ' ' . $html->link(__('Delete', true), array(
-                  'action' => 'deleteregistration', $nregs_roll['NmrRoll']['id']),
-                	null, __('Are you sure?', true)
-								);
                 $rows[] = array(
                     $nregs_roll['NmrRoll']['role_date'],
                     $nregs_roll['NmrRoll']['starting_roll_no'],
                     $nregs_roll['NmrRoll']['ending_roll_no'],
-                    $nregs_roll['NmrRoll']['currently_available_roll_no'],
-                    $nregs_roll['NmrRoll']['roll_entry_status'],
+                    // $nregs_roll['NmrRoll']['currently_available_roll_no'],
+                    // $nregs_roll['NmrRoll']['roll_entry_status'],
                     $actions,
                 );
             }

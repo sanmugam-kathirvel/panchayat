@@ -159,6 +159,22 @@
 				}
 			}
 		}
+		function edit_nmrrolls($id){
+			if(!empty($id)){
+				$this->NmrRoll->id=$id;
+	      if(empty($this->data)) {
+	        $this->data = $this->NmrRoll->read();
+	      }else{
+	      	if($this->NmrRoll->save($this->data)){
+	          $this->Session->setFlash(__('NMR Roll(s) updated successfully', true));    
+	          $this->redirect(array('action'=>'nmr_roll_index'));       
+	        }
+				}
+			}else{
+				$this->Session->setFlash(__('Invalid operation', true));
+				$this->redirect(array('action'=>'nmr_roll_index'));
+			}
+		}
 		function nmr_roll_index(){
 			$this->paginate = array(
 				'order' => 'NmrRoll.role_date',
@@ -166,29 +182,29 @@
 			$nregs_rolls = $this->paginate('NmrRoll');
 			$this->set(compact('nregs_rolls'));
 		}
-		function rollentry(){
-			$hamlets = $this->Hamlet->find('all');
-			$nmr_roll_no = $this->NmrRoll->findByRollEntryStatus('ongoing');
-			$this->set(compact('hamlets','nmr_roll_no'));
-			if(!empty($this->data)){
-				if($this->NmrRollentry->save($this->data)){
-					$ongoing = $this->NmrRoll->findByRollEntryStatus('ongoing');
-					if($ongoing['NmrRoll']['ending_roll_no'] == $ongoing['NmrRoll']['currently_available_roll_no']){
-						$ongoing['NmrRoll']['rollentry'] = 'rollentry';
-						$ongoing['NmrRoll']['roll_entry_status'] = 'closed';
-						$this->NmrRoll->save($ongoing);
-						$next_ongoing = $this->NmrRoll->find('first', array('conditions' => array('NmrRoll.roll_entry_status' => 'available')));
-						$next_ongoing['NmrRoll']['rollentry'] = 'rollentry';
-						$next_ongoing['NmrRoll']['roll_entry_status'] = 'ongoing';
-						$this->NmrRoll->save($next_ongoing);
-					}else{
-						$ongoing['NmrRoll']['rollentry'] = 'rollentry';
-						$ongoing['NmrRoll']['currently_available_roll_no'] = $ongoing['NmrRoll']['currently_available_roll_no'] + 1;
-						$this->NmrRoll->save($ongoing);
-					}
-				}
-			}
-		}
+		// function rollentry(){
+			// $hamlets = $this->Hamlet->find('all');
+			// $nmr_roll_no = $this->NmrRoll->findByRollEntryStatus('ongoing');
+			// $this->set(compact('hamlets','nmr_roll_no'));
+			// if(!empty($this->data)){
+				// if($this->NmrRollentry->save($this->data)){
+					// $ongoing = $this->NmrRoll->findByRollEntryStatus('ongoing');
+					// if($ongoing['NmrRoll']['ending_roll_no'] == $ongoing['NmrRoll']['currently_available_roll_no']){
+						// $ongoing['NmrRoll']['rollentry'] = 'rollentry';
+						// $ongoing['NmrRoll']['roll_entry_status'] = 'closed';
+						// $this->NmrRoll->save($ongoing);
+						// $next_ongoing = $this->NmrRoll->find('first', array('conditions' => array('NmrRoll.roll_entry_status' => 'available')));
+						// $next_ongoing['NmrRoll']['rollentry'] = 'rollentry';
+						// $next_ongoing['NmrRoll']['roll_entry_status'] = 'ongoing';
+						// $this->NmrRoll->save($next_ongoing);
+					// }else{
+						// $ongoing['NmrRoll']['rollentry'] = 'rollentry';
+						// $ongoing['NmrRoll']['currently_available_roll_no'] = $ongoing['NmrRoll']['currently_available_roll_no'] + 1;
+						// $this->NmrRoll->save($ongoing);
+					// }
+				// }
+			// }
+		// }
 		function add_workdetails(){
 			if(!empty($this->data)){
 				if($this->Workdetail->save($this->data)){
@@ -298,6 +314,7 @@
 					'contain' => false,
 				));
 				$attendance['AttendanceRegister']['payment_status'] = $this->data['Payment']['payment_status'];
+				$attendance['AttendanceRegister']['amount_per_head'] = $this->data['Payment']['amount_per_head'];
 				$attendance['AttendanceRegister']['amount_paid'] = $this->data['Payment']['amount_paid'];
 				$this->AttendanceRegister->save($attendance);
 				$this->Session->setFlash(__('Amount paid', true));

@@ -16,11 +16,13 @@
       	<dd>&nbsp;&nbsp;&nbsp;&nbsp;- சிட்டா</dd>
       	<dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 10', true), array('action'=>'form10_report')); ?></li></dt>
       	<dd>&nbsp;&nbsp;&nbsp;&nbsp;- ஊராட்சியின் பல்வகை கேட்பு, வசூல் மற்றும் நிலுவைப் பதிவேடு</dd>
-      	<dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 11', true), array('action'=>'form11_reoprt', '2012-07-01', '2012-07-31')); ?></li></dt>
+      	<dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 11', true), array('action'=>'../cashbook/index', '11')); ?></li></dt>
       	<dd>&nbsp;&nbsp;&nbsp;&nbsp;- ரொக்கப் பதிவேடு (கணக்கு எண் I)</dd>
-      	<dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 23', true), array('action'=>'form23_reoprt', '2012-07-01', '2012-07-31')); ?></li></dt>
+      	<dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 13', true), array('action'=>'form13_report')); ?></li></dt>
+      	<dd>&nbsp;&nbsp;&nbsp;&nbsp;- செலவுகள்</dd>
+      	<dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 23', true), array('action'=>'../cashbook/index', '23')); ?></li></dt>
       	<dd>&nbsp;&nbsp;&nbsp;&nbsp;- ரொக்கப் பதிவேடு (கணக்கு எண் II)</dd>
-      	<dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 26', true), array('action'=>'form26_reoprt', '2012-07-01', '2012-07-31')); ?></li></dt>
+      	<dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 26', true), array('action'=>'../cashbook/index', '26')); ?></li></dt>
       	<dd>&nbsp;&nbsp;&nbsp;&nbsp;- ரொக்கப் பதிவேடு (கணக்கு எண் III)</dd>
       </dl>
     </div>

@@ -8,16 +8,16 @@
         <li><?php echo $html->link(__('Job Cards', true), array('action'=>'../nregs/jobcardindex')); ?></li>
       </ul>
       <ul>
-        <li><?php echo $html->link(__('NMR Rolls', true), array('action'=>'')); ?></li>
+        <li><?php echo $html->link(__('NMR Rolls', true), array('action'=>'../nregs/nmr_roll_index')); ?></li>
       </ul>
-      <ul>
+      <!-- <ul>
         <li><?php echo $html->link(__('Roll Entry', true), array('action'=>'')); ?></li>
-      </ul>
+      </ul> -->
       <ul>
         <li><?php echo $html->link(__('Work details', true), array('controller' => 'nregs', 'action'=>'index_workdetails')); ?></li>
       </ul>
       <ul>
-        <li><?php echo $html->link(__('Attendance', true), array('controller' => 'nregs', 'action'=>'attendance_index')); ?></li>
+        <li><?php echo $html->link(__('Attendance and Payment Register', true), array('controller' => 'nregs', 'action'=>'attendance_index')); ?></li>
       </ul>
     </div>
 </div>

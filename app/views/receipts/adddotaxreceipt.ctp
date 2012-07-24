@@ -11,6 +11,7 @@
 	echo $form->input('name', array('class' => 'name', 'readonly' => 'readonly'));
 	echo $form->input('father_name', array('class' => 'father_name', 'readonly' => 'readonly'));
 	echo $form->input('address', array('class' => 'address', 'readonly' => 'readonly'));
+	echo $form->input('emd', array('class' => 'emd', 'readonly' => 'readonly'));
 	echo "<div class='input inline'>";
 		echo "<table><tr>";
 			echo "<td></td>";
@@ -22,14 +23,13 @@
 			echo '<td>'.$form->input('end_date', array('id' => 'datepicker2', 'label' => false, 'type' => 'text', 'class' => 'small')).'</td>';
 		echo '</tr></table>';
 	echo '</div>';
-	echo $form->input('emd', array('class' => 'emd', 'readonly' => 'readonly'));
 	echo "<div class='input inline'>";
 		echo "<table><tr>";
 			echo "<td></td>";
 			echo "<td>Pending</td>";
 			echo "<td>Current</td>";
 		echo "</tr><tr>";
-			echo "<td><label>D&O Traders Demand</label></td>";
+			echo "<td><label>D&O Traders Tax</label></td>";
 			echo '<td>'.$form->input('do_pending', array('label' => false, 'class' => 'small do_pending')).'</td>';
 			echo '<td>'.$form->input('do_current', array('label' => false, 'class' => 'small do_current')).'</td>';
 		echo '</tr></table>';
