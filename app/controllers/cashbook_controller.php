@@ -92,7 +92,7 @@
 				$records = $this->CashBook->find('first',array(
 					'conditions' => array('CashBook.account_id' => 1, 'CashBook.Opening_date' => $start_date)
 				));
-				$xls_fmt['worksheet']->write($i, 1, 'இம்மாத ஆரம்ப இருப்பு', $xls_fmt['fmt_left_title']);
+				$xls_fmt['worksheet']->write($i, 1, 'இம்மாத தொடக்க இருப்பு', $xls_fmt['fmt_left_title']);
 				$xls_fmt['worksheet']->writeNumber($i, 2, $records['CashBook']['opening_cash']);
 				$xls_fmt['worksheet']->writeNumber($i++, 3, $records['CashBook']['opening_bank']);
 				$income_cash = (double)$records['CashBook']['opening_cash'];
@@ -286,7 +286,7 @@
 					$i = $i_copy;
 				}
 				$xls_fmt['worksheet']->write($i_copy, 5, $end_date, $xls_fmt['fmt_left']);
-				$xls_fmt['worksheet']->write($i_copy, 7, 'இம்மாத இறுதி இருப்பு', $xls_fmt['fmt_left_title']);
+				$xls_fmt['worksheet']->write($i_copy, 7, 'இம்மாத முடிவு இருப்பு', $xls_fmt['fmt_left_title']);
 				$xls_fmt['worksheet']->writeNumber($i_copy, 8, ($income_cash - $expense_cash));
 				$xls_fmt['worksheet']->writeNumber($i_copy++, 9, ($income_bank - $expense_bank));
 				$special = $xls_fmt['workbook']->addFormat();
@@ -360,7 +360,7 @@
 				$records = $this->CashBook->find('first',array(
 					'conditions' => array('CashBook.account_id' => 2, 'CashBook.Opening_date' => $start_date)
 				));
-				$xls_fmt['worksheet']->write($i, 1, 'இம்மாத ஆரம்ப இருப்பு', $xls_fmt['fmt_left_title']);
+				$xls_fmt['worksheet']->write($i, 1, 'இம்மாத தொடக்க இருப்பு', $xls_fmt['fmt_left_title']);
 				$xls_fmt['worksheet']->writeNumber($i, 2, $records['CashBook']['opening_cash']);
 				$xls_fmt['worksheet']->writeNumber($i++, 3, $records['CashBook']['opening_bank']);
 				$income_cash = (double)$records['CashBook']['opening_cash'];
@@ -403,7 +403,7 @@
 					$i = $i_copy;
 				}
 				$xls_fmt['worksheet']->write($i_copy, 5, $end_date, $xls_fmt['fmt_left']);
-				$xls_fmt['worksheet']->write($i_copy, 7, 'இம்மாத இறுதி இருப்பு', $xls_fmt['fmt_left_title']);
+				$xls_fmt['worksheet']->write($i_copy, 7, 'இம்மாத முடிவு இருப்பு', $xls_fmt['fmt_left_title']);
 				$xls_fmt['worksheet']->writeNumber($i_copy, 8, ($income_cash - $expense_cash));
 				$xls_fmt['worksheet']->writeNumber($i_copy++, 9, ($income_bank - $expense_bank));
 				$special = $xls_fmt['workbook']->addFormat();
@@ -479,7 +479,7 @@
 				$records = $this->CashBook->find('first',array(
 					'conditions' => array('CashBook.account_id' => 1, 'CashBook.Opening_date' => $start_date)
 				));
-				$xls_fmt['worksheet']->write($i, 1, 'இம்மாத ஆரம்ப இருப்பு', $xls_fmt['fmt_left_title']);
+				$xls_fmt['worksheet']->write($i, 1, 'இம்மாத தொடக்க இருப்பு', $xls_fmt['fmt_left_title']);
 				$xls_fmt['worksheet']->writeNumber($i, 2, $records['CashBook']['opening_cash']);
 				$xls_fmt['worksheet']->writeNumber($i++, 3, $records['CashBook']['opening_bank']);
 				$income_cash = (double)$records['CashBook']['opening_cash'];
@@ -541,7 +541,7 @@
 					$i = $i_copy;
 				}
 				$xls_fmt['worksheet']->write($i_copy, 5, $end_date, $xls_fmt['fmt_left']);
-				$xls_fmt['worksheet']->write($i_copy, 7, 'இம்மாத இறுதி இருப்பு', $xls_fmt['fmt_left_title']);
+				$xls_fmt['worksheet']->write($i_copy, 7, 'இம்மாத முடிவு இருப்பு', $xls_fmt['fmt_left_title']);
 				$xls_fmt['worksheet']->writeNumber($i_copy, 8, ($income_cash - $expense_cash));
 				$xls_fmt['worksheet']->writeNumber($i_copy++, 9, ($income_bank - $expense_bank));
 				$special = $xls_fmt['workbook']->addFormat();

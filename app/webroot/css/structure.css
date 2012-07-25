@@ -12,3 +12,4 @@ form div.submit{clear:left;padding:10px 0;}
 #wrapper #container form#PurchasePurchaseForm,#wrapper #container form#SalarySalaryForm{position:relative;}#wrapper #container form#PurchasePurchaseForm div.submit,#wrapper #container form#SalarySalaryForm div.submit{top:190px;left:229px;position:absolute;}
 #wrapper #container form#PurchasePurchaseForm div.link,#wrapper #container form#SalarySalaryForm div.link{width:990px;text-align:right;}
 #wrapper #container form#PurchasePurchaseForm div.submit{top:230px;}
+div.blocks.form table td a{padding:0 5px;}

@@ -2,7 +2,7 @@
 	App::import('Vendor', 'Writer', array('file' => 'Spreadsheet'.DS.'Writer.php'));
 	class ReportsController extends AppController {
 
-		var $uses = array('CashToBank', 'Expense', 'Income', 'HousetaxReceipt', 'WatertaxReceipt', 'ProfessionaltaxReceipt', 'DotaxReceipt', 'OthersReceipt', 'HtDemand', 'PtDemand', 'WtDemand', 'DoDemand', 'Header');
+		var $uses = array('StockIssue', 'CashToBank', 'Expense', 'Income', 'HousetaxReceipt', 'WatertaxReceipt', 'ProfessionaltaxReceipt', 'DotaxReceipt', 'OthersReceipt', 'HtDemand', 'PtDemand', 'WtDemand', 'DoDemand', 'Header', 'Purchase', 'PurchaseItem');
 		function index(){
 
 		}
@@ -876,6 +876,120 @@
 				$xls_fmt['worksheet']->writeNumber($j++, 3, $cumulative_total);
 			}
 			$xls_fmt['workbook']->send('Form_13.xls');
+			$xls_fmt['workbook']->close();
+			$this->redirect(array('action'=>'index'));
+		}
+		function form18_report(){
+			$i = 0;
+			$xls_fmt = $this->xls_format('Form_18');
+			$xls_fmt['worksheet']->write($i, 0, 'ஊராட்சி படிவம் எண்: 18', $xls_fmt['fmt_left_title']);
+			$xls_fmt['worksheet']->setMerge($i, 0, $i++, 11);
+			$xls_fmt['worksheet']->write($i, 0, 'மின் உபகரணங்கள், கைபம்பு உதிரிபாகங்கள், சுகாதாரப் பொருட்கள் மற்றும் அன்றாட உபயோகப் பொருட்கள் இருப்புப் பதிவேடு', $xls_fmt['fmt_center']);
+			$xls_fmt['worksheet']->setMerge($i, 0, ($i + 1), 11);
+			$titles =array('வ எண்', 'எவரிடமிருந்து பெறப்பட்டது', 'பட்டியல் எண் / நாள்', 'ஆரம்ப இருப்பு எண்ணிக்கை அளவு', 'வரவு எண்ணிக்கை அளவு', 'தொகை ரூ.', 'மொத்த எண்ணிக்கை அளவு', 'வழங்கிய எண்ணிக்கை அளவு', 'பராமரிப்புப் பதிவேட்டின் பக்க எண்', 'இறுதி இருப்பு எண்ணிக்கை அளவு', 'எந்த வேலைக்காக வழங்கப்பட்டது', ' பொருள் பெற்றவரின் பெயரும் ஒப்பமும்');
+			$xls_fmt['worksheet']->writeRow(($i += 2), 0, $titles, $xls_fmt['fmt_center']);
+			$xls_fmt['worksheet']->setColumn(0, 0, 10.00);
+			$xls_fmt['worksheet']->setColumn(1, 1, 30.00);
+			$xls_fmt['worksheet']->setColumn(2, 9, 14.00);
+			$xls_fmt['worksheet']->setColumn(10, 11, 30.00);
+			$stocks = $this->Purchase->find('all', array(
+				'conditions' => array('Purchase.purchase_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'order' => 'Purchase.purchase_date'
+			));
+			$records = array();
+			$index = 0;
+			foreach($stocks as $stock){
+				$stock_items = $this->PurchaseItem->find('all', array(
+					'conditions' => array('PurchaseItem.purchase_id' => $stock['Purchase']['id']),
+					'orders' => 'PurchaseItem.id'
+				));
+				foreach($stock_items as $stock_item){
+					$records[$index]['type'] = 'purchase';
+					$records[$index]['sort_date'] = $stock['Purchase']['purchase_date'];
+					$records[$index]['name'] = $stock['Purchase']['company_name'];
+					$records[$index]['voucher_date'] = $stock['Purchase']['voucher_number'].' / '.$stock['Purchase']['purchase_date'];
+					$records[$index]['opening_stock'] = $stock_item['PurchaseItem']['opening_stock'];
+					$records[$index]['item_quantity'] = $stock_item['PurchaseItem']['item_quantity'];
+					$records[$index]['amount'] = $stock_item['PurchaseItem']['item_tot_amount'];
+					$records[$index++]['total_stock'] = (int)$stock_item['PurchaseItem']['opening_stock'] + (int)$stock_item['PurchaseItem']['item_quantity'];
+				}
+			}
+			$stocks = $this->StockIssue->find('all', array(
+				'conditions' => array('StockIssue.issue_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'orders' => 'StockIssue.issue_date'
+			));
+			foreach($stocks as $stock){
+				$records[$index]['type'] = 'issue';
+				$records[$index]['sort_date'] = $stock['StockIssue']['issue_date'];
+				$records[$index]['voucher_date'] = $stock['StockIssue']['issue_date'];
+				$records[$index]['item_quantity'] = $stock['StockIssue']['item_quantity'];
+				$records[$index]['closing_stock'] = $stock['StockIssue']['closing_item_quantity'];
+				$records[$index]['description'] = $stock['StockIssue']['description'];
+				$records[$index++]['name'] = $stock['StockIssue']['hand_over_name'];
+			}
+			function arrange_records($a, $b){
+				$time1 = strtotime($a['sort_date']);
+				$time2 = strtotime($b['sort_date']);
+				if($a['sort_date'] != $b['sort_date']){
+					return $time1 > $time2;
+				}
+				return strcmp($a['type'], $b['type']);
+			}
+			usort($records, 'arrange_records');
+			$index = 1;
+			foreach($records as $record){
+				$i++;
+				$xls_fmt['worksheet']->writeNumber($i, 0, $index++);
+				$xls_fmt['worksheet']->write($i, 2, $record['voucher_date'], $xls_fmt['fmt_left']);
+				if($record['type'] == 'purchase'){
+					$xls_fmt['worksheet']->write($i, 1, $record['name'], $xls_fmt['fmt_left']);
+					$xls_fmt['worksheet']->writeNumber($i, 3, $record['opening_stock']);
+					$xls_fmt['worksheet']->writeNumber($i, 4, $record['item_quantity']);
+					$xls_fmt['worksheet']->writeNumber($i, 5, $record['amount']);
+					$xls_fmt['worksheet']->writeNumber($i, 6, $record['total_stock']);
+				}elseif($record['type'] == 'issue'){
+					$xls_fmt['worksheet']->writeNumber($i, 7, $record['item_quantity']);
+					$xls_fmt['worksheet']->writeNumber($i, 9, $record['closing_stock']);
+					$xls_fmt['worksheet']->write($i, 10, $record['description'], $xls_fmt['fmt_left']);
+					$xls_fmt['worksheet']->write($i, 11, $record['name'], $xls_fmt['fmt_left']);
+				}
+			}
+			$xls_fmt['workbook']->send('Form_18.xls');
+			$xls_fmt['workbook']->close();
+			$this->redirect(array('action'=>'index'));
+		}
+		function form21_report(){
+			// $i = 0;
+			// $xls_fmt = $this->xls_format('Form_21');
+			// $xls_fmt['worksheet']->write($i, 0, 'ஊராட்சி படிவம் எண்: 21', $xls_fmt['fmt_left_title']);
+			// $xls_fmt['worksheet']->setMerge($i, 0, $i++, 9);
+			// $xls_fmt['worksheet']->write($i, 0, 'கழிவு செய்யப்பட்ட பொருள்களின் இருப்பு பதிவேடு', $xls_fmt['fmt_center']);
+			// $xls_fmt['worksheet']->setMerge($i++, 0, $i, 9);
+			$i = 0;
+			$xls_fmt = $this->xls_format('Form_21');
+			$xls_fmt['worksheet']->write($i, 0, 'ஊராட்சி படிவம் எண்: 21', $xls_fmt['fmt_left_title']);
+			$xls_fmt['worksheet']->setMerge($i, 0, $i++, 9);
+			$xls_fmt['worksheet']->write($i, 0, 'கழிவு செய்யப்பட்ட பொருள்களின் இருப்புப் பதிவேடு', $xls_fmt['fmt_center']);
+			$xls_fmt['worksheet']->setMerge($i, 0, ($i + 1), 9);
+			$titles = array('வ எண்', 'பராமரிப்பு பதிவேட்டில் எந்த வரிசை எண்ணிலிருந்து பெறப்பட்ட பொருட்கள்');
+			$xls_fmt['worksheet']->writeRow(($i += 2), 0, $titles, $xls_fmt['fmt_center']);
+			$xls_fmt['worksheet']->setMerge($i, 0, ($i + 1), 0);
+			$xls_fmt['worksheet']->setMerge($i, 1, ($i + 1), 1);
+			$xls_fmt['worksheet']->write($i, 2, 'பெறப்பட்ட பொருட்கள்', $xls_fmt['fmt_center']);
+			$xls_fmt['worksheet']->setMerge($i, 2, $i, 3);
+			$xls_fmt['worksheet']->write($i, 4, 'கழிவு செய்யப்பட்ட பொருட்களை பொறியாளரால் மதிப்பீடு செய்த', $xls_fmt['fmt_center']);
+			$xls_fmt['worksheet']->setMerge($i, 4, $i, 5);
+			$xls_fmt['worksheet']->write($i, 6, 'ஏலம் விடப்பட்ட', $xls_fmt['fmt_center']);
+			$xls_fmt['worksheet']->setMerge($i, 6, $i, 7);
+			$xls_fmt['worksheet']->write($i, 8, 'ஏலம் உறுதி செய்த', $xls_fmt['fmt_center']);
+			$xls_fmt['worksheet']->setMerge($i, 8, $i++, 9);
+			$titles = array('விபரம்', 'எண்ணிக்கை', 'நாள்', 'தொகை', 'நாள்', 'தொகை', 'நாள்', 'தொகை');
+			$xls_fmt['worksheet']->writeRow($i, 2, $titles, $xls_fmt['fmt_center']);
+			$xls_fmt['worksheet']->setColumn(0, 0, 10.00);
+			$xls_fmt['worksheet']->setColumn(1, 1, 25.00);
+			$xls_fmt['worksheet']->setColumn(2, 2, 30.00);
+			$xls_fmt['worksheet']->setColumn(3, 9, 14.00);
+			$xls_fmt['workbook']->send('Form_21.xls');
 			$xls_fmt['workbook']->close();
 			$this->redirect(array('action'=>'index'));
 		}

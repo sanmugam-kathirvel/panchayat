@@ -54,5 +54,14 @@
 				}
 			}
 		}
+		function get_stock_avail(){
+			$this->layout = false;
+			$stock = $this->Stock->find('first', array(
+				'conditions' => array('Stock.id' => $_POST['stock_id'])
+			));
+			$this->set(compact('stock'));
+			echo json_encode($stock);
+			exit;
+		}
 	}
 ?>

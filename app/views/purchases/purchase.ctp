@@ -17,13 +17,15 @@
 			echo "<tbody class= 'add_new_field'>";
 					echo "<tr>";
 						echo "<th>Item Description</th>";
+						echo "<th>Available stock</th>";
 						echo "<th>Item Quantity</th>";
 						echo "<th>Unit Cost</th>";
 						echo "<th>Total Amount</th>";
 					echo "</tr>";
 					for($i = 0; $i < 20 ; $i++){
 					  echo "<tr id ='new_field' class='new_field_".$i."'>";
-							echo '<td>'.$form->input('PurchaseItem.'.$i.'.stock_id', array('options' => $stock_list, 'label' => false)).'</td>';
+							echo '<td>'.$form->input('PurchaseItem.'.$i.'.stock_id', array('options' => $stock_list, 'class' => 'stock_id', 'label' => false, 'empty' => true)).'</td>';
+							echo '<td>'.$form->input('PurchaseItem.'.$i.'.opening_stock', array('label' => false, 'class' => 'opening_stock', 'value' => 0, 'readonly' => 'readonly')).'</td>';
 							echo '<td>'.$form->input('PurchaseItem.'.$i.'.item_quantity', array('label' => false, 'class' => 'quantity', 'value' => 0)).'</td>';
 							echo '<td>'.$form->input('PurchaseItem.'.$i.'.item_rate', array('label' => false, 'class' => 'unit_cost', 'value' => 0)).'</td>';
 							echo '<td>'.$form->input('PurchaseItem.'.$i.'.item_tot_amount', array('label' => false, 'id' => 'tot_amount', 'class' => 'tot_amount_'.$i, 'value' => 0, 'readonly' => 'readonly')).'</td>';
@@ -80,11 +82,24 @@ $(document).ready(function(){
 				$('.grand_total').val(grand_total);
 			}
 		});
-		if(flag == 1 && parseInt($('.tax_amount').val()) > 0){
+		if(flag == 1 && parseInt($('.tax_amount').val()) >= 0){
 			$('.grand_total').val(parseInt($('.grand_total').val()) + parseInt($('.tax_amount').val()));
 		}else{
 			$('.grand_total').val(0);
 		}
+	});
+	$('.stock_id').change(function() {
+		var stock_id = parseInt($(this).val());
+		var temp_this = $(this);
+		$.ajax({
+	  	type: 'POST',
+	  	url: Webroot+"/purchases/get_stock_avail/",
+	  	data: {'stock_id': stock_id},
+	  	success: function(data){
+	  		output=JSON.parse(data);
+	  	  temp_this.parent('div').parent().next().children('div').children().val(output.Stock.item_quantity);
+	  	}
+		});
 	});
 });
 </script>

@@ -50,46 +50,46 @@
   				<?= $this->Html->link("Grama", "#", array("class" => "brand")) ?>
   				<ul class = "nav">
   					<li class = "dropdown" data-dropdown="dropdown">
-  						<?= $this->Html->link("Main", "#", array("class" => 'dropdown-toggle') ) ?>
+  						<?= $this->Html->link("முதன்மை", "#", array("class" => 'dropdown-toggle') ) ?>
   						<ul class = "dropdown-menu">
-  							<li><?= $this->Html->link("Opening Balance", array('plugin' => false, "controller" => "menus", "action" => "balanceindex")); ?></li>
-  							<li><?= $this->Html->link("Hamlets", array('plugin' => false, "controller" => "menus", "action" => "addhamlet")); ?></li>
-  							<li><?= $this->Html->link("Headers", array('plugin' => false, "controller" => "menus", "action" => "headerindex")); ?></li>
-  							<li><?= $this->Html->link("Opening Stocks", array('plugin' => false, "controller" => "menus", "action" => "addopeningstock")); ?></li>
-  							<li><?= $this->Html->link("Stock Issue", array('plugin' => false, "controller" => "menus", "action" => "stockissue")); ?></li>
-  							<li><?= $this->Html->link("Book Details", array('plugin' => false, "controller" => "menus", "action" => "bookindex")); ?></li>
+  							<li><?= $this->Html->link("தொடக்க இருப்புத் தொகை", array('plugin' => false, "controller" => "menus", "action" => "balanceindex")); ?></li>
+  							<li><?= $this->Html->link("குக்கிராமங்கள்", array('plugin' => false, "controller" => "menus", "action" => "addhamlet")); ?></li>
+  							<li><?= $this->Html->link("தலைப்புகள்", array('plugin' => false, "controller" => "menus", "action" => "headerindex")); ?></li>
+  							<li><?= $this->Html->link("தொடக்கக் கையிருப்பு", array('plugin' => false, "controller" => "menus", "action" => "addopeningstock")); ?></li>
+  							<li><?= $this->Html->link("கையிருப்பு விநியோகம்", array('plugin' => false, "controller" => "menus", "action" => "stockissue")); ?></li>
+  							<li><?= $this->Html->link("புத்தகக் கையிருப்பு விபரம்", array('plugin' => false, "controller" => "menus", "action" => "bookindex")); ?></li>
   						</ul>
   					</li>
   					<li class = "dropdown" data-dropdown="dropdown">
-  						<?= $this->Html->link("Demands", "#", array("class" => 'dropdown-toggle') ) ?>
+  						<?= $this->Html->link("கேட்புகள்", "#", array("class" => 'dropdown-toggle') ) ?>
   						<ul class = "dropdown-menu">
-  							<li><?= $this->Html->link("House Tax", array('plugin' => false, "controller" => "demands", "action" => "htindex")); ?></li>
-  							<li><?= $this->Html->link("Water Tax", array('plugin' => false, "controller" => "demands", "action" => "wtindex")); ?></li>
-  							<li><?= $this->Html->link("Professional Tax", array('plugin' => false, "controller" => "demands", "action" => "ptindex")); ?></li>
-  							<li><?= $this->Html->link("D & O Traders", array('plugin' => false, "controller" => "demands", "action" => "doindex")); ?></li>
+  							<li><?= $this->Html->link("வீட்டு வரி", array('plugin' => false, "controller" => "demands", "action" => "htindex")); ?></li>
+  							<li><?= $this->Html->link("குடிநீர் வரி", array('plugin' => false, "controller" => "demands", "action" => "wtindex")); ?></li>
+  							<li><?= $this->Html->link("தொழில் வரி", array('plugin' => false, "controller" => "demands", "action" => "ptindex")); ?></li>
+  							<li><?= $this->Html->link("டி & ஓ வியாபாரிகள்", array('plugin' => false, "controller" => "demands", "action" => "doindex")); ?></li>
   						</ul>
   					</li>
   					<li class = "dropdown" data-dropdown="dropdown">
-  						<?= $this->Html->link("Accounts", "#", array("class" => 'dropdown-toggle') ) ?>
+  						<?= $this->Html->link("கணக்குகள்", "#", array("class" => 'dropdown-toggle') ) ?>
   						<ul class = "dropdown-menu">
-  							<li><?= $this->Html->link("Account 1", array('plugin' => false, "controller" => "accounts", "action" => "account1")); ?></li>
-  							<li><?= $this->Html->link("Account 2", array('plugin' => false, "controller" => "accounts", "action" => "account2")); ?></li>
-  							<li><?= $this->Html->link("Account 3", array('plugin' => false, "controller" => "accounts", "action" => "account3")); ?></li>
-  							<li><?= $this->Html->link("Account 4", array('plugin' => false, "controller" => "accounts", "action" => "account4")); ?></li>
-  							<li><?= $this->Html->link("Account 5", array('plugin' => false, "controller" => "accounts", "action" => "account5")); ?></li>
-  							<li><?= $this->Html->link("Account 6", array('plugin' => false, "controller" => "accounts", "action" => "account6")); ?></li>
+  							<li><?= $this->Html->link("கணக்கு எண் 1", array('plugin' => false, "controller" => "accounts", "action" => "account1")); ?></li>
+  							<li><?= $this->Html->link("கணக்கு எண் 2", array('plugin' => false, "controller" => "accounts", "action" => "account2")); ?></li>
+  							<li><?= $this->Html->link("கணக்கு எண் 3", array('plugin' => false, "controller" => "accounts", "action" => "account3")); ?></li>
+  							<li><?= $this->Html->link("கணக்கு எண் 4", array('plugin' => false, "controller" => "accounts", "action" => "account4")); ?></li>
+  							<li><?= $this->Html->link("கணக்கு எண் 5", array('plugin' => false, "controller" => "accounts", "action" => "account5")); ?></li>
+  							<li><?= $this->Html->link("கணக்கு எண் 6", array('plugin' => false, "controller" => "accounts", "action" => "account6")); ?></li>
   						</ul>
   					</li>
-  					<li><?= $this->Html->link("Reports", array('plugin' => false, "controller" => "reports", "action" => "index")); ?></li>
+  					<li><?= $this->Html->link("அறிக்கைகள்", array('plugin' => false, "controller" => "reports", "action" => "index")); ?></li>
   				</ul>
   				<ul class = "nav">
   					<?php if($session->check('Auth.User.id')){
   						$user = $session->read('Auth.User'); 
-  						echo '<li><a>You are logined as <b>'.$user['username'].'</b></a></li>';
-  						echo '<li>'.$this->Html->link("Logout", array('plugin' => false, "controller" => "users", "action" => "logout")).'</li>';
+  						echo '<li><a><b>'.$user['username'].'</b> - தங்களது பயன்பாட்டுத் தளத்திற்குள் நுழைந்துள்ளீர்கள்</a></li>';
+  						echo '<li>'.$this->Html->link("வெளியேறு", array('plugin' => false, "controller" => "users", "action" => "logout")).'</li>';
   					}else{
-  						echo '<li>'.$this->Html->link("Login", array('plugin' => false, "controller" => "users", "action" => "login")).'</li>';
-							echo '<li>'.$this->Html->link("Register", array('plugin' => false, "controller" => "users", "action" => "register")).'</li>';
+  						echo '<li>'.$this->Html->link("நுழை", array('plugin' => false, "controller" => "users", "action" => "login")).'</li>';
+							echo '<li>'.$this->Html->link("பதிவு செய்", array('plugin' => false, "controller" => "users", "action" => "register")).'</li>';
   					}?>
   				</ul>
   			</div>
