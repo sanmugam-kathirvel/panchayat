@@ -42,7 +42,7 @@
 		  return $xls_fmt;
     }
 
-		function form11_reoprt(){
+		function form11_report(){
 			$start_date = $_POST['year'].'-'.$_POST['month'].'-01';
 			$end_date = date('Y,m,d', strtotime($_POST['year'].'-'.((int)$_POST['month'] + 1).'-00'));
 			if(!empty($start_date) && !empty($end_date)){
@@ -310,7 +310,7 @@
 				$this->redirect(array('action'=>'index'));
 			}
 		}
-		function form23_reoprt(){
+		function form23_report(){
 			$start_date = $_POST['year'].'-'.$_POST['month'].'-01';
 			$end_date = date('Y,m,d', strtotime($_POST['year'].'-'.((int)$_POST['month'] + 1).'-00'));
 			if(!empty($start_date) && !empty($end_date)){
@@ -427,7 +427,7 @@
 				$this->redirect(array('action'=>'index'));
 			}
 		}
-		function form26_reoprt(){
+		function form26_report(){
 			$start_date = $_POST['year'].'-'.$_POST['month'].'-01';
 			$end_date = date('Y,m,d', strtotime($_POST['year'].'-'.((int)$_POST['month'] + 1).'-00'));
 			if(!empty($start_date) && !empty($end_date)){

@@ -12,8 +12,8 @@
 	for($i = 2012; $i <= 2016; $i++){
 		$years[$i] = $i;
 	}
-	echo $form->create('Index', array('method' => 'get', 'url' => array('controller' => 'cashbook', 'action' => 'form'.$report_number.'_report')));
+	echo $form->create('Index', array('method' => 'get', 'url' => array('controller' => 'reports', 'action' => 'form30_report')));
 	echo $form->input('month', array('name' => 'month', 'options' => $months));
 	echo $form->input('year', array('name' => 'year', 'options' => $years));
-	echo $form->end('Submit').'<a href="../../reports/index">Back to reports</a>'; 
+	echo $form->end('Submit').'<a href="index">Back to reports</a>'; 
 ?>

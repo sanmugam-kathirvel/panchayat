@@ -247,5 +247,39 @@
 				$this->redirect(array('action'=>'bookindex'));
 			}
 		}
+		function book_issue(){
+			$book_names = $this->Book->find('list', array(
+				'fields' => 'Book.book_name'
+			));
+			$this->set(compact('book_names'));
+			if(!empty($this->data)){
+				$this->BookDetail->set($this->data);
+				if($this->BookDetail->validates()){
+					$this->BookDetail->id = $this->data['BookDetail']['book_detail_id'];
+					if($this->BookDetail->saveField('status', 'used')){
+						$this->Session->setFlash(__('Book issued', true));
+						$this->redirect(array('action' => 'bookindex'));
+					}else{
+						$this->Session->setFlash(__('Book not issued', true));
+						$this->redirect(array('action' => 'book_issue'));
+					}
+				}else{
+					$this->Session->setFlash(__('Invalid operation', true));
+					$this->redirect(array('action' => 'book_issue'));
+				}
+			}
+ 		}
+		function get_book_details(){
+			$this->layout = false;
+      $bookdetail = $this->BookDetail->find('all', array(
+        'conditions' => array(
+        	'BookDetail.book_id' => $_POST['book_type_id'],
+        	'BookDetail.status' => 'available'
+				),
+        'contain' => false
+      ));
+       echo json_encode($bookdetail);
+       exit; 
+		}
 	}
 ?>

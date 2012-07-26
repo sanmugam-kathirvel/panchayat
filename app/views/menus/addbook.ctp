@@ -1,16 +1,16 @@
-<p>Add Book Details</p>
+<p>புதிய ரசீது புத்தகத் தகவல் சேர்த்தல்</p>
 <?php
 	$book_names = array();
 	foreach($books as $book){
 		$book_names[$book['Book']['id']] =  $book['Book']['book_name'];
 	}
 	echo $form->create('BookDetail', array( 'url' => array('controller' => 'menus', 'action' => 'addbook')));
-	echo $form->input('book_id', array('type' => 'select', 'options' => $book_names, 'label' => 'Book Name'));
-	echo $form->input('purchase_date', array('id' => 'datepicker', 'type' => 'text'));
-	echo $form->input('company_name');
-	echo $form->input('book_number');
-	echo $form->input('start_receipt_number');
-	echo $form->input('end_receipt_number');
+	echo $form->input('book_id', array('type' => 'select', 'options' => $book_names, 'label' => 'புத்தகத்தின் பெயர்'));
+	echo $form->input('purchase_date', array('label' => 'வாங்கிய தேதி', 'id' => 'datepicker', 'type' => 'text'));
+	echo $form->input('company_name', array('label' => 'நிறுவனத்தின் பெயர்'));
+	echo $form->input('book_number', array('label' => 'புத்தகத்தின் எண்'));
+	echo $form->input('start_receipt_number', array('label' => 'ஆரம்ப ரசீது எண்'));
+	echo $form->input('end_receipt_number', array('label' => 'இருதி ரசீது எண்'));
 	echo $form->input('status', array('type' => 'hidden', 'value' => 'available'));
 	echo $form->end('Submit');
 ?>

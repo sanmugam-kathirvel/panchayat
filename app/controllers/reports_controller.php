@@ -2,7 +2,7 @@
 	App::import('Vendor', 'Writer', array('file' => 'Spreadsheet'.DS.'Writer.php'));
 	class ReportsController extends AppController {
 
-		var $uses = array('StockIssue', 'CashToBank', 'Expense', 'Income', 'HousetaxReceipt', 'WatertaxReceipt', 'ProfessionaltaxReceipt', 'DotaxReceipt', 'OthersReceipt', 'HtDemand', 'PtDemand', 'WtDemand', 'DoDemand', 'Header', 'Purchase', 'PurchaseItem');
+		var $uses = array('Scrap', 'StockIssue', 'CashToBank', 'Expense', 'Income', 'HousetaxReceipt', 'WatertaxReceipt', 'ProfessionaltaxReceipt', 'DotaxReceipt', 'OthersReceipt', 'HtDemand', 'PtDemand', 'WtDemand', 'DoDemand', 'Header', 'Purchase', 'PurchaseItem');
 		function index(){
 
 		}
@@ -16,9 +16,11 @@
 			$fmt_left = $workbook->addFormat();
 			$fmt_left->setAlign('left');
 			$fmt_left->setSize(12);
+			$fmt_left->setTextWrap();
 			$fmt_right = $workbook->addFormat();
 			$fmt_right->setAlign('right');
 			$fmt_right->setSize(12);
+			$fmt_right->setTextWrap();
 			$fmt_center = $workbook->addFormat();
 			$fmt_center->setAlign('center');
 			$fmt_center->setSize(12);
@@ -901,7 +903,7 @@
 			foreach($stocks as $stock){
 				$stock_items = $this->PurchaseItem->find('all', array(
 					'conditions' => array('PurchaseItem.purchase_id' => $stock['Purchase']['id']),
-					'orders' => 'PurchaseItem.id'
+					'order' => 'PurchaseItem.id'
 				));
 				foreach($stock_items as $stock_item){
 					$records[$index]['type'] = 'purchase';
@@ -916,7 +918,7 @@
 			}
 			$stocks = $this->StockIssue->find('all', array(
 				'conditions' => array('StockIssue.issue_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
-				'orders' => 'StockIssue.issue_date'
+				'order' => 'StockIssue.issue_date'
 			));
 			foreach($stocks as $stock){
 				$records[$index]['type'] = 'issue';
@@ -959,12 +961,6 @@
 			$this->redirect(array('action'=>'index'));
 		}
 		function form21_report(){
-			// $i = 0;
-			// $xls_fmt = $this->xls_format('Form_21');
-			// $xls_fmt['worksheet']->write($i, 0, 'ஊராட்சி படிவம் எண்: 21', $xls_fmt['fmt_left_title']);
-			// $xls_fmt['worksheet']->setMerge($i, 0, $i++, 9);
-			// $xls_fmt['worksheet']->write($i, 0, 'கழிவு செய்யப்பட்ட பொருள்களின் இருப்பு பதிவேடு', $xls_fmt['fmt_center']);
-			// $xls_fmt['worksheet']->setMerge($i++, 0, $i, 9);
 			$i = 0;
 			$xls_fmt = $this->xls_format('Form_21');
 			$xls_fmt['worksheet']->write($i, 0, 'ஊராட்சி படிவம் எண்: 21', $xls_fmt['fmt_left_title']);
@@ -984,14 +980,335 @@
 			$xls_fmt['worksheet']->write($i, 8, 'ஏலம் உறுதி செய்த', $xls_fmt['fmt_center']);
 			$xls_fmt['worksheet']->setMerge($i, 8, $i++, 9);
 			$titles = array('விபரம்', 'எண்ணிக்கை', 'நாள்', 'தொகை', 'நாள்', 'தொகை', 'நாள்', 'தொகை');
-			$xls_fmt['worksheet']->writeRow($i, 2, $titles, $xls_fmt['fmt_center']);
+			$xls_fmt['worksheet']->writeRow($i++, 2, $titles, $xls_fmt['fmt_center']);
 			$xls_fmt['worksheet']->setColumn(0, 0, 10.00);
 			$xls_fmt['worksheet']->setColumn(1, 1, 25.00);
 			$xls_fmt['worksheet']->setColumn(2, 2, 30.00);
 			$xls_fmt['worksheet']->setColumn(3, 9, 14.00);
+			$records = $this->Scrap->find('all', array(
+				'conditions' => array('Scrap.estimation_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'order' => 'Scrap.estimation_date ASC'
+			));
+			$sno = 1;
+			foreach($records as $record){
+				$xls_fmt['worksheet']->writeNumber($i, 0, $sno++);
+				$xls_fmt['worksheet']->write($i, 2, $record['Scrap']['scrap_detail'], $xls_fmt['fmt_left']);
+				$xls_fmt['worksheet']->writeNumber($i, 3, $record['Scrap']['quantity']);
+				$xls_fmt['worksheet']->write($i, 4, $record['Scrap']['estimation_date'], $xls_fmt['fmt_right']);
+				$xls_fmt['worksheet']->writeNumber($i, 5, $record['Scrap']['estimation_amount']);
+				if($record['Scrap']['tender_status'] == 'sold'){
+					$xls_fmt['worksheet']->write($i, 6, $record['Scrap']['tender_date'], $xls_fmt['fmt_right']);
+					$xls_fmt['worksheet']->writeNumber($i, 7, $record['Scrap']['tender_amount']);
+					$xls_fmt['worksheet']->write($i, 8, $record['Scrap']['tender_confirmation_date'], $xls_fmt['fmt_right']);
+					$xls_fmt['worksheet']->writeNumber($i, 9, $record['Scrap']['tender_confirmation_amount']);
+				}
+				$i++;
+			}
 			$xls_fmt['workbook']->send('Form_21.xls');
 			$xls_fmt['workbook']->close();
 			$this->redirect(array('action'=>'index'));
+		}
+		function form30_report(){
+			$start_date = $_POST['year'].'-'.$_POST['month'].'-01';
+			$end_date = date('Y,m,d', strtotime($_POST['year'].'-'.((int)$_POST['month'] + 1).'-00'));
+			$month = date('d, m, Y', strtotime($_POST['year'].'-'.((int)$_POST['month'] + 1).'-00'));
+			if(!empty($start_date) && !empty($end_date)){
+				$i = 0;
+				$xls_fmt = $this->xls_format('Form_30');
+				$xls_fmt['worksheet']->write($i, 0, 'மாதாந்திர கணக்குகள் ஊராட்சியின் ஒப்புதலுக்கு வைக்கப்படும் சான்று மற்றும் படிவம்', $xls_fmt['fmt_center']);
+				$xls_fmt['worksheet']->setMerge($i, 0, $i++, 7);
+				$xls_fmt['worksheet']->write($i, 0, 'ஊராட்சி படிவம் எண்: 30', $xls_fmt['fmt_left_title']);
+				$xls_fmt['worksheet']->setMerge($i, 0, $i, 3);
+				$xls_fmt['worksheet']->write($i, 4, 'மாதம்: '.$month, $xls_fmt['fmt_right_title']);
+				$xls_fmt['worksheet']->setMerge($i, 4, $i++, 7);
+				$titles = array('வ எண்', 'வரவின் தலைப்பு', 'நடப்பு மாதம் முடிய வரவினம் ரூ.', 'நடப்பு மாதம் முடிய உள்ள வரவினம் ரூ.', 'வ எண்', 'செலவின் தலைப்பு', 'நடப்பு மாதம் முடிய செலவினம் ரூ.', 'நடப்பு மாதம் முடிய உள்ள செலவினம் ரூ.');
+				$xls_fmt['worksheet']->writeRow($i++, 0, $titles, $xls_fmt['fmt_center']);
+				$xls_fmt['worksheet']->setColumn(0, 0, 10.00);
+				$xls_fmt['worksheet']->setColumn(1, 1, 53.00);
+				$xls_fmt['worksheet']->setColumn(2, 3, 16.00);
+				$xls_fmt['worksheet']->setColumn(4, 4, 10.00);
+				$xls_fmt['worksheet']->setColumn(5, 5, 53.00);
+				$xls_fmt['worksheet']->setColumn(6, 7, 16.00);
+				$records = array();
+				$sno = 1;
+				$index = 0;
+				$record = $this->HousetaxReceipt->find('all',array(
+					'fields' => array('SUM(HousetaxReceipt.ht_pending) as ht_pending', 'SUM(HousetaxReceipt.ht_current) as ht_current', 'SUM(HousetaxReceipt.lc_pending) as lc_pending', 'SUM(HousetaxReceipt.lc_current) as lc_current'),
+					'conditions' => array('HousetaxReceipt.receipt_date BETWEEN ? AND ?' => array($start_date, $end_date))
+				));
+				foreach($record as $row){
+					$records[$index]['sno'] = $sno++;
+					$records[$index]['income_name'] = 'வீட்டு வரி';
+					$records[$index]['current_month'] = (double)$row[0]['ht_pending'] + (double)$row[0]['ht_current'];
+					$records[$index + 1]['sno'] = $sno++;
+					$records[$index + 1]['income_name'] = 'நூலக வரி';
+					$records[$index + 1]['current_month'] = (double)$row[0]['lc_pending'] + (double)$row[0]['lc_current'];
+				}
+				$record = $this->HousetaxReceipt->find('all',array(
+					'fields' => array('SUM(HousetaxReceipt.ht_pending) as ht_pending', 'SUM(HousetaxReceipt.ht_current) as ht_current', 'SUM(HousetaxReceipt.lc_pending) as lc_pending', 'SUM(HousetaxReceipt.lc_current) as lc_current'),
+					'conditions' => array('HousetaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date))
+				));
+				foreach($record as $row){
+					$records[$index++]['till_current_month'] = (double)$row[0]['ht_pending'] + (double)$row[0]['ht_current'];
+					$records[$index++]['till_current_month'] = (double)$row[0]['lc_pending'] + (double)$row[0]['lc_current'];
+				}
+				$record = $this->ProfessionaltaxReceipt->find('all',array(
+					'fields' => array('SUM(ProfessionaltaxReceipt.part1_pending) as part1_pending', 'SUM(ProfessionaltaxReceipt.part1_current) as part1_current', 'SUM(ProfessionaltaxReceipt.part2_pending) as part2_pending', 'SUM(ProfessionaltaxReceipt.part2_current) as part2_current'),
+					'conditions' => array('ProfessionaltaxReceipt.receipt_date BETWEEN ? AND ?' => array($start_date, $end_date))
+				));
+				foreach($record as $row){
+					$records[$index]['sno'] = $sno++;
+					$records[$index]['income_name'] = 'தொழில் வரி';
+					$records[$index]['current_month'] = (double)$row[0]['part1_pending'] + (double)$row[0]['part1_current'] + (double)$row[0]['part2_pending'] + (double)$row[0]['part2_current'];
+				}
+				$record = $this->ProfessionaltaxReceipt->find('all',array(
+					'fields' => array('SUM(ProfessionaltaxReceipt.part1_pending) as part1_pending', 'SUM(ProfessionaltaxReceipt.part1_current) as part1_current', 'SUM(ProfessionaltaxReceipt.part2_pending) as part2_pending', 'SUM(ProfessionaltaxReceipt.part2_current) as part2_current'),
+					'conditions' => array('ProfessionaltaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date))
+				));
+				foreach($record as $row){
+					$records[$index++]['till_current_month'] = (double)$row[0]['part1_pending'] + (double)$row[0]['part1_current'] + (double)$row[0]['part2_pending'] + (double)$row[0]['part2_current'];
+				}
+				$record = $this->WatertaxReceipt->find('all',array(
+					'fields' => array('SUM(WatertaxReceipt.wt_pending) as wt_pending', 'SUM(WatertaxReceipt.wt_current) as wt_current'),
+					'conditions' => array('WatertaxReceipt.receipt_date BETWEEN ? AND ?' => array($start_date, $end_date))
+				));
+				foreach($record as $row){
+					$records[$index]['sno'] = $sno++;
+					$records[$index]['income_name'] = 'குடிநீர் வரி';
+					$records[$index]['current_month'] = (double)$row[0]['wt_pending'] + (double)$row[0]['wt_current'];
+				}
+				$record = $this->WatertaxReceipt->find('all',array(
+					'fields' => array('SUM(WatertaxReceipt.wt_pending) as wt_pending', 'SUM(WatertaxReceipt.wt_current) as wt_current'),
+					'conditions' => array('WatertaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date))
+				));
+				foreach($record as $row){
+					$records[$index++]['till_current_month'] = (double)$row[0]['wt_pending'] + (double)$row[0]['wt_current'];
+				}
+				$headers = $this->Header->find('all', array(
+					'conditions' => array('Header.account_id' => 1, 'Header.header_type' => 'income', 'Header.receipt' => 'yes')
+				));
+				foreach($headers as $header){
+					$record = $this->OthersReceipt->find('all',array(
+						'fields' => array('SUM(OthersReceipt.amount) as amount'),
+						'conditions' => array('OthersReceipt.receipt_date BETWEEN ? AND ?' => array($start_date, $end_date), 'OthersReceipt.header_id' => $header['Header']['id'])
+					));
+					foreach($record as $row){
+						$records[$index]['sno'] = $sno++;
+						$records[$index]['income_name'] = $header['Header']['header_name'];
+						$records[$index]['current_month'] = $row[0]['amount'];
+					}
+					$record = $this->OthersReceipt->find('all',array(
+						'fields' => array('SUM(OthersReceipt.amount) as amount'),
+						'conditions' => array('OthersReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date), 'OthersReceipt.header_id' => $header['Header']['id'])
+					));
+					foreach($record as $row){
+						$records[$index++]['till_current_month'] = $row[0]['amount'];
+					}
+				}
+				$headers = $this->Header->find('all', array(
+					'conditions' => array('Header.account_id' => 1, 'Header.header_type' => 'income', 'Header.receipt' => 'no')
+				));
+				foreach($headers as $header){
+					$record = $this->Income->find('all',array(
+						'fields' => array('SUM(Income.income_amount) as income_amount'),
+						'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($start_date, $end_date), 'Income.header_id' => $header['Header']['id'])
+					));
+					foreach($record as $row){
+						$records[$index]['sno'] = $sno++;
+						$records[$index]['income_name'] = $header['Header']['header_name'];
+						$records[$index]['current_month'] = $row[0]['income_amount'];
+					}
+					$record = $this->Income->find('all',array(
+						'fields' => array('SUM(Income.income_amount) as income_amount'),
+						'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date), 'Income.header_id' => $header['Header']['id'])
+					));
+					foreach($record as $row){
+						$records[$index++]['till_current_month'] = $row[0]['income_amount'];
+					}
+				}
+				$i_copy = $i;
+				$current_total = 0;
+				$till_current_total = 0;
+				$xls_fmt['worksheet']->write($i++, 1, '(அ)ஊராட்சி நிதி', $xls_fmt['fmt_left_title']);
+				$i++;
+				foreach($records as $record){
+					$xls_fmt['worksheet']->writeNumber($i, 0, $record['sno']);
+					$xls_fmt['worksheet']->write($i, 1, $record['income_name'], $xls_fmt['fmt_left']);
+					$xls_fmt['worksheet']->writeNumber($i, 2, $record['current_month']);
+					$xls_fmt['worksheet']->writeNumber($i++, 3, $record['till_current_month']);
+					$current_total += (double)$record['current_month'];
+					$till_current_total += (double)$record['till_current_month'];
+				}
+				$xls_fmt['worksheet']->write(++$i, 1, '(அ)உள்மொத்தம்', $xls_fmt['fmt_center']);
+				$xls_fmt['worksheet']->writeNumber($i, 2, $current_total);
+				$xls_fmt['worksheet']->writeNumber($i++, 3, $till_current_total);
+				$xls_fmt['worksheet']->write(++$i, 1, '(ஆ)TWAD / TNEB DIST. COLLECTOR நிதி கணக்கு', $xls_fmt['fmt_left']);
+				$i += 2;
+				$sno = 1;
+				$current_total = 0;
+				$till_current_total = 0;
+				$headers = $this->Header->find('all', array(
+					'conditions' => array('Header.account_id' => 2, 'Header.header_type' => 'income', 'Header.receipt' => 'no')
+				));
+				foreach($headers as $header){
+					$record = $this->Income->find('all',array(
+						'fields' => array('SUM(Income.income_amount) as income_amount'),
+						'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($start_date, $end_date), 'Income.header_id' => $header['Header']['id'])
+					));
+					foreach($record as $row){
+						$xls_fmt['worksheet']->writeNumber($i, 0, $sno++);
+						$xls_fmt['worksheet']->write($i, 1, $header['Header']['header_name'], $xls_fmt['fmt_left']);
+						$xls_fmt['worksheet']->writeNumber($i, 2, $row[0]['income_amount']);
+						$current_total += (double)$row[0]['income_amount'];
+					}
+					$record = $this->Income->find('all',array(
+						'fields' => array('SUM(Income.income_amount) as income_amount'),
+						'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date), 'Income.header_id' => $header['Header']['id'])
+					));
+					foreach($record as $row){
+						$xls_fmt['worksheet']->writeNumber($i++, 3, $row[0]['income_amount']);
+						$till_current_total += (double)$row[0]['income_amount'];
+					}
+				}
+				$xls_fmt['worksheet']->write(++$i, 1, '(ஆ)உள்மொத்தம்', $xls_fmt['fmt_center']);
+				$xls_fmt['worksheet']->writeNumber($i, 2, $current_total);
+				$xls_fmt['worksheet']->writeNumber($i++, 3, $till_current_total);
+				$xls_fmt['worksheet']->write(++$i, 1, '(இ)திட்ட நிதி', $xls_fmt['fmt_left_title']);
+				$i += 2;
+				$sno = 1;
+				$current_total = 0;
+				$till_current_total = 0;
+				$headers = $this->Header->find('all', array(
+					'conditions' => array('Header.account_id' => 3, 'Header.header_type' => 'income', 'Header.receipt' => 'no')
+				));
+				foreach($headers as $header){
+					$record = $this->Income->find('all',array(
+						'fields' => array('SUM(Income.income_amount) as income_amount'),
+						'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($start_date, $end_date), 'Income.header_id' => $header['Header']['id'])
+					));
+					foreach($record as $row){
+						$xls_fmt['worksheet']->writeNumber($i, 0, $sno++);
+						$xls_fmt['worksheet']->write($i, 1, $header['Header']['header_name'], $xls_fmt['fmt_left']);
+						$xls_fmt['worksheet']->writeNumber($i, 2, $row[0]['income_amount']);
+						$current_total += (double)$row[0]['income_amount'];
+					}
+					$record = $this->Income->find('all',array(
+						'fields' => array('SUM(Income.income_amount) as income_amount'),
+						'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date), 'Income.header_id' => $header['Header']['id'])
+					));
+					foreach($record as $row){
+						$xls_fmt['worksheet']->writeNumber($i++, 3, $row[0]['income_amount']);
+						$till_current_total += (double)$row[0]['income_amount'];
+					}
+				}
+				$xls_fmt['worksheet']->write(++$i, 1, '(இ)உள்மொத்தம்', $xls_fmt['fmt_center']);
+				$xls_fmt['worksheet']->writeNumber($i, 2, $current_total);
+				$xls_fmt['worksheet']->writeNumber($i++, 3, $till_current_total);
+				// echo '<pre>';
+				// print_r($records);
+				// die;(ஆ)உள்மொத்தம்
+				$xls_fmt['worksheet']->write($i_copy++, 5, '(அ)ஊராட்சி நிதி', $xls_fmt['fmt_left_title']);
+				$i_copy++;
+				$sno = 1;
+				$current_total = 0;
+				$till_current_total = 0;
+				$headers = $this->Header->find('all', array(
+					'conditions' => array('Header.account_id' => 1, 'Header.header_type' => 'expense', 'Header.receipt' => 'no')
+				));
+				foreach($headers as $header){
+					$record = $this->Expense->find('all',array(
+						'fields' => array('SUM(Expense.expense_amount) as expense_amount'),
+						'conditions' => array('Expense.expense_date BETWEEN ? AND ?' => array($start_date, $end_date), 'Expense.header_id' => $header['Header']['id'])
+					));
+					foreach($record as $row){
+						$xls_fmt['worksheet']->writeNumber($i_copy, 4, $sno++);
+						$xls_fmt['worksheet']->write($i_copy, 5, $header['Header']['header_name'], $xls_fmt['fmt_left']);
+						$xls_fmt['worksheet']->writeNumber($i_copy, 6, $row[0]['expense_amount']);
+						$current_total += (double)$row[0]['expense_amount'];
+					}
+					$record = $this->Expense->find('all',array(
+						'fields' => array('SUM(Expense.expense_amount) as expense_amount'),
+						'conditions' => array('Expense.expense_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date), 'Expense.header_id' => $header['Header']['id'])
+					));
+					foreach($record as $row){
+						$xls_fmt['worksheet']->writeNumber($i_copy++, 7, $row[0]['expense_amount']);
+						$till_current_total += (double)$row[0]['expense_amount'];
+					}
+				}
+				$xls_fmt['worksheet']->write(++$i_copy, 5, '(அ)உள்மொத்தம்', $xls_fmt['fmt_center']);
+				$xls_fmt['worksheet']->writeNumber($i_copy, 6, $current_total);
+				$xls_fmt['worksheet']->writeNumber($i_copy++, 7, $till_current_total);
+				$xls_fmt['worksheet']->write(++$i_copy, 5, '(ஆ)TWAD / TNEB DIST. COLLECTOR நிதி கணக்கு', $xls_fmt['fmt_left']);
+				$i_copy += 2;
+				$sno = 1;
+				$current_total = 0;
+				$till_current_total = 0;
+				$headers = $this->Header->find('all', array(
+					'conditions' => array('Header.account_id' => 2, 'Header.header_type' => 'expense', 'Header.receipt' => 'no')
+				));
+				foreach($headers as $header){
+					$record = $this->Expense->find('all',array(
+						'fields' => array('SUM(Expense.expense_amount) as expense_amount'),
+						'conditions' => array('Expense.expense_date BETWEEN ? AND ?' => array($start_date, $end_date), 'Expense.header_id' => $header['Header']['id'])
+					));
+					foreach($record as $row){
+						$xls_fmt['worksheet']->writeNumber($i_copy, 4, $sno++);
+						$xls_fmt['worksheet']->write($i_copy, 5, $header['Header']['header_name'], $xls_fmt['fmt_left']);
+						$xls_fmt['worksheet']->writeNumber($i_copy, 6, $row[0]['expense_amount']);
+						$current_total += (double)$row[0]['expense_amount'];
+					}
+					$record = $this->Expense->find('all',array(
+						'fields' => array('SUM(Expense.expense_amount) as expense_amount'),
+						'conditions' => array('Expense.expense_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date), 'Expense.header_id' => $header['Header']['id'])
+					));
+					foreach($record as $row){
+						$xls_fmt['worksheet']->writeNumber($i_copy++, 7, $row[0]['expense_amount']);
+						$till_current_total += (double)$row[0]['expense_amount'];
+					}
+				}
+				$xls_fmt['worksheet']->write(++$i_copy, 5, '(ஆ)உள்மொத்தம்', $xls_fmt['fmt_center']);
+				$xls_fmt['worksheet']->writeNumber($i_copy, 6, $current_total);
+				$xls_fmt['worksheet']->writeNumber($i_copy++, 7, $till_current_total);
+				$xls_fmt['worksheet']->write(++$i_copy, 5, '(இ)திட்ட நிதி', $xls_fmt['fmt_left_title']);
+				$i_copy += 2;
+				$current_total = 0;
+				$till_current_total = 0;
+				$headers = $this->Header->find('all', array(
+					'conditions' => array('Header.account_id' => 3, 'Header.header_type' => 'expense', 'Header.receipt' => 'no')
+				));
+				foreach($headers as $header){
+					$record = $this->Expense->find('all',array(
+						'fields' => array('SUM(Expense.expense_amount) as expense_amount'),
+						'conditions' => array('Expense.expense_date BETWEEN ? AND ?' => array($start_date, $end_date), 'Expense.header_id' => $header['Header']['id'])
+					));
+					foreach($record as $row){
+						$xls_fmt['worksheet']->writeNumber($i_copy, 4, $sno++);
+						$xls_fmt['worksheet']->write($i_copy, 5, $header['Header']['header_name'], $xls_fmt['fmt_left']);
+						$xls_fmt['worksheet']->writeNumber($i_copy, 6, $row[0]['expense_amount']);
+						$current_total += (double)$row[0]['expense_amount'];
+					}
+					$record = $this->Expense->find('all',array(
+						'fields' => array('SUM(Expense.expense_amount) as expense_amount'),
+						'conditions' => array('Expense.expense_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date), 'Expense.header_id' => $header['Header']['id'])
+					));
+					foreach($record as $row){
+						$xls_fmt['worksheet']->writeNumber($i_copy++, 7, $row[0]['expense_amount']);
+						$till_current_total += (double)$row[0]['expense_amount'];
+					}
+				}
+				$xls_fmt['worksheet']->write(++$i_copy, 5, '(இ)உள்மொத்தம்', $xls_fmt['fmt_center']);
+				$xls_fmt['worksheet']->writeNumber($i_copy, 6, $current_total);
+				$xls_fmt['worksheet']->writeNumber($i_copy++, 7, $till_current_total);
+				$xls_fmt['workbook']->send('Form_30.xls');
+				$xls_fmt['workbook']->close();
+				$this->redirect(array('action'=>'index'));
+			}else{
+				$this->Session->setFlash(__('Indiavalid operation', true));
+				$this->redirect(array('action'=>'index'));
+			}
+		}
+		function form30_index(){
+			
 		}
 	}
 ?>
