@@ -1,26 +1,26 @@
-<p>Purchase</p>
+<h2>கொள்முதல் விபரம்</h2>
 <?php
 	$stock_list = array();
 	foreach($stocks as $stock){
 		$stock_list[$stock['Stock']['id']] = $stock['Stock']['item_name'];
 	}
 	echo $form->create('Purchase', array( 'url' => array('controller' => 'purchases', 'action' => 'purchase')));
-	echo $form->input('company_name');
-	echo $form->input('purchase_date', array('type' => 'text', 'id' => 'datepicker1'));
-	echo $form->input('voucher_number');
-	echo $form->input('cheque_number');
-	echo $form->input('cheque_date', array('type' => 'text', 'id' => 'datepicker'));
-	echo $form->input('tax_amount', array('class' => 'tax_amount','value' => 0));
-	echo $form->input('total_amt', array( 'class' => 'grand_total','value' => 0, 'readonly' => 'readonly'));
+	echo $form->input('company_name', array('label' => 'நிறுவனத்தின் பெயர்'));
+	echo $form->input('purchase_date', array('label' => 'வாங்கிய தேதி', 'type' => 'text', 'id' => 'datepicker1'));
+	echo $form->input('voucher_number', array('label' => 'செலவுச் சீட்டு எண்'));
+	echo $form->input('cheque_number', array('label' => 'காசோலை எண்'));
+	echo $form->input('cheque_date', array('label' => 'காசோலை வழங்கிய தேதி', 'type' => 'text', 'id' => 'datepicker'));
+	echo $form->input('tax_amount', array('label' => 'வரித் தொகை', 'class' => 'tax_amount','value' => 0));
+	echo $form->input('total_amt', array('label' => 'மொத்தத் தொகை', 'class' => 'grand_total','value' => 0, 'readonly' => 'readonly'));
 	echo "<div class='new_field'>";
 		echo "<table>";
 			echo "<tbody class= 'add_new_field'>";
 					echo "<tr>";
-						echo "<th>Item Description</th>";
-						echo "<th>Available stock</th>";
-						echo "<th>Item Quantity</th>";
-						echo "<th>Unit Cost</th>";
-						echo "<th>Total Amount</th>";
+						echo "<th>பொருளின் விபரம்</th>";
+						echo "<th>கையிருப்பு அளவு</th>";
+						echo "<th>பொருளின் அளவு</th>";
+						echo "<th>ஒன்றின் விலை</th>";
+						echo "<th>மொத்த விலை</th>";
 					echo "</tr>";
 					for($i = 0; $i < 20 ; $i++){
 					  echo "<tr id ='new_field' class='new_field_".$i."'>";
@@ -35,11 +35,11 @@
 		echo "</table>";
 		echo "</div>";
 	echo "<div class='link'>";	
-		echo $html->link('add new', '', array('class' => 'add_field'));
+		echo $html->link('புதிதாக சேர்', '', array('class' => 'add_field'));
 		echo " | ";
-		echo $html->link('remove', '', array('class' => 'remove_field'));
+		echo $html->link('நீக்கு', '', array('class' => 'remove_field'));
 	echo "</div>";
-	echo $form->end('Submit');
+	echo $form->end('அனுப்பு');
 ?>
 <script>
 $(document).ready(function(){

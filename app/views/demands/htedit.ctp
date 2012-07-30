@@ -1,4 +1,4 @@
-<p>Edit House Tax Demand</p>
+<h2>வீட்டு வரி கேட்பு விபரங்களைத் திருத்து</h2>
 <?php
 	$hamlet_info = array();
 	foreach($hamlet as $ham){
@@ -12,7 +12,7 @@
 	echo $form->input('name', array('label' => 'பெயர்'));
 	echo $form->input('father_name', array('label' => 'தந்தை பெயர்'));
 	echo $form->input('address', array('label' => 'முகவரி'));
-	echo $form->input('hamlet_id', array('type' => 'select','options'=> $hamlet, 'label' => 'குக்கிராமத்தின் குறியீடு'));
+	echo $form->input('hamlet_id', array('type' => 'select','options'=> $hamlet_info, 'label' => 'குக்கிராமத்தின் குறியீடு'));
 	echo "<div class='input inline'>";
 		echo "<table><tr>";
 			echo "<td></td>";
@@ -32,5 +32,5 @@
 		echo '<td>'.$form->input('lc_current', array('label' => false, 'class' => 'small')).'</td>';
 		echo '</tr></table>';
 	echo '</div>';
-	echo $form->end('Submit');
+	echo $form->end('அனுப்பு');
 ?>

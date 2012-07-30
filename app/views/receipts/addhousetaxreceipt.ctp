@@ -1,34 +1,34 @@
-<p>Add House Tax Receipt</p>
+<h2>புதிய வீட்டு வரி ரசீது விபரங்களைச் சேர்</h2>
 <?php
 	$hamlet_info = array();
 	foreach($hamlet as $ham){
 		$hamlet_info[$ham['Hamlet']['id']] =  $ham['Hamlet']['hamlet_code'];
 	}
 	echo $form->create('HousetaxReceipt', array( 'url' => array('controller' => 'receipts', 'receipts' => 'addhousetaxreceipt')));
-	echo $form->input('receipt_date', array('id' => 'datepicker', 'type' => 'text'));
-	echo $form->input('receipt_number');
-	echo $form->input('demand_number', array('class' => 'demand_number'));
-	echo $form->input('door_number', array('class' => 'door_number', 'readonly' => 'readonly'));
-	echo $form->input('name', array('class' => 'name', 'readonly' => 'readonly'));
-	echo $form->input('father_name', array('class' => 'father_name', 'readonly' => 'readonly'));
-	echo $form->input('address', array('class' => 'address', 'readonly' => 'readonly'));
-	echo $form->input('hamlet_id', array('class' => 'hamlet_id', 'readonly' => 'readonly', 'type' => 'select','options'=> $hamlet_info, 'label' => 'Hamlet Code'));
-	echo $form->input('survey_number');
-	echo $form->input('square_feet_estimation', array('label' => 'Sqr Feet Estimation'));
+	echo $form->input('receipt_date', array('label' => 'தேதி', 'id' => 'datepicker', 'type' => 'text'));
+	echo $form->input('receipt_number', array('label' => 'ரசீது எண்'));
+	echo $form->input('demand_number', array('label' => 'கேட்பு எண்', 'class' => 'demand_number'));
+	echo $form->input('door_number', array('label' => 'கதவு எண்', 'class' => 'door_number', 'readonly' => 'readonly'));
+	echo $form->input('name', array('class' => 'name', 'label' => 'பெயர்', 'readonly' => 'readonly'));
+	echo $form->input('father_name', array('class' => 'father_name', 'label' => 'தந்தையின் பெயர்', 'readonly' => 'readonly'));
+	echo $form->input('address', array('label' => 'முகவரி', 'class' => 'address', 'readonly' => 'readonly'));
+	echo $form->input('hamlet_id', array('label' => 'குக்கிராமத்தின் குறியீடு', 'class' => 'hamlet_id', 'readonly' => 'readonly', 'type' => 'select','options'=> $hamlet_info));
+	echo $form->input('survey_number', array('label' => 'சர்வே எண்'));
+	echo $form->input('square_feet_estimation', array('label' => 'மதிப்பீடு - சதுர அடி'));
 	echo "<div class='input inline'>";
 		echo "<table><tr>";
 			echo "<td></td>";
-			echo "<td>Pending</td>";
-			echo "<td>Current</td>";
+			echo "<td>நிலுவை</td>";
+			echo "<td>நடப்பு</td>";
 		echo "</tr><tr>";
-			echo "<td><label>House Tax</label></td>";
+			echo "<td><label>வீட்டு வரி</label></td>";
 			echo '<td>'.$form->input('ht_pending', array('label' => false, 'class' => 'small ht_pending')).'</td>';
 			echo '<td>'.$form->input('ht_current', array('label' => false, 'class' => 'small ht_current')).'</td>';
 		echo '</tr></table>';
 	echo '</div>';
 	echo "<div class='input inline'>";
 		echo "<table><tr>";
-			echo "<td><label>Libraray Tax</label></td>";
+			echo "<td><label>நூலக வரி</label></td>";
 
 		echo '<td>'.$form->input('lc_pending', array('label' => false, 'class' => 'small lc_pending')).'</td>';
 		echo '<td>'.$form->input('lc_current', array('label' => false, 'class' => 'small lc_current')).'</td>';
@@ -38,8 +38,8 @@
 	//echo $form->input('house_tax', array('class' =>'house_tax', 'label' => 'House Tax'));
 	// echo $form->input('library_charge', array('class' =>'library_charge', 'label' => 'Library Charge'));
 	// echo $form->input('pending_amount', array('class' =>'pending_amount', 'label' => 'Pending Amount'));
-	echo $form->input('total_amount', array('class' => 'total_amount', 'readonly' => 'readonly'));
-	echo $form->end('Submit');
+	echo $form->input('total_amount', array('label' => 'மொத்தம் ரூ.', 'class' => 'total_amount', 'readonly' => 'readonly'));
+	echo $form->end('அனுப்பு');
 ?>
 
 <script>

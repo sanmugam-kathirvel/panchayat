@@ -1,20 +1,20 @@
-<p>Attendance</p>
+<h2>புதிய வருகையைப் பதிவு செய்</h2>
 
 <?php
 	echo $form->create('AttendanceRegister', array( 'url' => array('controller' => 'nregs', 'action' => 'attendance')));
-	echo $form->input('workdetail_id', array('class' => 'workdetail','type' => 'select', 'options' => $work_details));
-	echo $form->input('from_date', array('id' => 'datepicker', 'type' => 'text'));
-  echo $form->input('to_date', array('id' => 'datepicker1', 'type' => 'text'));
+	echo $form->input('workdetail_id', array('label' => 'வேலையின் பெயர்', 'class' => 'workdetail','type' => 'select', 'options' => $work_details));
+	echo $form->input('from_date', array('label' => 'ஆரம்ப தேதி', 'id' => 'datepicker', 'type' => 'text'));
+  echo $form->input('to_date', array('label' => 'இருதி தேதி', 'id' => 'datepicker1', 'type' => 'text'));
 	echo $form->hidden('payment_status', array('value' => 'no'));
 	echo "<div class='new_field'>";
 		echo "<table>";
 			echo "<tbody class= 'add_new_field'>";
 					echo "<tr>";
-						echo "<th>family Id</th>";
-						echo "<th>Job Card Number</th>";
-						echo "<th>Name</th>";
-						echo "<th>Father/Husband Name</th>";
-            echo "<th>No.of Days Worked</th>";
+						echo "<th>குடும்ப எண்</th>";
+						echo "<th>வேலை அடையாள அட்டை எண்</th>";
+						echo "<th>பெயர்</th>";
+						echo "<th>தந்தை / கணவர் பெயர்</th>";
+            echo "<th>வேலை செய்த நாட்களின் எண்ணிக்கை</th>";
 					echo "</tr>";
 					  echo "<tr id ='new_field' class='new_field_0'>";
 							echo '<td>'.$form->input('Attendance.0.family_number', array('class' => 'family_number', 'label' => false)).'</td>';
@@ -27,12 +27,12 @@
 		echo "</table>";
 		echo "</div>";
 	echo "<div class='link'>";	
-		echo $html->link('add new', '', array('class' => 'add_field'));
+		echo $html->link('புதிதாக சேர்', '', array('class' => 'add_field'));
 		echo " | ";
-		echo $html->link('remove', '', array('class' => 'remove_field'));
+		echo $html->link('நீக்கு', '', array('class' => 'remove_field'));
 	echo "</div>";
 	
-	echo $form->end('Submit');
+	echo $form->end('அனுப்பு');
 
 ?>
 <script>

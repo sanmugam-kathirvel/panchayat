@@ -1,9 +1,9 @@
 
 <div class="blocks form">
-    <h2><?php __('வீட்டு வரி கேட்பு'); ?></h2>
+    <h2><?php __('வீட்டு வரி கேட்பு விபரங்கள்'); ?></h2>
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('புதிய வீட்டு வரி கேட்பு', true), array('action'=>'addhtdemand')); ?></li>
+            <li><?php echo $html->link(__('புதிய வீட்டு வரி கேட்பு விபரங்களைச் சேர்', true), array('action'=>'addhtdemand')); ?></li>
         </ul>
     </div>
     

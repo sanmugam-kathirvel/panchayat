@@ -1,4 +1,4 @@
-<p>ரசீது புத்தகத் தகவலை திருத்து</p>
+<h2>ரசீது புத்தகத் தகவலை திருத்து</h2>
 <?php
 	$book_names = array();
 	foreach($books as $book){
@@ -13,5 +13,5 @@
 	echo $form->input('start_receipt_number', array('label' => 'ஆரம்ப ரசீது எண்'));
 	echo $form->input('end_receipt_number', array('label' => 'இருதி ரசீது எண்'));
 	echo $form->input('status', array('type' => 'hidden', 'value' => 'available'));
-	echo $form->end('Submit');
+	echo $form->end('அனுப்பு');
 ?>

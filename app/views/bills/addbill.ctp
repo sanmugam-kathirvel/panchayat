@@ -1,31 +1,31 @@
-<p><h3><?php __('Add Account-'.$acc_id.' Bill Estimation'); ?></h3></p>
+<p><h3><?php __('கணக்கு எண் - '.$acc_id.', புதிய வரைவு மதிப்பீடு விபரங்களைச் சேர்'); ?></h3></p>
 <?php
 	echo $form->create('ContractBillEstimation', array( 'url' => array('controller' => 'bills', 'action' => 'addbill')));
 	echo $form->input('account_id', array('class' => 'account_id', 'type' => 'hidden', 'value' => $acc_id));
-	echo $form->input('bill_date', array('id' => 'datepicker', 'type' => 'text'));
-	echo $form->input('cheque_date', array('id' => 'datepicker1', 'type' => 'text'));
-	echo $form->input('cheque_number');
-	echo $form->input('voucher_number');
-	echo $form->input('contractor_name');
-	echo $form->input('address');
-	echo $form->input('estimation_amt', array('label' => 'Estimation amount', 'value' => '0'));
-	echo $form->input('workdone_amt', array('class' => 'workdone_amt', 'label' => 'Work Done amount', 'value' => '0'));
+	echo $form->input('bill_date', array('label' => 'தேதி', 'id' => 'datepicker', 'type' => 'text'));
+	echo $form->input('cheque_date', array('label' => 'காசோலை வழங்கிய தேதி', 'id' => 'datepicker1', 'type' => 'text'));
+	echo $form->input('cheque_number', array('label' => 'காசோலை எண்'));
+	echo $form->input('voucher_number', array('label' => 'செலவுச் சீட்டு எண்'));
+	echo $form->input('contractor_name', array('label' => 'ஒப்பந்தக்காரரின் பெயர்'));
+	echo $form->input('address', array('label' => 'முகவரி'));
+	echo $form->input('estimation_amt', array('label' => 'மதிப்பீடு செய்யப்பட்ட தொகை', 'value' => '0'));
+	echo $form->input('workdone_amt', array('class' => 'workdone_amt', 'label' => 'வேலையை முடிக்க செலவிடப்பட்ட தொகை', 'value' => '0'));
 	if($acc_id > 1){
-		echo $form->input('cement', array('class' => 'cement', 'value' => '0'));
-		echo $form->input('steel', array('class' => 'steel', 'value' => '0'));
-		echo $form->input('door', array('class' => 'door', 'value' => '0'));
-		echo $form->input('windows', array('class' => 'windows', 'value' => '0'));
-		echo $form->input('toilet_basin', array('class' => 'toilet_basin', 'value' => '0'));
+		echo $form->input('cement', array('label' => 'சிமெண்ட்', 'class' => 'cement', 'value' => '0'));
+		echo $form->input('steel', array('label' => 'இரும்பு', 'class' => 'steel', 'value' => '0'));
+		echo $form->input('door', array('label' => 'கதவு', 'class' => 'door', 'value' => '0'));
+		echo $form->input('windows', array('label' => 'ஜன்னல்', 'class' => 'windows', 'value' => '0'));
+		echo $form->input('toilet_basin', array('label' => 'கழிவறை தொட்டி', 'class' => 'toilet_basin', 'value' => '0'));
 	}
-	echo $form->input('emd', array('class' => 'emd','label' => 'EMD 5%', 'value' => '0'));
-	echo $form->input('it', array('class' => 'it','label' => 'IT 2%', 'value' => '0'));
+	echo $form->input('emd', array('class' => 'emd','label' => 'வைப்புத் தொகை 5%', 'value' => '0'));
+	echo $form->input('it', array('class' => 'it','label' => 'வருமாண வரி 2%', 'value' => '0'));
 	echo $form->input('scst', array('class' => 'scst','label' => 'SC on ST 10%', 'value' => '0'));
 	echo $form->input('ec', array('class' => 'ec','label' => 'EC 3%', 'value' => '0'));
 	echo $form->input('vat', array('class' => 'vat','label' => 'Vat 4%', 'value' => '0'));
 	echo $form->input('lwf', array('class' => 'lwf','label' => 'LWF 3%', 'value' => '0'));
-	echo $form->input('deduction_amt', array('class' => 'deduction_amt', 'value' => '0', 'readonly' => 'readonly'));
-	echo $form->input('cheque_amt', array('class' => 'total_amt', 'value' => '0', 'readonly' => 'readonly'));
-	echo $form->end('Submit');
+	echo $form->input('deduction_amt', array('label' => 'கழிவுத் தொகை', 'class' => 'deduction_amt', 'value' => '0', 'readonly' => 'readonly'));
+	echo $form->input('cheque_amt', array('label' => 'காசோலையில் குறிப்பிடப்பட்ட தொகை', 'class' => 'total_amt', 'value' => '0', 'readonly' => 'readonly'));
+	echo $form->end('அனுப்பு');
 ?>
 
 <script>

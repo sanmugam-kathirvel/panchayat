@@ -1,24 +1,24 @@
-<p>Add D & O Traders Receipt</p>
+<h2>டி & ஓ வியாபாரிகள் வரி ரசீது விபரங்களைச் சேர்</h2>
 <?php
 	$hamlet_info = array();
 	foreach($hamlet as $ham){
 		$hamlet_info[$ham['Hamlet']['id']] =  $ham['Hamlet']['hamlet_code'];
 	}
 	echo $form->create('DotaxReceipt', array( 'url' => array('controller' => 'receipts', 'action' => 'adddotaxreceipt')));
-	echo $form->input('receipt_date', array('id' => 'datepicker', 'type' => 'text'));
-	echo $form->input('receipt_number');
-	echo $form->input('demand_number', array('class' => 'demand_number'));
-	echo $form->input('name', array('class' => 'name', 'readonly' => 'readonly'));
-	echo $form->input('father_name', array('class' => 'father_name', 'readonly' => 'readonly'));
-	echo $form->input('address', array('class' => 'address', 'readonly' => 'readonly'));
-	echo $form->input('emd', array('class' => 'emd', 'readonly' => 'readonly'));
+	echo $form->input('receipt_date', array('label' => 'தேதி', 'id' => 'datepicker', 'type' => 'text'));
+	echo $form->input('receipt_number', array('label' => 'ரசீது எண்'));
+	echo $form->input('demand_number', array('label' => 'கேட்பு எண்', 'class' => 'demand_number'));
+	echo $form->input('name', array('label' => 'பெயர்', 'class' => 'name', 'readonly' => 'readonly'));
+	echo $form->input('father_name', array('label' => 'தந்தையின் பெயர்', 'class' => 'father_name', 'readonly' => 'readonly'));
+	echo $form->input('address', array('label' => 'முகவரி', 'class' => 'address', 'readonly' => 'readonly'));
+	echo $form->input('emd', array('label' => 'வைப்புத் தொகை', 'class' => 'emd', 'readonly' => 'readonly'));
 	echo "<div class='input inline'>";
 		echo "<table><tr>";
 			echo "<td></td>";
-			echo "<td>Start Date</td>";
-			echo "<td>End Date</td>";
+			echo "<td>ஆரம்ப தேதி</td>";
+			echo "<td>இருதி தேதி</td>";
 		echo "</tr><tr>";
-			echo "<td><label>Period</label></td>";
+			echo "<td><label>காலம்</label></td>";
 			echo '<td>'.$form->input('start_date', array('id' => 'datepicker1', 'label' => false, 'type' => 'text', 'class' => 'small')).'</td>';
 			echo '<td>'.$form->input('end_date', array('id' => 'datepicker2', 'label' => false, 'type' => 'text', 'class' => 'small')).'</td>';
 		echo '</tr></table>';
@@ -26,16 +26,16 @@
 	echo "<div class='input inline'>";
 		echo "<table><tr>";
 			echo "<td></td>";
-			echo "<td>Pending</td>";
-			echo "<td>Current</td>";
+			echo "<td>நிலுவை</td>";
+			echo "<td>நடப்பு</td>";
 		echo "</tr><tr>";
-			echo "<td><label>D&O Traders Tax</label></td>";
+			echo "<td><label>வசூலிக்கப்பட்ட தொகை</label></td>";
 			echo '<td>'.$form->input('do_pending', array('label' => false, 'class' => 'small do_pending')).'</td>';
 			echo '<td>'.$form->input('do_current', array('label' => false, 'class' => 'small do_current')).'</td>';
 		echo '</tr></table>';
 	echo '</div>';
-	echo $form->input('total_amount', array('class' => 'total_amount', 'readonly' => 'readonly'));
-	echo $form->end('Submit');
+	echo $form->input('total_amount', array('label' => 'மொத்தம் ரூ.', 'class' => 'total_amount', 'readonly' => 'readonly'));
+	echo $form->end('அனுப்பு');
 ?>
 
 <script>

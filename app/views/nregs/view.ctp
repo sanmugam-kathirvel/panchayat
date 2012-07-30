@@ -1,17 +1,16 @@
 
 <div class="blocks form">
-    <h2><?php __('Registrations'); ?></h2>
+    <h2><?php echo 'பணியாளர்களின் பதிவீடுகள்'; ?></h2>
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('Back', true), array('action'=>'registrationindex')); ?></li>
+            <li><?php echo $html->link(__('பின் செல்', true), array('action'=>'registrationindex')); ?></li>
         </ul>
     </div>
     <div class='view-data'>
-    	<label>Family Number</label>
+    	<label>குடும்ப எண்</label>
     	<p><?php echo $registration_detail['NregsRegistration']['family_number']; ?></p>
     	<p><?php echo $html->image('/photo/'.$registration_detail['NregsRegistration']['id']."_p.jpg"); ?></p>
     </div>
-          <?php echo $registration_detail['NregsRegistration']['serial_number']; ?>
           <?php echo $registration_detail['NregsRegistration']['job_card_number']; ?>
           <?php echo $registration_detail['NregsRegistration']['name']; ?>
           <?php echo $registration_detail['NregsRegistration']['father_or_husband_name']; ?>

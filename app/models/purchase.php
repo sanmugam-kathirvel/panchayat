@@ -12,7 +12,7 @@
 				'message' => 'This Field Not Empty'
 			),
 			'voucher_number' => array(
-				'rule' => 'alphaNumeric',
+				'rule' => 'notEmpty',
 				'message' => 'Enter Valied Number'
 			),
 			'cheque_number' => array(

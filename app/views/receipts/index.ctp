@@ -1,20 +1,20 @@
 <div class="blocks form">
-    <h2><?php __('Receipts'); ?></h2>
+    <h2><?php echo 'ரசீதுகள்'; ?></h2>
     <div class="actions">
     	<ul>
-            <li><?php echo $html->link(__('House Tax Receipts', true), array('action'=>'addhousetaxreceipt')); ?></li>
+            <li><?php echo $html->link(__('வீட்டு வரி ரசீது', true), array('action'=>'addhousetaxreceipt')); ?></li>
       </ul>
       <ul>
-          <li><?php echo $html->link(__('water Tax Receipts', true), array('action'=>'addwatertaxreceipt')); ?></li>
+          <li><?php echo $html->link(__('குடிநீர் வரி ரசீது', true), array('action'=>'addwatertaxreceipt')); ?></li>
       </ul>
       <ul>
-            <li><?php echo $html->link(__('Professional Tax Receipts', true), array('action'=>'addprofessionaltaxreceipt')); ?></li>
+            <li><?php echo $html->link(__('தொழில் வரி ரசீது', true), array('action'=>'addprofessionaltaxreceipt')); ?></li>
       </ul>
       <ul>
-            <li><?php echo $html->link(__('D & O Trader Receipts', true), array('action'=>'adddotaxreceipt')); ?></li>
+            <li><?php echo $html->link(__('டி & ஓ வியாபாரிகள் வரி ரசீது', true), array('action'=>'adddotaxreceipt')); ?></li>
       </ul>
       <ul>
-            <li><?php echo $html->link(__('Other Receipts', true), array('action'=>'addothersreceipt')); ?></li>
+            <li><?php echo $html->link(__('மற்ற ரசீதுகள்', true), array('action'=>'addothersreceipt')); ?></li>
       </ul>
     </div>
 </div>

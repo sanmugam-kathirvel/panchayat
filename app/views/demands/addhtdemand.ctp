@@ -1,4 +1,4 @@
-<p>புதிய வீட்டு வரி கேட்பு</p>
+<h2>புதிய வீட்டு வரி கேட்பு</h2>
 <?php
 	echo $form->create('HtDemand', array( 'url' => array('controller' => 'demands', 'action' => 'addhtdemand')));
 	echo $form->input('demand_number', array('label' => 'கேட்பு எண்'));
@@ -27,5 +27,5 @@
 		echo '<td>'.$form->input('lc_current', array('label' => false, 'class' => 'small')).'</td>';
 		echo '</tr></table>';
 	echo '</div>';
-	echo $form->end('Submit');
+	echo $form->end('அனுப்பு');
 ?>

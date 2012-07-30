@@ -1,4 +1,4 @@
-<p>தொடக்க இருப்புத் தொகையை திருத்து</p>
+<h2>தொடக்க இருப்புத் தொகையை திருத்து</h2>
 <?php
 	$account_op = array();
 	foreach($account as $acc){
@@ -14,5 +14,5 @@
 	echo $form->input('branch', array('label' => 'கிளை'));
 	echo $form->input('opening_cash_balance', array('label' => 'தொடக்க ரொக்க இருப்பு'));
 	echo $form->input('opening_bank_balance', array('label' => 'தொடக்க வங்கி இருப்பு'));
-	echo $form->end('Submit');
+	echo $form->end('அனுப்பு');
 ?>

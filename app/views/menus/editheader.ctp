@@ -1,4 +1,4 @@
-<p>தலைப்பினை திருத்து</p>
+<h2>தலைப்பினை திருத்து</h2>
 <?php
 	$account_op = array();
 	foreach($account as $acc){
@@ -12,5 +12,5 @@
 	echo $form->input('header_name', array('label' => 'தலைப்பின் பெயர்'));
 	echo $form->input('header_type', array('label' => 'தலைப்பின் வகை', 'type'=>'select','options'=> $options2));
 	echo $form->input('receipt', array('label' => 'ரசீது', 'type'=>'select', 'empty' => true, 'options'=> $receipt_op));
-	echo $form->end('Submit');
+	echo $form->end('அனுப்பு');
 ?>

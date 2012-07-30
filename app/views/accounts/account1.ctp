@@ -1,26 +1,26 @@
 <div class="blocks form">
-    <h2><?php __('Account 1'); ?></h2>
+    <h2><?php __('கணக்கு எண் 1'); ?></h2>
     <div class="actions">
     	<ul>
-        <li><?php echo $html->link(__('Purchases', true), array('action'=>'../purchases/purchase')); ?></li>
+        <li><?php echo $html->link(__('கொள்முதல்', true), array('action'=>'../purchases/purchase')); ?></li>
       </ul>
       <ul>
-        <li><?php echo $html->link(__('Salaries', true), array('action'=>'../salaries/salary')); ?></li>
+        <li><?php echo $html->link(__('ஊதியம்', true), array('action'=>'../salaries/salary')); ?></li>
       </ul>
       <ul>
-        <li><?php echo $html->link(__('Bill Estimations', true), array('action'=>'../bills/index', '1')); ?></li>
+        <li><?php echo $html->link(__('வரைவு மதிப்பீடு', true), array('action'=>'../bills/index', '1')); ?></li>
       </ul>
       <ul>
-      	<li><?php echo $html->link(__('Incomes', true), array('action'=>'../incomes/index', '1')); ?></li>
+      	<li><?php echo $html->link(__('வரவுகள்', true), array('action'=>'../incomes/index', '1')); ?></li>
       </ul>
       <ul>
-      	<li><?php echo $html->link(__('Expenses', true), array('action'=>'../expenses/index', '1')); ?></li>
+      	<li><?php echo $html->link(__('செலவுகள்', true), array('action'=>'../expenses/index', '1')); ?></li>
       </ul>
 			<ul>
-      	<li><?php echo $html->link(__('Receipts', true), array('action'=>'../receipts/index')); ?></li>
+      	<li><?php echo $html->link(__('ரசீதுகள்', true), array('action'=>'../receipts/index')); ?></li>
       </ul>
       <ul>
-      	<li><?php echo $html->link(__('Transfer Cash To Bank', true), array('action'=>'../receipts/cashtobank')); ?></li>
+      	<li><?php echo $html->link(__('ரொக்கத் தொகையை வங்கி கணக்கிற்கு மாற்றுதல்', true), array('action'=>'../receipts/cashtobank_index')); ?></li>
       </ul>
     </div>
 </div>

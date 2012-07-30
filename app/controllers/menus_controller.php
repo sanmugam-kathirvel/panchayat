@@ -281,5 +281,9 @@
        echo json_encode($bookdetail);
        exit; 
 		}
+		function stock_index(){
+			$stocks = $this->paginate('Stock');
+			$this->set(compact('stocks'));
+		}
 	}
 ?>

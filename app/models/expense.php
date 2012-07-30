@@ -10,7 +10,7 @@
 				
 			),
 			'voucher_number' => array(
-				'rule' => 'numeric',
+				'rule' => 'notEmpty',
 				'allowEmpty' => false,
 				'message' => 'This Field Not Empty'
 				

@@ -1,4 +1,4 @@
-<p>Salary</p>
+<h2>ஊதியம்</h2>
 <?php
   $employee_name = array();
 	$employee_designation = array();
@@ -7,19 +7,19 @@
 		$employee_designation[$employee['Employee']['designation']] =  $employee['Employee']['designation'];
 	}
 	echo $form->create('Salary', array( 'url' => array('controller' => 'salaries', 'action' => 'salary')));
-	echo $form->input('salary_date', array('type' => 'text', 'id' => 'datepicker'));
-	echo $form->input('drawee_name');
-	echo $form->input('voucher_number');
-	echo $form->input('cheque_number');
-	echo $form->input('cheque_date', array('type' => 'text', 'id' => 'datepicker1'));
-	echo $form->input('cheque_amount', array('class' => 'cheque_amount', 'readonly' => 'readonly'));
+	echo $form->input('salary_date', array('label' => 'தேதி', 'type' => 'text', 'id' => 'datepicker'));
+	echo $form->input('drawee_name', array('label' => 'காசோலைக்குரியவரின் பெயர்'));
+	echo $form->input('voucher_number', array('label' => 'செலவுச் சீட்டு எண்'));
+	echo $form->input('cheque_number', array('label' => 'காசோலை எண்'));
+	echo $form->input('cheque_date', array('label' => 'காசோலை வழங்கிய தேதி', 'type' => 'text', 'id' => 'datepicker1'));
+	echo $form->input('cheque_amount', array('label' => 'காசோலையில் குறிப்பிடப்பட்ட தொகை', 'class' => 'cheque_amount', 'readonly' => 'readonly'));
 	echo "<div class='new_field'>";
 		echo "<table>";
 			echo "<tbody class= 'add_new_field'>";
 					echo "<tr>";
-						echo "<th>Employee Name</th>";
-						echo "<th>Employee Designation</th>";
-						echo "<th>Salary</th>";
+						echo "<th>ஊழியரின் பெயர்</th>";
+						echo "<th>ஊழியரின் பதவி</th>";
+						echo "<th>ஊதியம்</th>";
 					echo "</tr>";
 					for($i = 0; $i < 20 ; $i++){
 					  echo "<tr id ='new_field' class='new_field_".$i."'>";
@@ -32,11 +32,11 @@
 		echo "</table>";
 		echo "</div>";
 	echo "<div class='link'>";	
-		echo $html->link('add new', '', array('class' => 'add_field'));
+		echo $html->link('புதிதாக சேர்', '', array('class' => 'add_field'));
 		echo " | ";
-		echo $html->link('remove', '', array('class' => 'remove_field'));
+		echo $html->link('நீக்கு', '', array('class' => 'remove_field'));
 	echo "</div>";
-	echo $form->end('Submit');
+	echo $form->end('அனுப்பு');
 ?>
 
 <script>

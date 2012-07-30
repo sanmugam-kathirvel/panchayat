@@ -1,9 +1,9 @@
 
 <div class="blocks form">
-    <h2><?php __('Account-'.$acc_id.' Bill Estimations'); ?></h2>
+    <h2><?php __('கணக்கு எண் - '.$acc_id.' வரைவு மதிப்பீடு'); ?></h2>
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('Add Bill Estimation', true), array('action'=>'addbill', $acc_id)); ?></li>
+            <li><?php echo $html->link(__('புதிய வரைவு மதிப்பீடு விபரங்களைச் சேர்', true), array('action'=>'addbill', $acc_id)); ?></li>
         </ul>
     </div>
     
@@ -11,62 +11,62 @@
       <?php
 				if($acc_id > 1){
         	$tableHeaders = $html->tableHeaders(array(
-        		$paginator->sort('bill_date'),
-        		$paginator->sort('cheque_date'),
-        		$paginator->sort('cheque_number'),
-        		$paginator->sort('voucher_number'),
-            $paginator->sort('contractor_name'),
-            $paginator->sort('address'),
-            $paginator->sort('estimation_amt'),
-            $paginator->sort('workdone_amt'),
-            $paginator->sort('cement'),
-            $paginator->sort('steel'),
-            $paginator->sort('door'),
-            $paginator->sort('windows'),
-            $paginator->sort('toilet_basin'),
-            $paginator->sort('emd'),
-            $paginator->sort('it'),
+        		$paginator->sort('தேதி', 'bill_date'),
+        		$paginator->sort('காசோலை வழங்கிய தேதி', 'cheque_date'),
+        		$paginator->sort('காசோலை எண்', 'cheque_number'),
+        		$paginator->sort('செலவுச் சீட்டு எண்', 'voucher_number'),
+            $paginator->sort('ஒப்பந்தக்காரரின் பெயர்', 'contractor_name'),
+            $paginator->sort('முகவரி', 'address'),
+            $paginator->sort('மதிப்பீடு செய்யப்பட்ட தொகை', 'estimation_amt'),
+            $paginator->sort('வேலையை முடிக்க செலவிடப்பட்ட தொகை', 'workdone_amt'),
+            $paginator->sort('சிமெண்ட்', 'cement'),
+            $paginator->sort('இரும்பு', 'steel'),
+            $paginator->sort('கதவு', 'door'),
+            $paginator->sort('ஜன்னல்', 'windows'),
+            $paginator->sort('கழிவறை தொட்டி', 'toilet_basin'),
+            $paginator->sort('வைப்புத் தொகை', 'emd'),
+            $paginator->sort('வருமாண வரி', 'it'),
             $paginator->sort('scst'),
             $paginator->sort('ec'),
             $paginator->sort('vat'),
             $paginator->sort('lwf'),
-            $paginator->sort('deduction_amt'),
-            $paginator->sort('cheque_amt'),
+            $paginator->sort('கழிவுத் தொகை', 'deduction_amt'),
+            $paginator->sort('காசோலையில் குறிப்பிடப்பட்ட தொகை', 'cheque_amt'),
             __('Actions', true),
           ));
           echo $tableHeaders;
 				}else{
 					$tableHeaders = $html->tableHeaders(array(
-						$paginator->sort('bill_date'),
-						$paginator->sort('cheque_date'),
-        		$paginator->sort('cheque_number'),
-        		$paginator->sort('voucher_number'),
-            $paginator->sort('contractor_name'),
-            $paginator->sort('address'),
-            $paginator->sort('estimation_amt'),
-            $paginator->sort('workdone_amt'),
-            $paginator->sort('emd'),
-            $paginator->sort('it'),
+						$paginator->sort('தேதி', 'bill_date'),
+        		$paginator->sort('காசோலை வழங்கிய தேதி', 'cheque_date'),
+        		$paginator->sort('காசோலை எண்', 'cheque_number'),
+        		$paginator->sort('செலவுச் சீட்டு எண்', 'voucher_number'),
+            $paginator->sort('ஒப்பந்தக்காரரின் பெயர்', 'contractor_name'),
+            $paginator->sort('முகவரி', 'address'),
+            $paginator->sort('மதிப்பீடு செய்யப்பட்ட தொகை', 'estimation_amt'),
+            $paginator->sort('வேலையை முடிக்க செலவிடப்பட்ட தொகை', 'workdone_amt'),
+            $paginator->sort('வைப்புத் தொகை', 'emd'),
+            $paginator->sort('வருமாண வரி', 'it'),
             $paginator->sort('scst'),
             $paginator->sort('ec'),
             $paginator->sort('vat'),
             $paginator->sort('lwf'),
-            $paginator->sort('deduction_amt'),
-            $paginator->sort('cheque_amt'),
-            __('Actions', true),
+            $paginator->sort('கழிவுத் தொகை', 'deduction_amt'),
+            $paginator->sort('காசோலையில் குறிப்பிடப்பட்ட தொகை', 'cheque_amt'),
+            			__('செயல்கள்', true),
           ));
           echo $tableHeaders;
 				}
         $rows = array();
         foreach ($bills AS $bill) {
-          $actions = ' ' . $html->link(__('Edit', true), array(
+          $actions = ' ' . $html->link(__('திருத்து', true), array(
           		'action' => 'edit'
           		, $bill['ContractBillEstimation']['id'])
 					);
-          $actions .= ' ' . $html->link(__('Delete', true), array(
+          $actions .= ' ' . $html->link(__('நீக்கு', true), array(
               'action' => 'delete',
               $bill['ContractBillEstimation']['id'], $bill['ContractBillEstimation']['account_id'], $bill['ContractBillEstimation']['cheque_amt'])
-             , null, __('Are you sure?', true)
+             , null, __('கண்டிப்பாக நீக்க விரும்புகிரீர்களா?', true)
 					);
 					if($acc_id > 1){
             $rows[] = array(
@@ -122,4 +122,4 @@
 </div>
 
 <div class="paging"><?php echo $paginator->numbers(); ?></div>
-<div class="counter"><?php echo $paginator->counter(array('format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true))); ?></div>
+<div class="counter"><?php echo $paginator->counter(array('format' => __('பக்கம் %pages%இல் %page%, இங்கே தெரிவது மொத்தம் %count%இல் %current% பதிவேடு(கள்), ஆரம்பப் பதிவேடு எண் %start%, இருதிப் பதிவேடு எண் %end%', true))); ?></div>

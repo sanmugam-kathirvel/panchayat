@@ -1,4 +1,4 @@
-<p>புதிய தொடக்க இருப்புத் தொகை சேர்த்தல்</p>
+<h2>புதிய தொடக்க இருப்புத் தொகை சேர்த்தல்</h2>
 <?php
 	echo $form->create('BankDetail', array( 'url' => array('controller' => 'menus', 'action' => 'addopeningbals')));
 	echo $form->input('account_id',array('label' => 'கணக்கின் பெயர்', 'type'=>'select','options'=> $account_op));
@@ -9,5 +9,5 @@
 	echo $form->input('branch', array('label' => 'கிளை'));
 	echo $form->input('opening_cash_balance', array('label' => 'தொடக்க ரொக்க இருப்பு'));
 	echo $form->input('opening_bank_balance', array('label' => 'தொடக்க வங்கி இருப்பு'));
-	echo $form->end('Submit');
+	echo $form->end('அனுப்பு');
 ?>

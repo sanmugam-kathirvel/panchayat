@@ -1,4 +1,4 @@
-<p><h3><?php __('Account-'.$acc_id.' Income'); ?></h3></p>
+<h2><?php echo 'கணக்கு எண் - '.$acc_id.', புதிய வரவு விபரங்களைச் சேர்'; ?></h2></p>
 <!-- <p>இந்த தலைப்புகளின் விளக்க்கள்</p> -->
 <?php
 	$header_op = array();
@@ -7,9 +7,9 @@
 	}
 	echo $form->create('Income', array( 'url' => array('controller' => 'incomes', 'action' => 'addincome')));
 	echo $form->input('account_id', array('type' => 'hidden', 'value' => $acc_id));
-	echo $form->input('header_id', array('label' => 'Header', 'options' => $header_op, 'type' => 'select','option' => ''));
-	echo $form->input('income_date', array('label' => 'Date', 'id' => 'datepicker', 'type' => 'text'));
-	echo $form->input('income_amount', array('label' => 'Amount'));
-	echo $form->input('description');
-	echo $form->end('Submit');
+	echo $form->input('header_id', array('label' => 'வரவின் தலைப்பு', 'options' => $header_op, 'type' => 'select','option' => ''));
+	echo $form->input('income_date', array('label' => 'தேதி', 'id' => 'datepicker', 'type' => 'text'));
+	echo $form->input('income_amount', array('label' => 'வரப்பெற்ற தொகை'));
+	echo $form->input('description' ,array('label' => 'விபரம்'));
+	echo $form->end('அனுப்பு');
 ?>

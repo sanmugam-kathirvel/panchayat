@@ -1,36 +1,36 @@
 
 <div class="blocks form">
-    <h2><?php __('Account '.$acc_id.' Expenses'); ?></h2>
+    <h2><?php echo 'கணக்கு எண் - '.$acc_id.' செலவுகள்'; ?></h2>
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('Add Expense', true), array('action'=>'addexpense', $acc_id)); ?></li>
+            <li><?php echo $html->link(__('புதிய செலவு விபரங்களைச் சேர்', true), array('action'=>'addexpense', $acc_id)); ?></li>
         </ul>
     </div>
     
     <table cellpadding="0" cellspacing="0">
         <?php
             $tableHeaders = $html->tableHeaders(array(
-                $paginator->sort('header_id'),
-                $paginator->sort('expense_date'),
-                $paginator->sort('voucher_number'),
-                $paginator->sort('expense_amount'),
-                $paginator->sort('drawee_name'),
-                $paginator->sort('cheque_number'),
-                $paginator->sort('cheque_date'),
-                $paginator->sort('description'),
-                __('Actions', true),
+                $paginator->sort('செலவின் தலைப்பு', 'header_id'),
+                $paginator->sort('தேதி', 'expense_date'),
+                $paginator->sort('செலவுச் சீட்டு எண்', 'voucher_number'),
+                $paginator->sort('செலவிடப்பட்ட தொகை', 'expense_amount'),
+                $paginator->sort('காசோலைக்குரியவரின் பெயர்', 'drawee_name'),
+                $paginator->sort('காசோலை எண்', 'cheque_number'),
+                $paginator->sort('காசோலை வழங்கிய தேதி', 'cheque_date'),
+                $paginator->sort('விபரம்', 'description'),
+                				__('செயல்கள்', true),
             ));
             echo $tableHeaders;
     
             $rows = array();
             foreach ($expenses AS $expense) {
-                $actions = ' ' . $html->link(__('Edit', true), array(
+                $actions = ' ' . $html->link(__('திருத்து', true), array(
                 	'action' => 'edit',
                 	$expense['Expense']['id']));
-                $actions .= ' ' . $html->link(__('Delete', true), array(
+                $actions .= ' ' . $html->link(__('நீக்கு', true), array(
                   'action' => 'delete',
                   $expense['Expense']['id'],$expense['Expense']['account_id'],  $expense['Expense']['expense_amount']
-                ), null, __('Are you sure?', true));
+                ), null, __('கண்டிப்பாக நீக்க விரும்புகிரீர்களா?', true));
     
                 $rows[] = array(
                     $expense['Header']['header_name'],
@@ -52,4 +52,4 @@
 </div>
 
 <div class="paging"><?php echo $paginator->numbers(); ?></div>
-<div class="counter"><?php echo $paginator->counter(array('format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true))); ?></div>
+<div class="counter"><?php echo $paginator->counter(array('format' => __('பக்கம் %pages%இல் %page%, இங்கே தெரிவது மொத்தம் %count%இல் %current% பதிவேடு(கள்), ஆரம்பப் பதிவேடு எண் %start%, இருதிப் பதிவேடு எண் %end%', true))); ?></div>

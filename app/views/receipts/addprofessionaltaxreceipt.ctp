@@ -1,41 +1,40 @@
-<p>Add Professional Tax Receipt</p>
+<h2>புதிய தொழில் வரி ரசீது விபரங்களைச் சேர்</h2>
 <?php
 	$hamlet_info = array();
 	foreach($hamlet as $ham){
 		$hamlet_info[$ham['Hamlet']['id']] =  $ham['Hamlet']['hamlet_code'];
 	}
 	echo $form->create('ProfessionaltaxReceipt', array( 'url' => array('controller' => 'receipts', 'action' => 'addprofessionaltaxreceipt')));
-	echo $form->input('receipt_date', array('id' => 'datepicker', 'type' => 'text'));
-	
-	echo $form->input('receipt_number');
-	echo $form->input('demand_number', array('class' => 'demand_number'));
-	echo $form->input('door_number', array('class' => 'door_number', 'readonly' => 'readonly'));
-	echo $form->input('name', array('class' => 'name', 'readonly' => 'readonly'));
-	echo $form->input('father_name', array('class' => 'father_name', 'readonly' => 'readonly'));
-	echo $form->input('address', array('class' => 'address', 'readonly' => 'readonly'));
-	echo $form->input('hamlet_id', array('class' => 'hamlet_id', 'readonly' => 'readonly', 'type' => 'select','options'=> $hamlet_info, 'label' => 'Hamlet Code'));
-	echo $form->input('company_name', array('class' => 'company_name', 'readonly' => 'readonly'));
-	echo $form->input('half_yearly_income', array('class' => 'half_yearly_income', 'readonly' => 'readonly'));
+	echo $form->input('receipt_date', array('label' => 'தேதி', 'id' => 'datepicker', 'type' => 'text'));
+	echo $form->input('receipt_number', array('label' => 'ரசீது எண்'));
+	echo $form->input('demand_number', array('label' => 'கேட்பு எண்', 'class' => 'demand_number'));
+	echo $form->input('door_number', array('label' => 'கதவு எண்', 'class' => 'door_number', 'readonly' => 'readonly'));
+	echo $form->input('name', array('label' => 'பெயர்', 'class' => 'name', 'readonly' => 'readonly'));
+	echo $form->input('father_name', array('label' => 'தந்தையின் பெயர்', 'class' => 'father_name', 'readonly' => 'readonly'));
+	echo $form->input('address', array('label' => 'முகவரி', 'class' => 'address', 'readonly' => 'readonly'));
+	echo $form->input('hamlet_id', array('class' => 'hamlet_id', 'readonly' => 'readonly', 'type' => 'select','options'=> $hamlet_info, 'label' => 'குக்கிராமத்தின் குறியீடு'));
+	echo $form->input('company_name', array('label' => 'நிறுவனத்தின் பெயர்', 'class' => 'company_name', 'readonly' => 'readonly'));
+	echo $form->input('half_yearly_income', array('label' => 'அரையாண்டு வருமானம்', 'class' => 'half_yearly_income', 'readonly' => 'readonly'));
 	echo "<div class='input inline'>";
 		echo "<table><tr>";
 			echo "<td></td>";
-			echo "<td>Pending</td>";
-			echo "<td>Current</td>";
+			echo "<td>நிலுவை</td>";
+			echo "<td>நடப்பு</td>";
 		echo "</tr><tr>";
-			echo "<td><label>Part I Demand</label></td>";
+			echo "<td><label>பாகம் ஒன்றின் வரித் தொகை</label></td>";
 			echo '<td>'.$form->input('part1_pending', array('label' => false, 'class' => 'small part1_pending')).'</td>';
 			echo '<td>'.$form->input('part1_current', array('label' => false, 'class' => 'small part1_current')).'</td>';
 		echo '</tr></table>';
 	echo '</div>';
 	echo "<div class='input inline'>";
 		echo "<table><tr>";
-			echo "<td><label>Part II Demand</label></td>";
+			echo "<td><label>பாகம் இரண்டின் வரித் தொகை</label></td>";
 			echo '<td>'.$form->input('part2_pending', array('label' => false, 'class' => 'small part2_pending')).'</td>';
 			echo '<td>'.$form->input('part2_current', array('label' => false, 'class' => 'small part2_current')).'</td>';
 		echo '</tr></table>';
 	echo '</div>';
-	echo $form->input('total_amount', array('class' => 'total_amount', 'readonly' => 'readonly'));
-	echo $form->end('Submit');
+	echo $form->input('total_amount', array('label' => 'மொத்தம் ரூ.', 'class' => 'total_amount', 'readonly' => 'readonly'));
+	echo $form->end('அனுப்பு');
 ?>
 
 <script>

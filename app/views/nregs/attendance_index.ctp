@@ -1,18 +1,18 @@
 <div class="blocks form">
-    <h2><?php __('Attendance Register'); ?></h2>
+    <h2><?php __('வருகைப் பதிவேடு'); ?></h2>
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('Add New Attendance', true), array('action'=>'attendance')); ?></li>
+            <li><?php echo $html->link(__('புதிய வருகையைப் பதிவு செய்', true), array('action'=>'attendance')); ?></li>
         </ul>
     </div>
     <table cellpadding="0" cellspacing="0">
         <?php
             $tableHeaders = $html->tableHeaders(array(
-                $paginator->sort('from_date'),
-                $paginator->sort('to_date'),
+                $paginator->sort('ஆரம்ப தேதி','from_date'),
+                $paginator->sort('இருதி தேதி', 'to_date'),
                 //$paginator->sort('estimation_amount'),
-                $paginator->sort('payment_status'),
-                __('Actions', true),
+                $paginator->sort('ஊதியத்தின் நிலை', 'payment_status'),
+                				__('செயல்கள்', true),
             ));
             echo $tableHeaders;
     
@@ -26,16 +26,16 @@
                 	// null, __('Are you sure?', true)
 								// );
 								if($attendance['AttendanceRegister']['payment_status'] != 'yes'){
-										$actions = ' ' . $html->link(__('Pay', true), array(
+										$actions = ' ' . $html->link(__('பணம் வழங்கு', true), array(
                    		'action' => 'payment', 'attendance_id' =>$attendance['AttendanceRegister']['id']));
                 }else{
-                		$actions = ' ' .'Paid';
+                		$actions = ' ' .'-';
                 }
                 $rows[] = array(
                   $attendance['AttendanceRegister']['from_date'],
                   $attendance['AttendanceRegister']['to_date'],
                   //var_dump($attendance),
-                  $attendance['AttendanceRegister']['payment_status'],
+                  $attendance['AttendanceRegister']['payment_status'] == 'yes' ? 'ஊதியம் வழங்கப்பட்டது' : 'ஊதியம் வழங்கப்படவில்லை',
                   $actions,
                 );
             }
@@ -47,4 +47,4 @@
 </div>
 
 <div class="paging"><?php echo $paginator->numbers(); ?></div>
-<div class="counter"><?php echo $paginator->counter(array('format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true))); ?></div>
+<div class="counter"><?php echo $paginator->counter(array('format' => __('பக்கம் %pages%இல் %page%, இங்கே தெரிவது மொத்தம் %count%இல் %current% பதிவேடு(கள்), ஆரம்பப் பதிவேடு எண் %start%, இருதிப் பதிவேடு எண் %end%', true))); ?></div>

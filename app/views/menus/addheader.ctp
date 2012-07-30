@@ -1,4 +1,4 @@
-<p>புதிய தலைப்பு சேர்த்தல்</p>
+<h2>புதிய தலைப்பு சேர்த்தல்</h2>
 <?php
 	$options2 = array('income' => 'வரவு', 'expense' => 'செலவு');
 	$receipt_op = array('no' => 'இல்லை', 'yes' => 'ஆம்');
@@ -7,5 +7,5 @@
 	echo $form->input('header_name', array('label' => 'தலைப்பின் பெயர்'));
 	echo $form->input('header_type', array('label' => 'தலைப்பின் வகை', 'type'=>'select','options'=> $options2));
 	echo $form->input('receipt', array('label' => 'ரசீது', 'type'=>'select', 'empty' => true, 'options'=> $receipt_op));
-	echo $form->end('Submit');
+	echo $form->end('அனுப்பு');
 ?>

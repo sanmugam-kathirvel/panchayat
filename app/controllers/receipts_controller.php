@@ -7,6 +7,15 @@
 		function index(){
 			
 		}
+		function cashtobank_index(){
+			$this->paginate = array(
+					'conditions' => array('CashToBank.transfer_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'order' => 'CashToBank.transfer_date DESC',
+					'contain' => array('BankDetail')
+				);
+				$banks = $this->paginate('CashToBank');
+				$this->set(compact('banks'));
+		}
 		function cashtobank(){
 			$account_detail = $this->BankDetail->find('first', array(
 				'conditions' => array(
