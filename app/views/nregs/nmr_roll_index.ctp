@@ -11,7 +11,7 @@
             $tableHeaders = $html->tableHeaders(array(
                 $paginator->sort('தேதி', 'role_date'),
                 $paginator->sort('ஆரம்ப NMR பட்டியல் எண்', 'starting_roll_no'),
-                $paginator->sort('இருதி NMR பட்டியல் எண்', 'ending_roll_no'),
+                $paginator->sort('இறுதி NMR பட்டியல் எண்', 'ending_roll_no'),
                 // $paginator->sort('currently_available_roll_no'),
                 // $paginator->sort('roll_entry_status'),
                 				__('செயல்கள்', true),
@@ -40,4 +40,4 @@
 </div>
 
 <div class="paging"><?php echo $paginator->numbers(); ?></div>
-<div class="counter"><?php echo $paginator->counter(array('format' => __('பக்கம் %pages%இல் %page%, இங்கே தெரிவது மொத்தம் %count%இல் %current% பதிவேடு(கள்), ஆரம்பப் பதிவேடு எண் %start%, இருதிப் பதிவேடு எண் %end%', true))); ?></div>
+<div class="counter"><?php echo $paginator->counter(array('format' => __('பக்கம் %pages%இல் %page%, இங்கே தெரிவது மொத்தம் %count%இல் %current% பதிவேடு(கள்), ஆரம்பப் பதிவேடு எண் %start%, இறுதிப் பதிவேடு எண் %end%', true))); ?></div>

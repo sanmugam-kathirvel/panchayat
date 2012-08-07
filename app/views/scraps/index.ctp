@@ -25,7 +25,7 @@
                 	$scrap['Scrap']['id']));
                 $actions .= ' ' . $html->link(__('நீக்கு', true), array(
                   'action' => 'delete', $scrap['Scrap']['id']), 
-                	null, __('கண்டிப்பாக நீக்க விரும்புகிரீர்களா?', true)
+                	null, __('கண்டிப்பாக நீக்க விரும்புகிறீர்களா?', true)
 								);
 							}else{
 								$actions = ' ' . $html->link(__('நோக்கு', true), array(
@@ -37,7 +37,7 @@
                   $scrap['Scrap']['quantity'],
                   $scrap['Scrap']['estimation_date'],
                   $scrap['Scrap']['estimation_amount'],
-                  $scrap['Scrap']['tender_status'] =='available' ? $html->link('இருகின்றது', array('controller' => 'scraps', 'action' => 'tender', 'id' => $scrap['Scrap']['id'])): 'விற்றுத் தீர்ந்துவிட்டது',
+                  $scrap['Scrap']['tender_status'] =='available' ? $html->link('இருக்கின்றது', array('controller' => 'scraps', 'action' => 'tender', 'id' => $scrap['Scrap']['id'])): 'விற்றுத் தீர்ந்துவிட்டது',
                   $actions,
                 );
             }
@@ -49,4 +49,4 @@
 </div>
 
 <div class="paging"><?php echo $paginator->numbers(); ?></div>
-<div class="counter"><?php echo $paginator->counter(array('format' => __('பக்கம் %pages%இல் %page%, இங்கே தெரிவது மொத்தம் %count%இல் %current% பதிவேடு(கள்), ஆரம்பப் பதிவேடு எண் %start%, இருதிப் பதிவேடு எண் %end%', true))); ?></div>
+<div class="counter"><?php echo $paginator->counter(array('format' => __('பக்கம் %pages%இல் %page%, இங்கே தெரிவது மொத்தம் %count%இல் %current% பதிவேடு(கள்), ஆரம்பப் பதிவேடு எண் %start%, இறுதிப் பதிவேடு எண் %end%', true))); ?></div>

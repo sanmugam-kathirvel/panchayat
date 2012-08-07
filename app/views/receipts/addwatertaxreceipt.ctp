@@ -61,5 +61,8 @@ $(document).ready(function(){
 		  	}
 		  });
 	});
+	$('.wt_current, .wt_pending').focusout(function(){
+		$('.total_amount').val(parseInt($('.wt_current').val()) + parseInt($('.wt_pending').val()));
+	});
 });
 </script>

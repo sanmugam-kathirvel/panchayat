@@ -5,8 +5,8 @@
 		$stock_list[$stock['Stock']['id']] = $stock['Stock']['item_name'];
 	}
 	echo $form->create('Purchase', array( 'url' => array('controller' => 'purchases', 'action' => 'purchase')));
-	echo $form->input('company_name', array('label' => 'நிறுவனத்தின் பெயர்'));
 	echo $form->input('purchase_date', array('label' => 'வாங்கிய தேதி', 'type' => 'text', 'id' => 'datepicker1'));
+	echo $form->input('company_name', array('label' => 'நிறுவனத்தின் பெயர்'));
 	echo $form->input('voucher_number', array('label' => 'செலவுச் சீட்டு எண்'));
 	echo $form->input('cheque_number', array('label' => 'காசோலை எண்'));
 	echo $form->input('cheque_date', array('label' => 'காசோலை வழங்கிய தேதி', 'type' => 'text', 'id' => 'datepicker'));

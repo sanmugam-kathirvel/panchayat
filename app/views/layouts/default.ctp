@@ -52,14 +52,15 @@
   					<li class = "dropdown" data-dropdown="dropdown">
   						<?= $this->Html->link("முதன்மை", "#", array("class" => 'dropdown-toggle') ) ?>
   						<ul class = "dropdown-menu">
-  							<li><?= $this->Html->link("தொடக்க இருப்புத் தொகை", array('plugin' => false, "controller" => "menus", "action" => "balanceindex")); ?></li>
-  							<li><?= $this->Html->link("குக்கிராமங்கள்", array('plugin' => false, "controller" => "menus", "action" => "hamletindex")); ?></li>
+  							<li><?= $this->Html->link("ஊழியர்கள்", array('plugin' => false, "controller" => "menus", "action" => "employees_index")); ?></li>
   							<li><?= $this->Html->link("தலைப்புகள்", array('plugin' => false, "controller" => "menus", "action" => "headerindex")); ?></li>
-  							<li><?= $this->Html->link("தொடக்கக் கையிருப்பு", array('plugin' => false, "controller" => "menus", "action" => "addopeningstock")); ?></li>
-  							<li><?= $this->Html->link("கையிருப்பு விபரம்", array('plugin' => false, "controller" => "menus", "action" => "stock_index")); ?></li>
-  							<li><?= $this->Html->link("கையிருப்பு விநியோகம்", array('plugin' => false, "controller" => "menus", "action" => "stockissue")); ?></li>
-  							<li><?= $this->Html->link("புத்தகக் கையிருப்பு விபரம்", array('plugin' => false, "controller" => "menus", "action" => "bookindex")); ?></li>
+  							<li><?= $this->Html->link("குக்கிராமங்கள்", array('plugin' => false, "controller" => "menus", "action" => "hamletindex")); ?></li>
   							<li><?= $this->Html->link("கழிவுகளின் விபரம்", array('plugin' => false, "controller" => "scraps", "action" => "index")); ?></li>
+  							<li><?= $this->Html->link("கையிருப்பு விபரம்", array('plugin' => false, "controller" => "menus", "action" => "stock_index")); ?></li>
+  							<li><?= $this->Html->link("தொடக்கக் கையிருப்பு", array('plugin' => false, "controller" => "menus", "action" => "addopeningstock")); ?></li>
+  							<li><?= $this->Html->link("கையிருப்பு விநியோகம்", array('plugin' => false, "controller" => "menus", "action" => "stockissue")); ?></li>
+  							<li><?= $this->Html->link("தொடக்க இருப்புத் தொகை", array('plugin' => false, "controller" => "menus", "action" => "balanceindex")); ?></li>
+  							<li><?= $this->Html->link("புத்தகக் கையிருப்பு விபரம்", array('plugin' => false, "controller" => "menus", "action" => "bookindex")); ?></li>
   						</ul>
   					</li>
   					<li class = "dropdown" data-dropdown="dropdown">

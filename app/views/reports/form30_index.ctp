@@ -13,7 +13,7 @@
 		$years[$i] = $i;
 	}
 	echo $form->create('Index', array('method' => 'get', 'url' => array('controller' => 'reports', 'action' => 'form30_report')));
-	echo $form->input('month', array('name' => 'month', 'options' => $months));
-	echo $form->input('year', array('name' => 'year', 'options' => $years));
-	echo $form->end('Submit').'<a href="index">Back to reports</a>'; 
+	echo $form->input('month', array('label' => 'மாதம்', 'name' => 'month', 'options' => $months));
+	echo $form->input('year', array('label' => 'ஆண்டு', 'name' => 'year', 'options' => $years));
+	echo $form->end('அனுப்பு').'<a href="index">அறிக்கைகளுக்கு திரும்பிச் செல்</a>'; 
 ?>

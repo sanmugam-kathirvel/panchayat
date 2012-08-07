@@ -218,5 +218,45 @@
 			echo json_encode($dodemand);
 			exit;	
 		}
+		function dotax_index(){
+			$this->paginate = array(
+					'conditions' => array('DotaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'order' => 'DotaxReceipt.receipt_date DESC'
+			);
+			$receipts = $this->paginate('DotaxReceipt');
+			$this->set(compact('receipts'));
+		}
+		function housetax_index(){
+			$this->paginate = array(
+					'conditions' => array('HousetaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'order' => 'HousetaxReceipt.receipt_date DESC'
+			);
+			$receipts = $this->paginate('HousetaxReceipt');
+			$this->set(compact('receipts'));
+		}
+		function professionaltax_index(){
+			$this->paginate = array(
+					'conditions' => array('ProfessionaltaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'order' => 'ProfessionaltaxReceipt.receipt_date DESC'
+			);
+			$receipts = $this->paginate('ProfessionaltaxReceipt');
+			$this->set(compact('receipts'));
+		}
+		function watertax_index(){
+			$this->paginate = array(
+					'conditions' => array('WatertaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'order' => 'WatertaxReceipt.receipt_date DESC'
+			);
+			$receipts = $this->paginate('WatertaxReceipt');
+			$this->set(compact('receipts'));
+		}
+		function otherstax_index(){
+			$this->paginate = array(
+					'conditions' => array('OthersReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'order' => 'OthersReceipt.receipt_date DESC'
+			);
+			$receipts = $this->paginate('OthersReceipt');
+			$this->set(compact('receipts'));
+		}
 	}
 ?>

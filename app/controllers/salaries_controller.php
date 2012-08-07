@@ -36,7 +36,7 @@
 							$this->BankDetail->save($acc_bank_details['BankDetail']);
 							$this->Salary->saveAll($datas);
 							$this->Session->setFlash(__('Salaries saved successfully', true));
-							$this->redirect(array('controller' => 'accounts', 'action'=>'account1'));
+							$this->redirect(array('action'=>'index'));
 						}else{
 							$this->Session->setFlash(__('Insufficient balance in account, available balance is '.$acc_bank_details['BankDetail']['closing_bank_balance'], true));
 						}
@@ -49,6 +49,32 @@
 			}else{
 				$employees = $this->Employee->find('all');
 				$this->set(compact('employees'));
+			}
+		}
+		function index(){
+			$this->paginate = array(
+					'conditions' => array('Salary.salary_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'order' => 'Salary.salary_date DESC'
+			);
+			$receipts = $this->paginate('Salary');
+			$this->set(compact('receipts'));
+		}
+		function view($id){
+			if(!empty($id)){
+				$items = $this->Salary->find('first', array(
+						'conditions' => array('Salary.id' => $id),
+				));
+				$this->data = $items['Salary'];
+				$items = $this->EmployeeSalary->find('all', array(
+						'conditions' => array('EmployeeSalary.salary_id' => $this->data['id']),
+						'order' => 'EmployeeSalary.id ASC'
+				));
+				// echo "<pre>";
+				// print_r($items); die;
+				$this->set(compact('items'));
+			}else{
+				$this->Session->setFlash(__('Invalid Operation', true));
+				$this->redirect(array('action'=>'index'));
 			}
 		}
 	}

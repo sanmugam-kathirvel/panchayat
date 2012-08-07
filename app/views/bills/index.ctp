@@ -32,7 +32,7 @@
             $paginator->sort('lwf'),
             $paginator->sort('கழிவுத் தொகை', 'deduction_amt'),
             $paginator->sort('காசோலையில் குறிப்பிடப்பட்ட தொகை', 'cheque_amt'),
-            __('Actions', true),
+            			__('செயல்கள்', true),
           ));
           echo $tableHeaders;
 				}else{
@@ -66,7 +66,7 @@
           $actions .= ' ' . $html->link(__('நீக்கு', true), array(
               'action' => 'delete',
               $bill['ContractBillEstimation']['id'], $bill['ContractBillEstimation']['account_id'], $bill['ContractBillEstimation']['cheque_amt'])
-             , null, __('கண்டிப்பாக நீக்க விரும்புகிரீர்களா?', true)
+             , null, __('கண்டிப்பாக நீக்க விரும்புகிறீர்களா?', true)
 					);
 					if($acc_id > 1){
             $rows[] = array(
@@ -116,10 +116,10 @@
 					}
         }
         echo $html->tableCells($rows);
-        echo $tableHeaders;
+        //echo $tableHeaders;
     	?>
     </table>
 </div>
 
 <div class="paging"><?php echo $paginator->numbers(); ?></div>
-<div class="counter"><?php echo $paginator->counter(array('format' => __('பக்கம் %pages%இல் %page%, இங்கே தெரிவது மொத்தம் %count%இல் %current% பதிவேடு(கள்), ஆரம்பப் பதிவேடு எண் %start%, இருதிப் பதிவேடு எண் %end%', true))); ?></div>
+<div class="counter"><?php echo $paginator->counter(array('format' => __('பக்கம் %pages%இல் %page%, இங்கே தெரிவது மொத்தம் %count%இல் %current% பதிவேடு(கள்), ஆரம்பப் பதிவேடு எண் %start%, இறுதிப் பதிவேடு எண் %end%', true))); ?></div>

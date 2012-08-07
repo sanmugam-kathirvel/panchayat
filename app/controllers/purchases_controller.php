@@ -63,5 +63,31 @@
 			echo json_encode($stock);
 			exit;
 		}
+		function index(){
+			$this->paginate = array(
+					'conditions' => array('Purchase.purchase_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'order' => 'Purchase.purchase_date DESC'
+			);
+			$receipts = $this->paginate('Purchase');
+			$this->set(compact('receipts'));
+		}
+		function view($id){
+			if(!empty($id)){
+				$items = $this->Purchase->find('first', array(
+						'conditions' => array('Purchase.id' => $id),
+				));
+				$this->data = $items['Purchase'];
+				$items = $this->PurchaseItem->find('all', array(
+						'conditions' => array('PurchaseItem.purchase_id' => $this->data['id']),
+						'order' => 'PurchaseItem.id ASC',
+				));
+				// echo "<pre>";
+				// print_r($items); die;
+				$this->set(compact('items'));
+			}else{
+				$this->Session->setFlash(__('Invalid Operation', true));
+				$this->redirect(array('action'=>'index'));
+			}
+		}
 	}
 ?>

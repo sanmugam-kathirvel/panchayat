@@ -263,10 +263,11 @@
       $this->paginate = array(
         'conditions' => array('AttendanceRegister.to_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']),),
         'order' => 'AttendanceRegister.id DESC',
-        //'contain' => 'Workdetail',
+        'contain' => array('Workdetail')
       );
-      
       $attendances = $this->paginate('AttendanceRegister');
+			// echo "<pre>";
+			// print_r($attendances); die;
       $this->set(compact('attendances'));   
     }
     function get_jobcard(){
@@ -322,5 +323,31 @@
         
       }
     }
+		function view_attendance($id){
+			if(!empty($id)){
+				$this->AttendanceRegister->id=$id;
+				$this->data = $this->AttendanceRegister->read();
+				$result = $this->Attendance->find('all', array(
+					'conditions' => array('Attendance.attendance_register_id' => $this->data['AttendanceRegister']['id']),
+					'order' => 'Attendance.family_number ASC',
+					'contain' => array()
+				));
+				$workers = array();
+				foreach($result as $key => $value){
+					$row = $this->NregsRegistration->find('first', array(
+						'conditions' => array('NregsRegistration.job_card_number' => $value['Attendance']['job_card_number'])
+					));
+					$workers[$key] = $result[$key]['Attendance'];
+					$workers[$key]['name'] = $row['NregsRegistration']['name'];
+					$workers[$key]['father_or_husband_name'] = $row['NregsRegistration']['father_or_husband_name'];
+				}
+				// echo "<pre>";
+				// print_r($workers); die;
+				$this->set(compact('workers'));
+			}else{
+				$this->Session->setFlash(__('Invalid operation', true));
+				$this->redirect(array('action'=>'attendance_index'));
+			}
+		}
 	}
 ?>

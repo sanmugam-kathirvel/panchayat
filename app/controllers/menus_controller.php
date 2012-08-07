@@ -1,6 +1,6 @@
 <?php
 	class MenusController extends AppController{
-		var $uses = array('Account', 'BankDetail', 'Header', 'Hamlet', 'Stock', 'StockIssue', 'Book', 'BookDetail');
+		var $uses = array('Account', 'BankDetail', 'Header', 'Hamlet', 'Stock', 'StockIssue', 'Book', 'BookDetail', 'Employee');
 		function beforeFilter(){
 			parent::beforeFilter();
 		}
@@ -159,6 +159,7 @@
 		}
 		function balanceindex(){
 			$this->paginate = array(
+					'conditions' => array('BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year']),
 					'contain' => 'Account'
 			);
 			$balances = $this->paginate('BankDetail');
@@ -284,6 +285,53 @@
 		function stock_index(){
 			$stocks = $this->paginate('Stock');
 			$this->set(compact('stocks'));
+		}
+		function employees_index(){
+			$employees = $this->paginate('Employee');
+			$this->set(compact('employees'));
+		}
+		function add_employee(){
+			if(!empty($this->data)){
+				$this->Employee->set($this->data);
+				if($this->Employee->validates()){
+					if($this->Employee->save($this->data)){
+						$this->Session->setFlash(__('Employee Details Saved Successfully.', true));
+						$this->redirect(array('action'=>'employees_index'));
+					}else{
+						$this->Session->setFlash(__('Error Saving Employee Details!', true));
+						$this->redirect(array('action'=>'employees_index'));
+					}
+				}
+			}
+		}
+		function edit_employee($id){
+			if(!empty($id)){
+				$this->Employee->id=$id;
+	      if(empty($this->data)) {
+	        $this->data = $this->Employee->read();
+				}else{
+	        if($this->Employee->save($this->data)){
+	          $this->Session->setFlash(__('Employee Details Updated Successfully.', true));
+						$this->redirect(array('action'=>'employees_index'));
+	        }else{
+						$this->Session->setFlash(__('Error Updating Employee Details!', true));
+						$this->redirect(array('action'=>'employees_index'));
+					}
+	      }
+			}else{
+				$this->Session->setFlash(__('Invalid operation', true));
+				$this->redirect(array('action'=>'employees_index'));
+			}
+		}
+		function delete_employee($id){
+			if(!empty($id)){
+				$this->Employee->delete($id);
+				$this->Session->setFlash(__('Employee Details deleted successfully', true));
+				$this->redirect(array('action'=>'employees_index'));
+			}else{
+				$this->Session->setFlash(__('Invalid operation', true));
+				$this->redirect(array('action'=>'employees_index'));
+			}
 		}
 	}
 ?>

@@ -10,7 +10,7 @@
 	echo $form->input('company_name', array('label' => 'நிறுவனத்தின் பெயர்'));
 	echo $form->input('book_number', array('label' => 'புத்தகத்தின் எண்'));
 	echo $form->input('start_receipt_number', array('label' => 'ஆரம்ப ரசீது எண்'));
-	echo $form->input('end_receipt_number', array('label' => 'இருதி ரசீது எண்'));
+	echo $form->input('end_receipt_number', array('label' => 'இறுதி ரசீது எண்'));
 	echo $form->input('status', array('type' => 'hidden', 'value' => 'available'));
 	echo $form->end('அனுப்பு');
 ?>

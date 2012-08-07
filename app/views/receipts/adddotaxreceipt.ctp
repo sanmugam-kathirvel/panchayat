@@ -44,31 +44,34 @@ $(document).ready(function(){
 	$('.demand_number').focusout(function(){
 	  var demand_number = $('.demand_number').val();
 	  var this_data = $(this);
-		  $.ajax({
-		  	type: 'POST',
-		  	url: Webroot+"/receipts/get_dotax_family_demand/",
-		  	data: {'demand_number':demand_number},
-		  	success: function(data){
-		  		output=JSON.parse(data);
-		  		if(output){
-			  		$('.name').val(output.DoDemand.name);
-			  		$('.father_name').val(output.DoDemand.father_name);
-			  		$('.address').val(output.DoDemand.address);
-			  		$('.emd').val(output.DoDemand.emd);
-			  		$('.do_pending').val(output.DoDemand.do_pending);
-			  		$('.do_current').val(output.DoDemand.do_current);
-			  		$('.total_amount').val(parseInt(output.DoDemand.do_pending) + parseInt(output.DoDemand.do_current) + parseInt(output.DoDemand.emd));
-		  		}else{
-		  			if(c==1){
-		  				this_data.parent().append('<div class="error-message">This Demand number not found</div>');
-			  			$('div.error-message').delay(5000).hide(1000);
-			  			c++;
-		  			}
-		  			this_data.val('');
-			  		this_data.focus();
-		  		}
-		  	}
-		  });
+	  $.ajax({
+	  	type: 'POST',
+	  	url: Webroot+"/receipts/get_dotax_family_demand/",
+	  	data: {'demand_number':demand_number},
+	  	success: function(data){
+	  		output=JSON.parse(data);
+	  		if(output){
+		  		$('.name').val(output.DoDemand.name);
+		  		$('.father_name').val(output.DoDemand.father_name);
+		  		$('.address').val(output.DoDemand.address);
+		  		$('.emd').val(output.DoDemand.emd);
+		  		$('.do_pending').val(output.DoDemand.do_pending);
+		  		$('.do_current').val(output.DoDemand.do_current);
+		  		$('.total_amount').val(parseInt(output.DoDemand.do_pending) + parseInt(output.DoDemand.do_current) + parseInt(output.DoDemand.emd));
+	  		}else{
+	  			if(c==1){
+	  				this_data.parent().append('<div class="error-message">This Demand number not found</div>');
+		  			$('div.error-message').delay(5000).hide(1000);
+		  			c++;
+	  			}
+	  			this_data.val('');
+		  		this_data.focus();
+	  		}
+	  	}
+	  });
+	});
+	$('.do_pending, .do_current').focusout(function(){
+		$('.total_amount').val(parseInt($('.do_pending').val()) + parseInt($('.do_current').val()) + parseInt($('.emd').val()));
 	});
 });
 </script>

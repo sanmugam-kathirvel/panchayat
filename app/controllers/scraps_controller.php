@@ -70,7 +70,9 @@
 			if(!empty($id)){
 				$this->Scrap->id=$id;
 				$this->data = $this->Scrap->read();
-				
+			}else{
+				$this->Session->setFlash(__('Invalid Operation', true));
+				$this->redirect(array('action' => 'index'));
 			}
 		}
 	}

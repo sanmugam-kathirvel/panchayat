@@ -1,4 +1,4 @@
-<h2>ரசீது புத்தகத்தை உபயோகிப்பதற்க்கு வழங்கு</h2>
+<h2>ரசீது புத்தகத்தை உபயோகிப்பதற்கு வழங்கு</h2>
 <?php
 	echo $form->create('BookDetail', array( 'url' => array('controller' => 'menus', 'action' => 'book_issue')));
 	echo $form->input('book_id', array('type' => 'select', 'empty' => true, 'class' => 'book_type', 'options' => $book_names, 'label' => 'புத்தகத்தின் பெயர்'));

@@ -1,4 +1,4 @@
-<p>Cash Book</p>
+<h2>ரொக்கப் பதிவேடு</h2>
 <?php
 	$months = array();
 	$years = array();
@@ -13,7 +13,7 @@
 		$years[$i] = $i;
 	}
 	echo $form->create('Index', array('method' => 'get', 'url' => array('controller' => 'cashbook', 'action' => 'form'.$report_number.'_report')));
-	echo $form->input('month', array('name' => 'month', 'options' => $months));
-	echo $form->input('year', array('name' => 'year', 'options' => $years));
-	echo $form->end('Submit').'<a href="../../reports/index">Back to reports</a>'; 
+	echo $form->input('month', array('label' => 'மாதம்', 'name' => 'month', 'options' => $months));
+	echo $form->input('year', array('label' => 'ஆண்டு', 'name' => 'year', 'options' => $years));
+	echo $form->end('அனுப்பு').'<a href="../../reports/index">அறிக்கைகளுக்கு திரும்பிச் செல்</a>'; 
 ?>
