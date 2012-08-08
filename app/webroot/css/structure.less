@@ -1,5 +1,50 @@
 body{
 	margin-top: 40px;
+	background-color: #F9F9F9;
+}
+h2{
+  font-weight: normal;
+  padding: 10px;
+  padding-left: 30px;
+}
+div.actions{
+  ul{
+    li{
+      line-height: 22px;
+      a{
+        font-size: 16px;
+      }
+    }
+  }
+}
+table{
+  width: 90%;
+  margin: auto;
+  background: white;
+  border: 1px solid #DFDFDF;
+  moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  th{
+    background-color: #E7E7E7;
+    font-size: 14px;
+    font-weight: normal;
+  }
+}
+.striped {
+  background-color: #f9f9f9;
+}
+div.paging,div.counter{
+  width: 90%;
+  margin: auto;
+  padding: 10px;
+}
+div.view-data{
+  p{
+    img{
+      margin-left: 70px;
+    }
+  }
 }
 form{
   div.input{
@@ -54,13 +99,23 @@ form{
 	    		width: 70%;
 	    	}
 	    }
+	    div.new_field.salary{
+	      margin-top: 10px;
+	      table{
+	        width: 50%;
+	        clear: left;
+	      }
+	    }
 	    div.input.inline{
 	    	margin: 0;
 	      margin-left: 150px;
 	      height: 45px;
 	    	table{
 	    		width: 100px;
+	    		margin: 0px;
 	    		margin-bottom: 0;
+	    		background: none;
+          border: none;
 	    		td{
 	    			border: 0;
 	    			div.input{
@@ -85,6 +140,9 @@ form{
 	  		width: 990px;
 				text-align: right;
 	  	}
+	  	div.link.salary{
+        width: 735px;
+      }
 	  }
 	  form#PurchasePurchaseForm{
 	  	div.submit{

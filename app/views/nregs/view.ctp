@@ -1,6 +1,6 @@
 
 <div class="blocks form">
-  <h2><?php echo 'பணியாளர்களின் பதிவீடுகள்'; ?></h2>
+  <h2><?php echo 'பணியாளரின் பதிவீடு விபரம்'; ?></h2>
   <div class="actions">
       <ul>
           <li><?php echo $html->link(__('பின் செல்', true), array('action'=>'registrationindex')); ?></li>
@@ -23,7 +23,13 @@
   	 	<td> <?php echo $registration_detail['NregsRegistration']['name']; ?> </td>
   	</tr>
     <tr>
-    	<td>தந்தை / கணவர் பெயர்</td>
+    	<?php
+    		if($registration_detail['NregsRegistration']['sex'] == 'ஆண்'){
+    			echo "\n\t\t\t<td>தந்தை பெயர்</td>\n";
+				}else{
+					echo "\n\t\t\t<td>தந்தை / கணவர் பெயர்</td>\n";
+				}
+    	?>
   	 	<td> <?php echo $registration_detail['NregsRegistration']['father_or_husband_name']; ?> </td>
   	</tr>
     <tr>

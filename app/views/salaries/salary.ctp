@@ -8,12 +8,12 @@
 	}
 	echo $form->create('Salary', array( 'url' => array('controller' => 'salaries', 'action' => 'salary')));
 	echo $form->input('salary_date', array('label' => 'தேதி', 'type' => 'text', 'id' => 'datepicker'));
-	echo $form->input('drawee_name', array('label' => 'காசோலைக்குரியவரின் பெயர்'));
+	echo $form->input('drawee_name', array('label' => 'காசோலைக்குரியவர் பெயர்'));
 	echo $form->input('voucher_number', array('label' => 'செலவுச் சீட்டு எண்'));
 	echo $form->input('cheque_number', array('label' => 'காசோலை எண்'));
 	echo $form->input('cheque_date', array('label' => 'காசோலை வழங்கிய தேதி', 'type' => 'text', 'id' => 'datepicker1'));
-	echo $form->input('cheque_amount', array('label' => 'காசோலையில் குறிப்பிடப்பட்ட தொகை', 'class' => 'cheque_amount', 'readonly' => 'readonly'));
-	echo "<div class='new_field'>";
+	echo $form->input('cheque_amount', array('label' => 'மொத்த தொகை', 'class' => 'cheque_amount', 'readonly' => 'readonly'));
+	echo "<div class='new_field salary'>";
 		echo "<table>";
 			echo "<tbody class= 'add_new_field'>";
 					echo "<tr>";
@@ -25,13 +25,13 @@
 					  echo "<tr id ='new_field' class='new_field_".$i."'>";
 							echo '<td>'.$form->input('EmployeeSalary.'.$i.'.employee_name', array('options' => $employee_name, 'label' => false, 'empty' => true)).'</td>';
 							echo '<td>'.$form->input('EmployeeSalary.'.$i.'.employee_designation', array('options' => $employee_designation, 'label' => false, 'class' => 'employee_designation', 'empty' => true)).'</td>';
-							echo '<td>'.$form->input('EmployeeSalary.'.$i.'.employee_pay', array('label' => false, 'class' => 'employee_pay', 'value' => 0, 'id' => 'employee_pay')).'</td>';
+							echo '<td>'.$form->input('EmployeeSalary.'.$i.'.employee_pay', array('label' => false, 'class' => 'small employee_pay', 'value' => 0, 'id' => 'employee_pay')).'</td>';
 						echo "</tr>";
 					}	
 			echo "</tbody>";
 		echo "</table>";
 		echo "</div>";
-	echo "<div class='link'>";	
+	echo "<div class='link salary'>";	
 		echo $html->link('புதிதாக சேர்', '', array('class' => 'add_field'));
 		echo " | ";
 		echo $html->link('நீக்கு', '', array('class' => 'remove_field'));

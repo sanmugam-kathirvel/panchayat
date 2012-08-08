@@ -25,10 +25,10 @@
 					for($i = 0; $i < 20 ; $i++){
 					  echo "<tr id ='new_field' class='new_field_".$i."'>";
 							echo '<td>'.$form->input('PurchaseItem.'.$i.'.stock_id', array('options' => $stock_list, 'class' => 'stock_id', 'label' => false, 'empty' => true)).'</td>';
-							echo '<td>'.$form->input('PurchaseItem.'.$i.'.opening_stock', array('label' => false, 'class' => 'opening_stock', 'value' => 0, 'readonly' => 'readonly')).'</td>';
-							echo '<td>'.$form->input('PurchaseItem.'.$i.'.item_quantity', array('label' => false, 'class' => 'quantity', 'value' => 0)).'</td>';
-							echo '<td>'.$form->input('PurchaseItem.'.$i.'.item_rate', array('label' => false, 'class' => 'unit_cost', 'value' => 0)).'</td>';
-							echo '<td>'.$form->input('PurchaseItem.'.$i.'.item_tot_amount', array('label' => false, 'id' => 'tot_amount', 'class' => 'tot_amount_'.$i, 'value' => 0, 'readonly' => 'readonly')).'</td>';
+							echo '<td>'.$form->input('PurchaseItem.'.$i.'.opening_stock', array('label' => false, 'class' => 'small opening_stock', 'value' => 0, 'readonly' => 'readonly')).'</td>';
+							echo '<td>'.$form->input('PurchaseItem.'.$i.'.item_quantity', array('label' => false, 'class' => 'small quantity', 'value' => 0)).'</td>';
+							echo '<td>'.$form->input('PurchaseItem.'.$i.'.item_rate', array('label' => false, 'class' => 'small unit_cost', 'value' => 0)).'</td>';
+							echo '<td>'.$form->input('PurchaseItem.'.$i.'.item_tot_amount', array('label' => false, 'id' => 'tot_amount', 'class' => 'small tot_amount_'.$i, 'value' => 0, 'readonly' => 'readonly')).'</td>';
 						echo "</tr>";
 					}	
 			echo "</tbody>";

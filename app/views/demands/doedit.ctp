@@ -14,7 +14,7 @@
 			echo "<td>நிலுவை</td>";
 			echo "<td>நடப்பு</td>";
 		echo "</tr><tr>";
-			echo "<td><label>டி & ஓ வியாபாரிகளின் கேட்புத் தொகை</label></td>";
+			echo "<td><label>கேட்புத் தொகை</label></td>";
 			echo '<td>'.$form->input('do_pending', array('label' => false, 'class' => 'small do_pending')).'</td>';
 			echo '<td>'.$form->input('do_current', array('label' => false, 'class' => 'small do_current')).'</td>';
 		echo '</tr></table>';

@@ -45,7 +45,7 @@
             }
     
             echo $html->tableCells($rows);
-            echo $tableHeaders;
+            //echo $tableHeaders;
         ?>
     </table>
 </div>

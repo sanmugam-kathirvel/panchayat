@@ -16,14 +16,14 @@
 			echo "<td>நிலுவை</td>";
 			echo "<td>நடப்பு</td>";
 		echo "</tr><tr>";
-			echo "<td><label>பாகம் ஒன்றின் கேட்புத் தொகை</label></td>";
+			echo "<td><label>பாகம் I கேட்புத் தொகை</label></td>";
 			echo '<td>'.$form->input('part1_pending', array('label' => false, 'class' => 'small part1_pending')).'</td>';
 			echo '<td>'.$form->input('part1_current', array('label' => false, 'class' => 'small part1_current')).'</td>';
 		echo '</tr></table>';
 	echo '</div>';
 	echo "<div class='input inline'>";
 		echo "<table><tr>";
-			echo "<td><label>பாகம் இரண்டின் கேட்புத் தொகை</label></td>";
+			echo "<td><label>பாகம் II கேட்புத் தொகை</label></td>";
 			echo '<td>'.$form->input('part2_pending', array('label' => false, 'class' => 'small part2_pending')).'</td>';
 			echo '<td>'.$form->input('part2_current', array('label' => false, 'class' => 'small part2_current')).'</td>';
 		echo '</tr></table>';

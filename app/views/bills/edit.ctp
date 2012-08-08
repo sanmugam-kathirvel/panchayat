@@ -9,8 +9,8 @@
 	echo $form->input('voucher_number', array('label' => 'செலவுச் சீட்டு எண்'));
 	echo $form->input('contractor_name', array('label' => 'ஒப்பந்தக்காரரின் பெயர்'));
 	echo $form->input('address', array('label' => 'முகவரி'));
-	echo $form->input('estimation_amt', array('label' => 'மதிப்பீடு செய்யப்பட்ட தொகை'));
-	echo $form->input('workdone_amt', array('class' => 'workdone_amt', 'label' => 'வேலையை முடிக்க செலவிடப்பட்ட தொகை'));
+	echo $form->input('estimation_amt', array('label' => 'மதிப்பிடப்பட்ட தொகை'));
+	echo $form->input('workdone_amt', array('class' => 'workdone_amt', 'label' => 'செலவிடப்பட்ட தொகை'));
 	if($this->data['ContractBillEstimation']['account_id'] > 1){
 		echo $form->input('cement', array('label' => 'சிமெண்ட்', 'class' => 'cement'));
 		echo $form->input('steel', array('label' => 'இரும்பு', 'class' => 'steel'));
@@ -25,7 +25,7 @@
 	echo $form->input('vat', array('class' => 'vat','label' => 'Vat 4%'));
 	echo $form->input('lwf', array('class' => 'lwf','label' => 'LWF 3%'));
 	echo $form->input('deduction_amt', array('label' => 'கழிவுத் தொகை', 'class' => 'deduction_amt', 'readonly' => 'readonly'));
-	echo $form->input('cheque_amt', array('label' => 'காசோலையில் குறிப்பிடப்பட்ட தொகை', 'class' => 'total_amt', 'readonly' => 'readonly'));
+	echo $form->input('cheque_amt', array('label' => 'காசோலைத் தொகை', 'class' => 'total_amt', 'readonly' => 'readonly'));
 	echo $form->end('அனுப்பு');
 ?>
 

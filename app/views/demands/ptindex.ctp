@@ -19,10 +19,10 @@
                 $paginator->sort('குக்கிராமத்தின் குறியீடு', 'hamlet_id'),
                 $paginator->sort('நிறுவனத்தின் பெயர்', 'company_name'),
                 $paginator->sort('அரையாண்டு வருமானம்', 'half_yearly_income'),
-                $paginator->sort('பாகம் ஒன்றின் கேட்புத் தொகை - நிலுவை', 'part1_pending'),
-                $paginator->sort('பாகம் ஒன்றின் கேட்புத் தொகை - நடப்பு', 'part1_current'),
-                $paginator->sort('பாகம் இரண்டின் கேட்புத் தொகை - நிலுவை', 'part2_pending'),
-                $paginator->sort('பாகம் இரண்டின் கேட்புத் தொகை - நடப்பு', 'part2_current'),
+                $paginator->sort('பாகம் I நிலுவை', 'part1_pending'),
+                $paginator->sort('பாகம் I நடப்பு', 'part1_current'),
+                $paginator->sort('பாகம் II நிலுவை', 'part2_pending'),
+                $paginator->sort('பாகம் II நடப்பு', 'part2_current'),
                 				__('செயல்கள்', true),
             ));
             echo $tableHeaders;

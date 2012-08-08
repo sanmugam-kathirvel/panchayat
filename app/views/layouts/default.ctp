@@ -114,6 +114,13 @@
       $( "#datepicker1" ).datepicker({dateFormat: "yy-mm-dd", showAnim: "show"});
       $( "#datepicker2" ).datepicker({dateFormat: "yy-mm-dd", showAnim: "show"});
     });
+    $("table tr:nth-child(even)").not('.controller-row').addClass("striped");
+    $('.container-fluid>ul>li').mouseover(function(){
+		  $(this).addClass('open');
+		});
+		$('.container-fluid>ul>li').mouseout(function(){
+		  $(this).removeClass('open');
+		});
   </script>
 </body>
 </html>

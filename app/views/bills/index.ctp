@@ -12,13 +12,13 @@
 				if($acc_id > 1){
         	$tableHeaders = $html->tableHeaders(array(
         		$paginator->sort('தேதி', 'bill_date'),
-        		$paginator->sort('காசோலை வழங்கிய தேதி', 'cheque_date'),
+        		$paginator->sort('காசோலைத் தேதி', 'cheque_date'),
         		$paginator->sort('காசோலை எண்', 'cheque_number'),
         		$paginator->sort('செலவுச் சீட்டு எண்', 'voucher_number'),
             $paginator->sort('ஒப்பந்தக்காரரின் பெயர்', 'contractor_name'),
             $paginator->sort('முகவரி', 'address'),
-            $paginator->sort('மதிப்பீடு செய்யப்பட்ட தொகை', 'estimation_amt'),
-            $paginator->sort('வேலையை முடிக்க செலவிடப்பட்ட தொகை', 'workdone_amt'),
+            $paginator->sort('மதிப்பிட்ட தொகை', 'estimation_amt'),
+            $paginator->sort('செலவிடப்பட்ட தொகை', 'workdone_amt'),
             $paginator->sort('சிமெண்ட்', 'cement'),
             $paginator->sort('இரும்பு', 'steel'),
             $paginator->sort('கதவு', 'door'),
@@ -31,20 +31,20 @@
             $paginator->sort('vat'),
             $paginator->sort('lwf'),
             $paginator->sort('கழிவுத் தொகை', 'deduction_amt'),
-            $paginator->sort('காசோலையில் குறிப்பிடப்பட்ட தொகை', 'cheque_amt'),
+            $paginator->sort('காசோலைத் தொகை', 'cheque_amt'),
             			__('செயல்கள்', true),
           ));
           echo $tableHeaders;
 				}else{
 					$tableHeaders = $html->tableHeaders(array(
 						$paginator->sort('தேதி', 'bill_date'),
-        		$paginator->sort('காசோலை வழங்கிய தேதி', 'cheque_date'),
+        		$paginator->sort('காசோலைத் தேதி', 'cheque_date'),
         		$paginator->sort('காசோலை எண்', 'cheque_number'),
         		$paginator->sort('செலவுச் சீட்டு எண்', 'voucher_number'),
             $paginator->sort('ஒப்பந்தக்காரரின் பெயர்', 'contractor_name'),
             $paginator->sort('முகவரி', 'address'),
-            $paginator->sort('மதிப்பீடு செய்யப்பட்ட தொகை', 'estimation_amt'),
-            $paginator->sort('வேலையை முடிக்க செலவிடப்பட்ட தொகை', 'workdone_amt'),
+            $paginator->sort('மதிப்பிட்ட தொகை', 'estimation_amt'),
+            $paginator->sort('செலவிடப்பட்ட தொகை', 'workdone_amt'),
             $paginator->sort('வைப்புத் தொகை', 'emd'),
             $paginator->sort('வருமாண வரி', 'it'),
             $paginator->sort('scst'),
@@ -52,7 +52,7 @@
             $paginator->sort('vat'),
             $paginator->sort('lwf'),
             $paginator->sort('கழிவுத் தொகை', 'deduction_amt'),
-            $paginator->sort('காசோலையில் குறிப்பிடப்பட்ட தொகை', 'cheque_amt'),
+            $paginator->sort('காசோலைத் தொகை', 'cheque_amt'),
             			__('செயல்கள்', true),
           ));
           echo $tableHeaders;

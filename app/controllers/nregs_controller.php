@@ -1,6 +1,6 @@
 <?php
 	class NregsController extends AppController{
-		var $uses = array('NregsRegistration', 'Hamlet', 'Jobcard', 'NregsStock', 'NmrRoll', 'NmrRollentry','Attendance','Workdetail','AttendanceRegister');
+		var $uses = array('NregsRegistration', 'Hamlet', 'Jobcard', 'NregsStock', 'NmrRoll','Attendance','Workdetail','AttendanceRegister');
 		function beforeFilter(){
 			parent::beforeFilter();
 		}
@@ -182,29 +182,6 @@
 			$nregs_rolls = $this->paginate('NmrRoll');
 			$this->set(compact('nregs_rolls'));
 		}
-		// function rollentry(){
-			// $hamlets = $this->Hamlet->find('all');
-			// $nmr_roll_no = $this->NmrRoll->findByRollEntryStatus('ongoing');
-			// $this->set(compact('hamlets','nmr_roll_no'));
-			// if(!empty($this->data)){
-				// if($this->NmrRollentry->save($this->data)){
-					// $ongoing = $this->NmrRoll->findByRollEntryStatus('ongoing');
-					// if($ongoing['NmrRoll']['ending_roll_no'] == $ongoing['NmrRoll']['currently_available_roll_no']){
-						// $ongoing['NmrRoll']['rollentry'] = 'rollentry';
-						// $ongoing['NmrRoll']['roll_entry_status'] = 'closed';
-						// $this->NmrRoll->save($ongoing);
-						// $next_ongoing = $this->NmrRoll->find('first', array('conditions' => array('NmrRoll.roll_entry_status' => 'available')));
-						// $next_ongoing['NmrRoll']['rollentry'] = 'rollentry';
-						// $next_ongoing['NmrRoll']['roll_entry_status'] = 'ongoing';
-						// $this->NmrRoll->save($next_ongoing);
-					// }else{
-						// $ongoing['NmrRoll']['rollentry'] = 'rollentry';
-						// $ongoing['NmrRoll']['currently_available_roll_no'] = $ongoing['NmrRoll']['currently_available_roll_no'] + 1;
-						// $this->NmrRoll->save($ongoing);
-					// }
-				// }
-			// }
-		// }
 		function add_workdetails(){
 			if(!empty($this->data)){
 				if($this->Workdetail->save($this->data)){

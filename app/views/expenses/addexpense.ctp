@@ -10,7 +10,7 @@
 	echo $form->input('expense_date', array('label' => 'தேதி', 'id' => 'datepicker', 'type' => 'text'));
 	echo $form->input('voucher_number', array('label' => 'செலவுச் சீட்டு எண்'));
 	echo $form->input('expense_amount', array('label' => 'செலவிடப்பட்ட தொகை'));
-	echo $form->input('drawee_name', array('label' => 'காசோலைக்குரியவரின் பெயர்'));
+	echo $form->input('drawee_name', array('label' => 'காசோலைக்குரியவர் பெயர்'));
 	echo $form->input('cheque_number', array('label' => 'காசோலை எண்'));
 	echo $form->input('cheque_date', array('label' => 'காசோலை வழங்கிய தேதி', 'id' => 'datepicker1', 'type' => 'text'));
 	echo $form->input('description', array('label' => 'விபரம்'));
