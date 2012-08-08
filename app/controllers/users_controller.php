@@ -15,6 +15,9 @@ class UsersController extends AppController {
 	}
 	function login() {
 		if(!empty($this->data) && isset($this->data['User']['accounting_year'])){
+			$years = explode("/",$this->data['User']['accounting_year']);
+			$this->Session->write('User.acc_opening_year', $years[0]);
+			$this->Session->write('User.acc_closing_year', $years[1]);
 			//$year = split('[/]', $this->data['User']['accounting_year']);
 			$this->redirect(array('controller' => 'accounts', 'action'=>'index'));
 		}

@@ -58,7 +58,7 @@
 		}
 		function htindex(){
 			$this->paginate = array(
-				'conditions' => array('HtDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('HtDemand.demand_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 					'order' => 'HtDemand.demand_date DESC',
 					'contain' => 'Hamlet'
 			);
@@ -94,7 +94,7 @@
 		}
 		function wtindex(){
 			$this->paginate = array(
-				'conditions' => array('WtDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('WtDemand.demand_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 					'order' => 'WtDemand.demand_date DESC',
 					'contain' => 'Hamlet'
 			);
@@ -130,7 +130,7 @@
 		}
 		function ptindex(){
 			$this->paginate = array(
-				'conditions' => array('PtDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('PtDemand.demand_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 					'order' => 'PtDemand.demand_date DESC',
 					'contain' => 'Hamlet'
 			);
@@ -166,7 +166,7 @@
 		}
 		function doindex(){
 			$this->paginate = array(
-				'conditions' => array('DoDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('DoDemand.demand_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 					'order' => 'DoDemand.demand_date DESC',
 					'contain' => 'Hamlet'
 			);

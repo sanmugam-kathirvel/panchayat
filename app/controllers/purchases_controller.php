@@ -10,14 +10,14 @@
 			if(!empty($this->data)){
 				$this->Purchase->set($this->data);
 				if($this->Purchase->validates()){
-					$acc_opening_date = strtotime($GLOBALS['accounting_year']['acc_opening_year']);
-					$acc_closing_date = strtotime($GLOBALS['accounting_year']['acc_closing_year']);
+					$acc_opening_date = strtotime($this->Session->read('User.acc_opening_year'));
+					$acc_closing_date = strtotime($this->Session->read('User.acc_closing_year'));
 					$purchase_date = strtotime($this->data['Purchase']['purchase_date']);
 					if($acc_closing_date >= $purchase_date && $acc_opening_date <= $purchase_date){
 						$acc_bank_details = $this->BankDetail->find('first', array(
 						'conditions' => array(
-							'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-							'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+							'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
+							'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'), 
 							'BankDetail.account_id' => 1
 							)
 						));
@@ -65,7 +65,7 @@
 		}
 		function index(){
 			$this->paginate = array(
-					'conditions' => array('Purchase.purchase_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'conditions' => array('Purchase.purchase_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 					'order' => 'Purchase.purchase_date DESC'
 			);
 			$receipts = $this->paginate('Purchase');

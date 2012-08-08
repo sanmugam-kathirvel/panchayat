@@ -5,7 +5,7 @@
 		}
 		function index(){
 			$this->paginate = array(
-				'conditions' => array('Scrap.estimation_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('Scrap.estimation_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 					'order' => 'Scrap.estimation_date DESC',
 			);
 			$scraps = $this->paginate('Scrap');

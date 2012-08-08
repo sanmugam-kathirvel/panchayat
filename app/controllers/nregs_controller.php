@@ -37,7 +37,7 @@
 		}
 		function registrationindex(){
 			$this->paginate = array(
-				'conditions' => array('NregsRegistration.application_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']),),
+				'conditions' => array('NregsRegistration.application_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year')),),
 				'order' => 'NregsRegistration.application_date DESC',
 				'contain' => array('Hamlet')
 			);
@@ -97,7 +97,7 @@
 		}
 		function jobcardindex(){
 			$this->paginate = array(
-				'conditions' => array('Jobcard.jobcard_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']),),
+				'conditions' => array('Jobcard.jobcard_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year')),),
 				'order' => 'Jobcard.jobcard_date DESC',
 			);
 			$nregs_jobcard = $this->paginate('Jobcard');
@@ -218,7 +218,7 @@
 		}
 		function index_workdetails() {
 			$this->paginate = array(
-				'conditions' => array('Workdetail.year BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']),),
+				'conditions' => array('Workdetail.year BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year')),),
 				'order' => 'Workdetail.year DESC',
 			);
 			$workdetails = $this->paginate('Workdetail');
@@ -238,7 +238,7 @@
 		}
     function attendance_index(){
       $this->paginate = array(
-        'conditions' => array('AttendanceRegister.to_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']),),
+        'conditions' => array('AttendanceRegister.to_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year')),),
         'order' => 'AttendanceRegister.id DESC',
         'contain' => array('Workdetail')
       );

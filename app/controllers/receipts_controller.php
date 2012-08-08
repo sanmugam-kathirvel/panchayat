@@ -9,7 +9,7 @@
 		}
 		function cashtobank_index(){
 			$this->paginate = array(
-					'conditions' => array('CashToBank.transfer_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'conditions' => array('CashToBank.transfer_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 					'order' => 'CashToBank.transfer_date DESC',
 					'contain' => array('BankDetail')
 				);
@@ -19,8 +19,8 @@
 		function cashtobank(){
 			$account_detail = $this->BankDetail->find('first', array(
 				'conditions' => array(
-					'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-					'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+					'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
+					'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'), 
 					'BankDetail.account_id' => 1
 				)
 			));
@@ -51,8 +51,8 @@
 				if($this->OthersReceipt->save($this->data)){
 					$acc_bank_details = $this->BankDetail->find('first', array(
 							'conditions' => array(
-								'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-								'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+								'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
+								'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'), 
 								'BankDetail.account_id' => 1
 							)
 					));
@@ -76,8 +76,8 @@
 					if($this->HousetaxReceipt->save($this->data)){
 						$acc_bank_details = $this->BankDetail->find('first', array(
 								'conditions' => array(
-									'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-									'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+									'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
+									'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'), 
 									'BankDetail.account_id' => 1
 								)
 						));
@@ -99,7 +99,7 @@
 			$this->layout = false;
 			$htdemand = $this->HtDemand->find('first', array(
 				'conditions' => array(
-					'HtDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']),
+					'HtDemand.demand_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year')),
 					'HtDemand.demand_number' => $_POST['demand_number']
 				)
 			));
@@ -113,8 +113,8 @@
 				if($this->WatertaxReceipt->save($this->data)){
 					$acc_bank_details = $this->BankDetail->find('first', array(
 								'conditions' => array(
-									'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-									'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+									'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
+									'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'), 
 									'BankDetail.account_id' => 1
 								)
 					));
@@ -133,7 +133,7 @@
 			$this->layout = false;
 			$wtdemand = $this->WtDemand->find('first', array(
 				'conditions' => array(
-					'WtDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']),
+					'WtDemand.demand_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year')),
 					'WtDemand.demand_number' => $_POST['demand_number']
 				)
 			));
@@ -149,8 +149,8 @@
 					if($this->ProfessionaltaxReceipt->save($this->data)){
 						$acc_bank_details = $this->BankDetail->find('first', array(
 									'conditions' => array(
-										'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-										'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+										'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
+										'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'), 
 										'BankDetail.account_id' => 1
 									)
 						));
@@ -172,7 +172,7 @@
 			$this->layout = false;
 			$ptdemand = $this->PtDemand->find('first', array(
 				'conditions' => array(
-					'PtDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']),
+					'PtDemand.demand_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year')),
 					'PtDemand.demand_number' => $_POST['demand_number']
 				)
 			));
@@ -188,8 +188,8 @@
 					if($this->DotaxReceipt->save($this->data)){
 						$acc_bank_details = $this->BankDetail->find('first', array(
 									'conditions' => array(
-										'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-										'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+										'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
+										'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'), 
 										'BankDetail.account_id' => 1
 									)
 						));
@@ -211,7 +211,7 @@
 			$this->layout = false;
 			$dodemand = $this->DoDemand->find('first', array(
 				'conditions' => array(
-					'DoDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']),
+					'DoDemand.demand_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year')),
 					'DoDemand.demand_number' => $_POST['demand_number']
 				)
 			));
@@ -220,7 +220,7 @@
 		}
 		function dotax_index(){
 			$this->paginate = array(
-					'conditions' => array('DotaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'conditions' => array('DotaxReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 					'order' => 'DotaxReceipt.receipt_date DESC'
 			);
 			$receipts = $this->paginate('DotaxReceipt');
@@ -228,7 +228,7 @@
 		}
 		function housetax_index(){
 			$this->paginate = array(
-					'conditions' => array('HousetaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'conditions' => array('HousetaxReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 					'order' => 'HousetaxReceipt.receipt_date DESC'
 			);
 			$receipts = $this->paginate('HousetaxReceipt');
@@ -236,7 +236,7 @@
 		}
 		function professionaltax_index(){
 			$this->paginate = array(
-					'conditions' => array('ProfessionaltaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'conditions' => array('ProfessionaltaxReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 					'order' => 'ProfessionaltaxReceipt.receipt_date DESC'
 			);
 			$receipts = $this->paginate('ProfessionaltaxReceipt');
@@ -244,7 +244,7 @@
 		}
 		function watertax_index(){
 			$this->paginate = array(
-					'conditions' => array('WatertaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'conditions' => array('WatertaxReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 					'order' => 'WatertaxReceipt.receipt_date DESC'
 			);
 			$receipts = $this->paginate('WatertaxReceipt');
@@ -252,7 +252,7 @@
 		}
 		function otherstax_index(){
 			$this->paginate = array(
-					'conditions' => array('OthersReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'conditions' => array('OthersReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 					'order' => 'OthersReceipt.receipt_date DESC'
 			);
 			$receipts = $this->paginate('OthersReceipt');

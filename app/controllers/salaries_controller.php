@@ -16,14 +16,14 @@
 							unset($datas['EmployeeSalary'][$key]);
 						}
 					}
-				  $acc_opening_date = strtotime($GLOBALS['accounting_year']['acc_opening_year']);
-					$acc_closing_date = strtotime($GLOBALS['accounting_year']['acc_closing_year']);
+				  $acc_opening_date = strtotime($this->Session->read('User.acc_opening_year'));
+					$acc_closing_date = strtotime($this->Session->read('User.acc_closing_year'));
 					$salary_date = strtotime($this->data['Salary']['salary_date']);
 					if($acc_closing_date >= $salary_date && $acc_opening_date <= $salary_date){
 						$acc_bank_details = $this->BankDetail->find('first', array(
 						'conditions' => array(
-							'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-							'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+							'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
+							'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'), 
 							'BankDetail.account_id' => 1
 							)
 						));
@@ -41,7 +41,7 @@
 							$this->Session->setFlash(__('Insufficient balance in account, available balance is '.$acc_bank_details['BankDetail']['closing_bank_balance'], true));
 						}
 					}else{
-						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$GLOBALS['accounting_year']['acc_opening_year'].' and '.$GLOBALS['accounting_year']['acc_closing_year'], true));
+						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$this->Session->read('User.acc_opening_year').' and '.$this->Session->read('User.acc_closing_year'), true));
 					}
 				}else{
 					$this->Session->setFlash(__('Salary could not be saved, Please fill all Required Fields', true));
@@ -53,7 +53,7 @@
 		}
 		function index(){
 			$this->paginate = array(
-					'conditions' => array('Salary.salary_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'conditions' => array('Salary.salary_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 					'order' => 'Salary.salary_date DESC'
 			);
 			$receipts = $this->paginate('Salary');

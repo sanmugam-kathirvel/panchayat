@@ -14,14 +14,14 @@
 			if(!empty($this->data)){
 				$this->ContractBillEstimation->set($this->data);
 				if($this->ContractBillEstimation->validates()){
-					$acc_opening_date = strtotime($GLOBALS['accounting_year']['acc_opening_year']);
-					$acc_closing_date = strtotime($GLOBALS['accounting_year']['acc_closing_year']);
+					$acc_opening_date = strtotime($this->Session->read('User.acc_opening_year'));
+					$acc_closing_date = strtotime($this->Session->read('User.acc_closing_year'));
 					$bill_date = strtotime($this->data['ContractBillEstimation']['bill_date']);
 					if($acc_closing_date >= $bill_date && $acc_opening_date <= $bill_date){
 						$acc_bank_details = $this->BankDetail->find('first', array(
 							'conditions' => array(
-								'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-								'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'],
+								'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
+								'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'),
 								'BankDetail.account_id' => $this->data['ContractBillEstimation']['account_id']
 							)
 						));
@@ -44,7 +44,7 @@
 							$this->redirect($this->referer());
 						}
 					}else{
-						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$GLOBALS['accounting_year']['acc_opening_year'].' and '.$GLOBALS['accounting_year']['acc_closing_year'], true));
+						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$this->Session->read('User.acc_opening_year').' and '.$this->Session->read('User.acc_closing_year'), true));
 						$this->redirect($this->referer());
 					}
 				}
@@ -70,8 +70,8 @@
 	        $this->data = $this->ContractBillEstimation->read();
 	      }else{
 	      	$this->ContractBillEstimation->set($this->data);
-					$acc_opening_date = strtotime($GLOBALS['accounting_year']['acc_opening_year']);
-					$acc_closing_date = strtotime($GLOBALS['accounting_year']['acc_closing_year']);
+					$acc_opening_date = strtotime($this->Session->read('User.acc_opening_year'));
+					$acc_closing_date = strtotime($this->Session->read('User.acc_closing_year'));
 					$bill_date = strtotime($this->data['ContractBillEstimation']['bill_date']);
 					if($acc_closing_date >= $bill_date && $acc_opening_date <= $bill_date){
 						$old_data = $this->ContractBillEstimation->findById($this->data['ContractBillEstimation']['id']);
@@ -88,8 +88,8 @@
 						if($amount_to_update != 0){
 							$acc_bank_details = $this->BankDetail->find('first', array(
 								'conditions' => array(
-									'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-									'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+									'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
+									'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'), 
 									'BankDetail.account_id' => $this->data['ContractBillEstimation']['account_id']
 								)
 							));
@@ -109,7 +109,7 @@
 							$this->redirect(array('action'=>'index', $this->data['ContractBillEstimation']['account_id']));
 						}
 					}else{
-						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$GLOBALS['accounting_year']['acc_opening_year'].' and '.$GLOBALS['accounting_year']['acc_closing_year'], true));
+						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$this->Session->read('User.acc_opening_year').' and '.$this->Session->read('User.acc_closing_year'), true));
 						$this->redirect($this->referer());
 					}
 	      }
@@ -122,8 +122,8 @@
 			if(!empty($id) && !empty($account_id) && !empty($amount)){
 				$acc_bank_details = $this->BankDetail->find('first', array(
 					'conditions' => array(
-						'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-						'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+						'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
+						'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'), 
 						'BankDetail.account_id' => $account_id
 					)
 				));

@@ -2,8 +2,8 @@
 <?php
 	echo $form->create('BankDetail', array( 'url' => array('controller' => 'menus', 'action' => 'addopeningbals')));
 	echo $form->input('account_id',array('label' => 'கணக்கின் பெயர்', 'type'=>'select','options'=> $account_op));
-	echo $form->input('acc_openning_year', array('type' => 'hidden', 'value' => $GLOBALS['accounting_year']['acc_opening_year']));
-	echo $form->input('acc_closing_year', array('type' => 'hidden', 'value' => $GLOBALS['accounting_year']['acc_closing_year']));
+	echo $form->input('acc_openning_year', array('type' => 'hidden', 'value' => $this->Session->read('User.acc_opening_year')));
+	echo $form->input('acc_closing_year', array('type' => 'hidden', 'value' => $this->Session->read('User.acc_closing_year')));
 	echo $form->input('account_number', array('label' => 'கணக்கு எண்'));
 	echo $form->input('bank_name', array('label' => 'வங்கியின் பெயர்'));
 	echo $form->input('branch', array('label' => 'கிளை'));

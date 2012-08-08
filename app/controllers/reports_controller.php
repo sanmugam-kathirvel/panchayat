@@ -43,7 +43,7 @@
 			$this->layout = false;
 			$xls_fmt = $this->xls_format('Form_3');
 			$data = $this->HtDemand->find('all', array(
-				'conditions' => array('HtDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('HtDemand.demand_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'order' => 'HtDemand.demand_number ASC')
 			);
 			$i = 0;
@@ -118,7 +118,7 @@
 				$lc_current = 0;
 				$lc_pending = 0;
 				$output = $this->HousetaxReceipt->find('all', array(
-					'conditions' => array('HousetaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])
+					'conditions' => array('HousetaxReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))
 												 , 'HousetaxReceipt.demand_number' => $row['HtDemand']['demand_number']),
 					'order' => 'HousetaxReceipt.receipt_date ASC')
 				);
@@ -162,7 +162,7 @@
 			$this->layout = false;
 			$xls_fmt = $this->xls_format('Form_5');
 			$data = $this->PtDemand->find('all', array(
-				'conditions' => array('PtDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('PtDemand.demand_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'order' => 'PtDemand.demand_number ASC')
 			);
 			$i = 0;
@@ -215,7 +215,7 @@
 				$p2_current = 0;
 				$p2_pending = 0;
 				$output = $this->ProfessionaltaxReceipt->find('all', array(
-					'conditions' => array('ProfessionaltaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])
+					'conditions' => array('ProfessionaltaxReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))
 												 , 'ProfessionaltaxReceipt.demand_number' => $row['PtDemand']['demand_number']),
 					'order' => 'ProfessionaltaxReceipt.receipt_date ASC')
 				);
@@ -285,7 +285,7 @@
 			$xls_fmt['worksheet']->write($i, 10, 'நடப்பு', $xls_fmt['fmt_center']);
 			$xls_fmt['worksheet']->write($i++, 11, 'மொத்தம்', $xls_fmt['fmt_center']);
 			$data = $this->WtDemand->find('all', array(
-				'conditions' => array('WtDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('WtDemand.demand_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'order' => 'WtDemand.demand_number ASC')
 			);
 			foreach($data as $row) {
@@ -295,7 +295,7 @@
 				$lc_current = 0;
 				$lc_pending = 0;
 				$output = $this->WatertaxReceipt->find('all', array(
-					'conditions' => array('WatertaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])
+					'conditions' => array('WatertaxReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))
 												 , 'WatertaxReceipt.demand_number' => $row['WtDemand']['demand_number']),
 					'order' => 'WatertaxReceipt.receipt_date ASC')
 				);
@@ -372,7 +372,7 @@
 			$records = array();
 			$x = 0;
 			$result = $this->HousetaxReceipt->find('all', array(
-				'conditions' => array('HousetaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('HousetaxReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'order' => 'HousetaxReceipt.receipt_date DESC'
 			));
 			foreach($result as $row){
@@ -387,7 +387,7 @@
 				$x++;
 			}
 			$result = $this->WatertaxReceipt->find('all', array(
-				'conditions' => array('WatertaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('WatertaxReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'order' => 'WatertaxReceipt.receipt_date DESC'
 			));
 			foreach($result as $row){
@@ -400,7 +400,7 @@
 				$x++;
 			}
 			$result = $this->ProfessionaltaxReceipt->find('all', array(
-				'conditions' => array('ProfessionaltaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('ProfessionaltaxReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'order' => 'ProfessionaltaxReceipt.receipt_date DESC'
 			));
 			foreach($result as $row){
@@ -413,7 +413,7 @@
 				$x++;
 			}
 			$result = $this->OthersReceipt->find('all', array(
-				'conditions' => array('OthersReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('OthersReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'contain' => array('Header'),
 				'order' => 'OthersReceipt.receipt_date DESC'
 			));
@@ -497,7 +497,7 @@
 			$xls_fmt['worksheet']->write($i++, 11, 'மொத்தம்', $xls_fmt['fmt_center']);
 			$records = array();
 			$record = $this->Income->find('all', array(
-				'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'contain' => array('Header'),
 				'order' => 'Income.income_date ASC'
 			));
@@ -510,7 +510,7 @@
 				$records[$index++]['description'] = $row['Income']['description'];
 			}
 			$record = $this->OthersReceipt->find('all', array(
-				'conditions' => array('OthersReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('OthersReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'contain' => array('Header'),
 				'order' => 'OthersReceipt.receipt_date ASC'
 			));
@@ -620,7 +620,7 @@
 			$records = array();
 			$x = 0;
 			$result = $this->HousetaxReceipt->find('all', array(
-				'conditions' => array('HousetaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('HousetaxReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'order' => 'HousetaxReceipt.receipt_date ASC'
 			));
 			foreach($result as $row){
@@ -633,7 +633,7 @@
 				$x++;
 			}
 			$result = $this->WatertaxReceipt->find('all', array(
-				'conditions' => array('WatertaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('WatertaxReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'order' => 'WatertaxReceipt.receipt_date ASC'
 			));
 			foreach($result as $row){
@@ -644,7 +644,7 @@
 				$x++;
 			}
 			$result = $this->ProfessionaltaxReceipt->find('all', array(
-				'conditions' => array('ProfessionaltaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('ProfessionaltaxReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'order' => 'ProfessionaltaxReceipt.receipt_date ASC'
 			));
 			foreach($result as $row){
@@ -655,7 +655,7 @@
 				$x++;
 			}
 			$result = $this->OthersReceipt->find('all', array(
-				'conditions' => array('OthersReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('OthersReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'contain' => array('Header'),
 				'order' => 'OthersReceipt.receipt_date ASC'
 			));
@@ -666,7 +666,7 @@
 				$x++;
 			}
 			$result = $this->Income->find('all', array(
-				'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']), 'Income.account_id' => 1),
+				'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year')), 'Income.account_id' => 1),
 				'contain' => array('Header'),
 				'order' => 'Income.income_date DESC'
 			));
@@ -678,7 +678,7 @@
 				$x++;
 			}
 			$result = $this->CashToBank->find('all', array(
-				'conditions' => array('CashToBank.transfer_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('CashToBank.transfer_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'order' => 'CashToBank.transfer_date ASC'
 			));
 			foreach($result as $row){
@@ -782,7 +782,7 @@
 
 		function form10_report(){
 			$records = $this->DotaxReceipt->find('all', array(
-				'conditions' => array('DotaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('DotaxReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'order' => 'DotaxReceipt.receipt_date ASC'
 			));
 			$i = 0;
@@ -812,7 +812,7 @@
 				$xls_fmt['worksheet']->write($i, $j++, $record['DotaxReceipt']['start_date'].' to '.$record['DotaxReceipt']['end_date'], $xls_fmt['fmt_left']);
 				$xls_fmt['worksheet']->writeNumber($i, $j++, $record['DotaxReceipt']['emd']);
 				$row = $this->DoDemand->find('first', array(
-					'conditions' => array('DoDemand.demand_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']), 'DoDemand.demand_number' => $record['DotaxReceipt']['demand_number'])
+					'conditions' => array('DoDemand.demand_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year')), 'DoDemand.demand_number' => $record['DotaxReceipt']['demand_number'])
 				));
 				$xls_fmt['worksheet']->writeNumber($i, $j++, ((double)$row['DoDemand']['do_pending'] + (double)$row['DoDemand']['do_current']));
 				$j += 2;
@@ -846,7 +846,7 @@
 			$xls_fmt['worksheet']->setColumn(2, 3, 14.00);
 			foreach($headers as $header){
 				$records = $this->Expense->find('all', array(
-					'conditions' => array('Expense.expense_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']), 'Expense.header_id' => $header['Header']['id'], 'Expense.account_id' => 1),
+					'conditions' => array('Expense.expense_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year')), 'Expense.header_id' => $header['Header']['id'], 'Expense.account_id' => 1),
 					'order' => 'Expense.expense_date ASC'
 				));
 				$worksheet = $xls_fmt['workbook']->addWorksheet($header['Header']['header_name']);
@@ -895,7 +895,7 @@
 			$xls_fmt['worksheet']->setColumn(2, 9, 14.00);
 			$xls_fmt['worksheet']->setColumn(10, 11, 30.00);
 			$stocks = $this->Purchase->find('all', array(
-				'conditions' => array('Purchase.purchase_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('Purchase.purchase_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'order' => 'Purchase.purchase_date'
 			));
 			$records = array();
@@ -917,7 +917,7 @@
 				}
 			}
 			$stocks = $this->StockIssue->find('all', array(
-				'conditions' => array('StockIssue.issue_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('StockIssue.issue_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'order' => 'StockIssue.issue_date'
 			));
 			foreach($stocks as $stock){
@@ -986,7 +986,7 @@
 			$xls_fmt['worksheet']->setColumn(2, 2, 30.00);
 			$xls_fmt['worksheet']->setColumn(3, 9, 14.00);
 			$records = $this->Scrap->find('all', array(
-				'conditions' => array('Scrap.estimation_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+				'conditions' => array('Scrap.estimation_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 				'order' => 'Scrap.estimation_date ASC'
 			));
 			$sno = 1;
@@ -1046,7 +1046,7 @@
 				}
 				$record = $this->HousetaxReceipt->find('all',array(
 					'fields' => array('SUM(HousetaxReceipt.ht_pending) as ht_pending', 'SUM(HousetaxReceipt.ht_current) as ht_current', 'SUM(HousetaxReceipt.lc_pending) as lc_pending', 'SUM(HousetaxReceipt.lc_current) as lc_current'),
-					'conditions' => array('HousetaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date))
+					'conditions' => array('HousetaxReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $end_date))
 				));
 				foreach($record as $row){
 					$records[$index++]['till_current_month'] = (double)$row[0]['ht_pending'] + (double)$row[0]['ht_current'];
@@ -1063,7 +1063,7 @@
 				}
 				$record = $this->ProfessionaltaxReceipt->find('all',array(
 					'fields' => array('SUM(ProfessionaltaxReceipt.part1_pending) as part1_pending', 'SUM(ProfessionaltaxReceipt.part1_current) as part1_current', 'SUM(ProfessionaltaxReceipt.part2_pending) as part2_pending', 'SUM(ProfessionaltaxReceipt.part2_current) as part2_current'),
-					'conditions' => array('ProfessionaltaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date))
+					'conditions' => array('ProfessionaltaxReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $end_date))
 				));
 				foreach($record as $row){
 					$records[$index++]['till_current_month'] = (double)$row[0]['part1_pending'] + (double)$row[0]['part1_current'] + (double)$row[0]['part2_pending'] + (double)$row[0]['part2_current'];
@@ -1079,7 +1079,7 @@
 				}
 				$record = $this->WatertaxReceipt->find('all',array(
 					'fields' => array('SUM(WatertaxReceipt.wt_pending) as wt_pending', 'SUM(WatertaxReceipt.wt_current) as wt_current'),
-					'conditions' => array('WatertaxReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date))
+					'conditions' => array('WatertaxReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $end_date))
 				));
 				foreach($record as $row){
 					$records[$index++]['till_current_month'] = (double)$row[0]['wt_pending'] + (double)$row[0]['wt_current'];
@@ -1099,7 +1099,7 @@
 					}
 					$record = $this->OthersReceipt->find('all',array(
 						'fields' => array('SUM(OthersReceipt.amount) as amount'),
-						'conditions' => array('OthersReceipt.receipt_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date), 'OthersReceipt.header_id' => $header['Header']['id'])
+						'conditions' => array('OthersReceipt.receipt_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $end_date), 'OthersReceipt.header_id' => $header['Header']['id'])
 					));
 					foreach($record as $row){
 						$records[$index++]['till_current_month'] = $row[0]['amount'];
@@ -1120,7 +1120,7 @@
 					}
 					$record = $this->Income->find('all',array(
 						'fields' => array('SUM(Income.income_amount) as income_amount'),
-						'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date), 'Income.header_id' => $header['Header']['id'])
+						'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $end_date), 'Income.header_id' => $header['Header']['id'])
 					));
 					foreach($record as $row){
 						$records[$index++]['till_current_month'] = $row[0]['income_amount'];
@@ -1163,7 +1163,7 @@
 					}
 					$record = $this->Income->find('all',array(
 						'fields' => array('SUM(Income.income_amount) as income_amount'),
-						'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date), 'Income.header_id' => $header['Header']['id'])
+						'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $end_date), 'Income.header_id' => $header['Header']['id'])
 					));
 					foreach($record as $row){
 						$xls_fmt['worksheet']->writeNumber($i++, 3, $row[0]['income_amount']);
@@ -1194,7 +1194,7 @@
 					}
 					$record = $this->Income->find('all',array(
 						'fields' => array('SUM(Income.income_amount) as income_amount'),
-						'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date), 'Income.header_id' => $header['Header']['id'])
+						'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $end_date), 'Income.header_id' => $header['Header']['id'])
 					));
 					foreach($record as $row){
 						$xls_fmt['worksheet']->writeNumber($i++, 3, $row[0]['income_amount']);
@@ -1228,7 +1228,7 @@
 					}
 					$record = $this->Expense->find('all',array(
 						'fields' => array('SUM(Expense.expense_amount) as expense_amount'),
-						'conditions' => array('Expense.expense_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date), 'Expense.header_id' => $header['Header']['id'])
+						'conditions' => array('Expense.expense_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $end_date), 'Expense.header_id' => $header['Header']['id'])
 					));
 					foreach($record as $row){
 						$xls_fmt['worksheet']->writeNumber($i_copy++, 7, $row[0]['expense_amount']);
@@ -1259,7 +1259,7 @@
 					}
 					$record = $this->Expense->find('all',array(
 						'fields' => array('SUM(Expense.expense_amount) as expense_amount'),
-						'conditions' => array('Expense.expense_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date), 'Expense.header_id' => $header['Header']['id'])
+						'conditions' => array('Expense.expense_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $end_date), 'Expense.header_id' => $header['Header']['id'])
 					));
 					foreach($record as $row){
 						$xls_fmt['worksheet']->writeNumber($i_copy++, 7, $row[0]['expense_amount']);
@@ -1289,7 +1289,7 @@
 					}
 					$record = $this->Expense->find('all',array(
 						'fields' => array('SUM(Expense.expense_amount) as expense_amount'),
-						'conditions' => array('Expense.expense_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $end_date), 'Expense.header_id' => $header['Header']['id'])
+						'conditions' => array('Expense.expense_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $end_date), 'Expense.header_id' => $header['Header']['id'])
 					));
 					foreach($record as $row){
 						$xls_fmt['worksheet']->writeNumber($i_copy++, 7, $row[0]['expense_amount']);

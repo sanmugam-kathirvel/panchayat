@@ -13,14 +13,14 @@
 			}elseif(!empty($this->data)){
 				$this->Income->set($this->data);
 				if($this->Income->validates()){
-					$acc_opening_date = strtotime($GLOBALS['accounting_year']['acc_opening_year']);
-					$acc_closing_date = strtotime($GLOBALS['accounting_year']['acc_closing_year']);
+					$acc_opening_date = strtotime($this->Session->read('User.acc_opening_year'));
+					$acc_closing_date = strtotime($this->Session->read('User.acc_closing_year'));
 					$income_acc_date = strtotime($this->data['Income']['income_date']);
 					if($acc_closing_date >= $income_acc_date && $acc_opening_date <= $income_acc_date){
 						$acc_bank_details = $this->BankDetail->find('first', array(
 							'conditions' => array(
-								'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-								'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'],
+								'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
+								'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'),
 								'BankDetail.account_id' => $this->data['Income']['account_id']
 							)
 						));
@@ -34,7 +34,7 @@
 						$this->Session->setFlash(__('Income saved successfully', true));
 						$this->redirect(array('action'=>'index', $this->data['Income']['account_id']));
 					}else{
-						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$GLOBALS['accounting_year']['acc_opening_year'].' and '.$GLOBALS['accounting_year']['acc_closing_year'], true));
+						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$this->Session->read('User.acc_opening_year').' and '.$this->Session->read('User.acc_closing_year'), true));
 					}
 				}else{
 					$this->Session->setFlash(__('Income could not be saved, Please fill all Required Fields', true));
@@ -48,7 +48,7 @@
 		function index($acc_id){
 			if(!empty($acc_id)){
 				$this->paginate = array(
-					'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year']),
+					'conditions' => array('Income.income_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year')),
 					'Income.account_id' => $acc_id),
 					'order' => 'Income.income_date DESC',
 					'contain' => array('Account','Header')
@@ -70,8 +70,8 @@
 					));
 					$this->set(compact('header'));
 	      }else{
-	      	$acc_opening_date = strtotime($GLOBALS['accounting_year']['acc_opening_year']);
-					$acc_closing_date = strtotime($GLOBALS['accounting_year']['acc_closing_year']);
+	      	$acc_opening_date = strtotime($this->Session->read('User.acc_opening_year'));
+					$acc_closing_date = strtotime($this->Session->read('User.acc_closing_year'));
 					$income_acc_date = strtotime($this->data['Income']['income_date']);
 					if($acc_closing_date >= $income_acc_date && $acc_opening_date <= $income_acc_date){
 						$old_data = $this->Income->findById($this->data['Income']['id']);
@@ -88,8 +88,8 @@
 						if($amount_to_update != 0){
 							$acc_bank_details = $this->BankDetail->find('first', array(
 								'conditions' => array(
-									'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-									'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+									'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
+									'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'), 
 									'BankDetail.account_id' => $this->data['Income']['account_id']
 								)
 							));
@@ -106,7 +106,7 @@
 		          $this->redirect(array('action'=>'index', $this->data['Income']['account_id']));       
 		        }        
 		      }else{
-						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$GLOBALS['accounting_year']['acc_opening_year'].' and '.$GLOBALS['accounting_year']['acc_closing_year'], true));
+						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$this->Session->read('User.acc_opening_year').' and '.$this->Session->read('User.acc_closing_year'), true));
 						$this->redirect(array('action'=>'edit', $this->data['Income']['account_id']));
 					}
 		    }
@@ -119,8 +119,8 @@
 			if(!empty($id)){
 				$acc_bank_details = $this->BankDetail->find('first', array(
 					'conditions' => array(
-						'BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year'],
-						'BankDetail.acc_closing_year' => $GLOBALS['accounting_year']['acc_closing_year'], 
+						'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
+						'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'), 
 						'BankDetail.account_id' => $account_id
 					)
 				));

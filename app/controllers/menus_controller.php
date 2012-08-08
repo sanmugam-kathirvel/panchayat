@@ -56,8 +56,8 @@
 			if(!empty($this->data)){
 				$this->StockIssue->set($this->data);
 				if($this->StockIssue->validates()){
-					$acc_opening_date = strtotime($GLOBALS['accounting_year']['acc_opening_year']);
-					$acc_closing_date = strtotime($GLOBALS['accounting_year']['acc_closing_year']);
+					$acc_opening_date = strtotime($this->Session->read('User.acc_opening_year'));
+					$acc_closing_date = strtotime($this->Session->read('User.acc_closing_year'));
 					$issue_acc_date = strtotime($this->data['StockIssue']['issue_date']);
 					if($acc_closing_date >= $issue_acc_date && $acc_opening_date <= $issue_acc_date){
 						$stock = $this->Stock->findById($this->data['StockIssue']['stock_id']);
@@ -72,7 +72,7 @@
 							$this->data['StockIssue'] = '';
 						}
 					}else{
-						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$GLOBALS['accounting_year']['acc_opening_year'].' and '.$GLOBALS['accounting_year']['acc_closing_year'], true));
+						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$this->Session->read('User.acc_opening_year').' and '.$this->Session->read('User.acc_closing_year'), true));
 					}
 				}
 			}
@@ -159,7 +159,7 @@
 		}
 		function balanceindex(){
 			$this->paginate = array(
-					'conditions' => array('BankDetail.acc_openning_year' => $GLOBALS['accounting_year']['acc_opening_year']),
+					'conditions' => array('BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year')),
 					'contain' => 'Account'
 			);
 			$balances = $this->paginate('BankDetail');
@@ -194,7 +194,7 @@
 		}
 		function bookindex(){
 			$this->paginate = array(
-					'conditions' => array('BookDetail.purchase_date BETWEEN ? AND ?' => array($GLOBALS['accounting_year']['acc_opening_year'], $GLOBALS['accounting_year']['acc_closing_year'])),
+					'conditions' => array('BookDetail.purchase_date BETWEEN ? AND ?' => array($this->Session->read('User.acc_opening_year'), $this->Session->read('User.acc_closing_year'))),
 					'order' => 'BookDetail.purchase_date DESC',
 					'contain' => array('Book')
 				);
