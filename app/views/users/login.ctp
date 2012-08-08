@@ -13,4 +13,5 @@
     echo $this->Form->input('password', array('label' => 'கடவுச்சொல்'));
 		echo $this->Form->input('accounting_year', array('label' => 'கணக்கியல் காலம்', 'options' => $accounting_year));
     echo $this->Form->end('நுழை');
+		echo $html->link('Forget password', array('action' => 'forgetpwd'))
 ?>

@@ -10,6 +10,10 @@
 				'password_conformation' => array(
 					'rule' => 'notEmpty',
 					'message' => 'This Field Not Empty'
+				),
+				'password' => array(
+					'rule' => 'notEmpty',
+					'message' => 'This Field Not Empty'
 				)
 			);
 	}
