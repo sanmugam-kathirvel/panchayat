@@ -8,10 +8,10 @@
 			$year++;
 		}
     echo $this->Session->flash('auth');
-    echo $this->Form->create('User',array('action'=>'login'));
+    echo $this->Form->create('User',array('url' => array('action'=>'login'), 'class' => 'login-form'));
     echo $this->Form->input('username', array('label' => 'பயனீட்டாளர் பெயர்'));
     echo $this->Form->input('password', array('label' => 'கடவுச்சொல்'));
 		echo $this->Form->input('accounting_year', array('label' => 'கணக்கியல் காலம்', 'options' => $accounting_year));
     echo $this->Form->end('நுழை');
-		echo $html->link('Forget password', array('action' => 'forgetpwd'))
+		echo $html->link('Forget password', array('action' => 'forgetpwd'), array('class' => 'forget-password'));
 ?>

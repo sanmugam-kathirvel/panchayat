@@ -22,7 +22,7 @@
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
-		<?php __('CakePHP: the rapid development php framework:'); ?>
+		<?php __('Account Management'); ?>
 		<?php echo $title_for_layout; ?>
 	</title>
 	<?php
@@ -84,15 +84,17 @@
   						</ul>
   					</li>
   					<li><?= $this->Html->link("அறிக்கைகள்", array('plugin' => false, "controller" => "reports", "action" => "index")); ?></li>
+  					<li><?= $this->Html->link("தமிழில் தட்டச்சு பலகை", array('plugin' => false, "controller" => "tamilpad", "action" => "index"), array('target' =>'__blank')); ?></li>
   				</ul>
   				<ul class = "nav">
   					<?php if($session->check('Auth.User.id')){
-  						$user = $session->read('Auth.User'); 
-  						echo '<li><a><b>'.$user['username'].'</b> - தங்களது பயன்பாட்டுத் தளத்திற்குள் நுழைந்துள்ளீர்கள்</a></li>';
+  						$user = $session->read('Auth.User');
   						echo '<li>'.$this->Html->link("வெளியேறு", array('plugin' => false, "controller" => "users", "action" => "logout")).'</li>';
+							echo '<li>'.$this->Html->link("பதிவு செய்", array('plugin' => false, "controller" => "users", "action" => "register")).'</li>';
+							//echo '<li><a><b>'.$user['username'].'</b> - தங்களது பயன்பாட்டுத் தளத்திற்குள் நுழைந்துள்ளீர்கள்</a></li>';
+							echo '<li><a><b>'.$user['username'].'</a></li>';
   					}else{
   						echo '<li>'.$this->Html->link("நுழை", array('plugin' => false, "controller" => "users", "action" => "login")).'</li>';
-							echo '<li>'.$this->Html->link("பதிவு செய்", array('plugin' => false, "controller" => "users", "action" => "register")).'</li>';
   					}?>
   				</ul>
   			</div>

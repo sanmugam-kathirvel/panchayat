@@ -4,7 +4,7 @@ class UsersController extends AppController {
   var $helpers=array("Html","Form","Session");
 	function beforeFilter(){
 		$this->Auth->autoRedirect = false;
-		$this->Auth->allow('register','forgetpwd','reset');
+		$this->Auth->allow('forgetpwd','reset');
 	}
 	function register(){
 		if(!empty($this->data) && $this->data['User']['password'] == $this->Auth->password($this->data['User']['password_conformation'])){
