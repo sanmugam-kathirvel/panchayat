@@ -12,7 +12,9 @@
 	echo $form->input('voucher_number', array('label' => 'செலவுச் சீட்டு எண்'));
 	echo $form->input('cheque_number', array('label' => 'காசோலை எண்'));
 	echo $form->input('cheque_date', array('label' => 'காசோலை வழங்கிய தேதி', 'type' => 'text', 'id' => 'datepicker1'));
-	echo $form->input('cheque_amount', array('label' => 'மொத்த தொகை', 'class' => 'cheque_amount', 'readonly' => 'readonly'));
+	echo $form->input('cheque_amount', array('value' => 0, 'label' => 'மொத்த தொகை', 'class' => 'cheque_amount', 'readonly' => 'readonly'));
+	//echo "<div class = 'submit'><input type = 'submit' value = 'அனுப்பு'></div>";
+	echo $form->submit('அனுப்பு');
 	echo "<div class='new_field salary'>";
 		echo "<table>";
 			echo "<tbody class= 'add_new_field'>";
@@ -36,7 +38,7 @@
 		echo " | ";
 		echo $html->link('நீக்கு', '', array('class' => 'remove_field'));
 	echo "</div>";
-	echo $form->end('அனுப்பு');
+	echo $form->end();
 ?>
 
 <script>

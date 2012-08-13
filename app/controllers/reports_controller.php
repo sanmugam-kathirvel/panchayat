@@ -1303,7 +1303,7 @@
 				$xls_fmt['workbook']->close();
 				$this->redirect(array('action'=>'index'));
 			}else{
-				$this->Session->setFlash(__('Indiavalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'index'));
 			}
 		}

@@ -18,6 +18,16 @@
 				'allowEmpty' => false,
 				'message' => 'Enter valied input'
 			),
+			'address' => array(
+				'rule' => 'notEmpty',
+				'allowEmpty' => false,
+				'message' => 'Enter valied input'
+			),
+			'header_id' => array(
+				'rule' => 'notEmpty',
+				'allowEmpty' => false,
+				'message' => 'Enter valied input'
+			),
 			'amount' => array(
 				'rule' => 'numeric',
 				'allowEmpty' => false,

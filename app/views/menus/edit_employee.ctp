@@ -1,6 +1,6 @@
 <h2>ஊழியரின் தகவலை திருத்து</h2>
 <?php
-	echo $form->create('Employee', array( 'url' => array('controller' => 'menus', 'action' => 'edit_employee')));
+	echo $form->create('Employee', array( 'url' => array('controller' => 'menus', 'action' => 'edit_employee',$this->data['Employee']['id'])));
 	echo $form->input('id');
 	echo $form->input('name', array('label' => 'பெயர்'));
 	echo $form->input('designation', array('label' => 'பதவி'));

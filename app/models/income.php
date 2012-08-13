@@ -7,19 +7,19 @@
 			'income_date' => array(
 				'rule' => 'notEmpty',
 				'allowEmpty' => false,
-				'message' => 'This Field Not Empty'
+				'message' => 'Enter valid Date'
 				
 			),
 			'header_id' => array(
 				'rule' => 'notEmpty',
 				'allowEmpty' => false,
-				'message' => 'This Field Not Empty'
+				'message' => 'Please select Header name'
 				
 			),
 			'income_amount' => array(
 				'rule' => 'numeric',
 				'allowEmpty' => false,
-				'message' => 'This Field Not Empty'
+				'message' => 'Enter valid CompIncome amountany'
 				
 			),
 			'account_id' => array(

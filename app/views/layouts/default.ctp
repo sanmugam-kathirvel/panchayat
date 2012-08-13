@@ -57,8 +57,6 @@
   							<li><?= $this->Html->link("குக்கிராமங்கள்", array('plugin' => false, "controller" => "menus", "action" => "hamletindex")); ?></li>
   							<li><?= $this->Html->link("கழிவுகளின் விபரம்", array('plugin' => false, "controller" => "scraps", "action" => "index")); ?></li>
   							<li><?= $this->Html->link("கையிருப்பு விபரம்", array('plugin' => false, "controller" => "menus", "action" => "stock_index")); ?></li>
-  							<li><?= $this->Html->link("தொடக்கக் கையிருப்பு", array('plugin' => false, "controller" => "menus", "action" => "addopeningstock")); ?></li>
-  							<li><?= $this->Html->link("கையிருப்பு விநியோகம்", array('plugin' => false, "controller" => "menus", "action" => "stockissue")); ?></li>
   							<li><?= $this->Html->link("தொடக்க இருப்புத் தொகை", array('plugin' => false, "controller" => "menus", "action" => "balanceindex")); ?></li>
   							<li><?= $this->Html->link("புத்தகக் கையிருப்பு விபரம்", array('plugin' => false, "controller" => "menus", "action" => "bookindex")); ?></li>
   						</ul>
@@ -83,33 +81,44 @@
   							<li><?= $this->Html->link("கணக்கு எண் 6", array('plugin' => false, "controller" => "accounts", "action" => "account6")); ?></li>
   						</ul>
   					</li>
-  					<li><?= $this->Html->link("அறிக்கைகள்", array('plugin' => false, "controller" => "reports", "action" => "index")); ?></li>
-  					<li><?= $this->Html->link("தமிழில் தட்டச்சு பலகை", array('plugin' => false, "controller" => "tamilpad", "action" => "index"), array('target' =>'__blank')); ?></li>
-  				</ul>
-  				<ul class = "nav">
-  					<?php if($session->check('Auth.User.id')){
-  						$user = $session->read('Auth.User');
-  						echo '<li>'.$this->Html->link("வெளியேறு", array('plugin' => false, "controller" => "users", "action" => "logout")).'</li>';
-							echo '<li>'.$this->Html->link("பதிவு செய்", array('plugin' => false, "controller" => "users", "action" => "register")).'</li>';
-							//echo '<li><a><b>'.$user['username'].'</b> - தங்களது பயன்பாட்டுத் தளத்திற்குள் நுழைந்துள்ளீர்கள்</a></li>';
-							echo '<li><a><b>'.$user['username'].'</a></li>';
-  					}else{
-  						echo '<li>'.$this->Html->link("நுழை", array('plugin' => false, "controller" => "users", "action" => "login")).'</li>';
-  					}?>
+  					<li class = "dropdown" data-dropdown="dropdown">
+  						<?= $this->Html->link("சேவைகள்", "#", array("class" => 'dropdown-toggle') ) ?>
+  						<ul class = "dropdown-menu">
+								<li><?= $this->Html->link("அறிக்கைகள்", array('plugin' => false, "controller" => "reports", "action" => "index")); ?></li>
+  							<li><?= $this->Html->link("தமிழ் தட்டச்சு பலகை", array('plugin' => false, "controller" => "tamilpad", "action" => "index"), array('target' =>'__blank')); ?></li>
+  						</ul>
+  					</li>
+  					<?php 
+  						if($session->check('Auth.User.id')){
+  							$user = $session->read('Auth.User');
+	  						echo '<li class = "dropdown" data-dropdown="dropdown">';
+	  						echo $this->Html->link($user['username'], "#", array("class" => 'dropdown-toggle'));
+	  						echo '<ul class = "dropdown-menu">';
+								echo '<li>'.$this->Html->link("புதிய பயனீட்டாளர் பதிவு", array('plugin' => false, "controller" => "users", "action" => "register")).'</li>';
+								echo '<li>'.$this->Html->link("வெளியேறு", array('plugin' => false, "controller" => "users", "action" => "logout")).'</li>';
+	  						echo '</ul>';
+	  						echo '</li>';
+								echo '<li>'.$this->Html->link('('.$this->Session->read('User.acc_opening_year').' / '.$this->Session->read('User.acc_closing_year').')','').'</li>';
+	  					}else{
+  							echo '<li>'.$this->Html->link("நுழை", array('plugin' => false, "controller" => "users", "action" => "login")).'</li>';
+  						}
+  					?>
   				</ul>
   			</div>
   		</div>
   	</div>
   	<div id = "container">
   		<div class = "content">
-  			<?php echo $this->Session->flash(); ?>
+  			<div id='falsh-notice'>
+  				<?php echo $this->Session->flash(); ?>
+  			</div>
   			<?php echo $content_for_layout; ?>
   		</div>	
   	</div>
   </div>
   <script>
   $('.required').children('label').append('<span style = "color:red">*</span>');
-  $('div#flashMessage.message').delay(10000).toggle(1000);
+  $('div#flashMessage.message, div#authMessage.message').delay(8000).toggle(1000);
   //$('div.error-message').delay(5000).hide(1000);
     $(function() {
       $( "#datepicker" ).datepicker({dateFormat: "yy-mm-dd", showAnim: "show"});

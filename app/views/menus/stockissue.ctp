@@ -1,4 +1,4 @@
-<p>கையிருப்பு விநியோகம்</p>
+<h2>கையிருப்பு விநியோகம்</h2>
 <?php
 	$stock_info = array();
 	foreach($stock as $item){

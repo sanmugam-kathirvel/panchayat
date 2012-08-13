@@ -69,10 +69,8 @@ $(document).ready(function(){
 		var unit_cost = parseInt($(this).val());
 		var tot_amount = 0;
 		var grand_total;
-		$('.tot_amount').val(quantity*unit_cost);
-		var current_row_total_field = $(this).parent('div').parent().next().children('div').children().attr('class');
 		tot_amount = (quantity * unit_cost);
-		$(this).parent('div').parent().next().children('div').children('.'+current_row_total_field).val(tot_amount);
+		$(this).parent('div').parent().next().children('div').children().val(tot_amount)
 		grand_total = 0;
 		var flag = 0;
 		$('div.new_field div.input').children('#tot_amount').each(function(){
@@ -100,6 +98,16 @@ $(document).ready(function(){
 	  	  temp_this.parent('div').parent().next().children('div').children().val(output.Stock.item_quantity);
 	  	}
 		});
+	});
+	$('.tax_amount').focusout(function() {
+		var grand_total = parseInt($('.tax_amount').val());
+		$('div.new_field div.input').children('#tot_amount').each(function(){
+			if(parseInt($(this).val()) > 0){
+				flag = 1;
+				grand_total += parseInt($(this).val());
+			}
+		});
+		$('.grand_total').val(grand_total);
 	});
 });
 </script>

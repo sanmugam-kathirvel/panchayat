@@ -2,9 +2,10 @@
 <div class="blocks form">
     <h2><?php __('கையிருப்பு விபரம்'); ?></h2>
     <div class="actions">
-        <!-- <ul>
-            <li><?php echo $html->link(__('புதிய தொடக்க இருப்புத் தொகையை சேர்', true), array('action'=>'addopeningbals')); ?></li>
-        </ul> -->
+        <ul>
+            <li><?php echo $html->link(__('புதிய தொடக்க கையிருப்பு விபரங்களைச் சேர்', true), array('action'=>'addopeningstock')); ?></li>
+            <li><?php echo $html->link(__('கையிருப்பு விநியோகம்', true), array('action'=>'stockissue')); ?></li>
+        </ul>
     </div>
     <table cellpadding="0" cellspacing="0">
         <?php

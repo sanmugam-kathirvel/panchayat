@@ -5,7 +5,7 @@
 	foreach($header as $head){
 		$header_op[$head['Header']['id']] =  $head['Header']['header_name'];
 	}
-	echo $form->create('Income', array( 'url' => array('controller' => 'incomes', 'action' => 'edit')));
+	echo $form->create('Income', array( 'url' => array('controller' => 'incomes', 'action' => 'edit', $this->data['Income']['id'])));
 	echo $form->input('id');
 	echo $form->input('account_id', array('type' => 'hidden'));
 	echo $form->input('header_id', array('label' => 'வரவின் தலைப்பு', 'options' => $header_op, 'type' => 'select','option' => ''));

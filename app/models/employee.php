@@ -5,19 +5,25 @@
 			'name' => array(
 				'rule' => 'notEmpty',
 				'allowEmpty' => false,
-				'message' => 'This Field Not Empty'
+				'message' => 'Please give valid name'
 				
 			),
 			'designation' => array(
 				'rule' => 'notEmpty',
 				'allowEmpty' => false,
-				'message' => 'This Field Not Empty'
+				'message' => 'Please give valid designation'
 				
 			),
 			'address' => array(
 				'rule' => 'notEmpty',
 				'allowEmpty' => false,
-				'message' => 'This Field Not Empty'
+				'message' => 'Please give valid address'
+				
+			),
+			'phone_number' => array(
+				'rule' => 'notEmpty',
+				'allowEmpty' => false,
+				'message' => 'please give valid phone number'
 				
 			),
 		);

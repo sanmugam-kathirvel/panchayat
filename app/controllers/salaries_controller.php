@@ -35,16 +35,14 @@
 							$acc_bank_details['BankDetail']['closing_bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'] - $this->data['Salary']['cheque_amount'];
 							$this->BankDetail->save($acc_bank_details['BankDetail']);
 							$this->Salary->saveAll($datas);
-							$this->Session->setFlash(__('Salaries saved successfully', true));
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
 							$this->redirect(array('action'=>'index'));
 						}else{
-							$this->Session->setFlash(__('Insufficient balance in account, available balance is '.$acc_bank_details['BankDetail']['closing_bank_balance'], true));
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['low_balance'], true));
 						}
 					}else{
-						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$this->Session->read('User.acc_opening_year').' and '.$this->Session->read('User.acc_closing_year'), true));
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['date_check'], true));
 					}
-				}else{
-					$this->Session->setFlash(__('Salary could not be saved, Please fill all Required Fields', true));
 				}
 			}else{
 				$employees = $this->Employee->find('all');
@@ -73,7 +71,7 @@
 				// print_r($items); die;
 				$this->set(compact('items'));
 			}else{
-				$this->Session->setFlash(__('Invalid Operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'index'));
 			}
 		}

@@ -18,6 +18,11 @@
 				'allowEmpty' => false,
 				'message' => 'Enter valied input'
 			),
+			'as_number' => array(
+				'rule' => 'notEmpty',
+				'allowEmpty' => false,
+				'message' => 'Enter valied input'
+			),
 		);
 	}
 ?>

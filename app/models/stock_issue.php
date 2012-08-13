@@ -3,20 +3,25 @@
 		var $name = 'StockIssue';
 		var $belongsTo = array('Stock');
 		var $validate = array(
+			'stock_id' => array(
+				'rule' => 'numeric',
+				'allowEmpty' => false,
+				'message' => 'Please select stock name'
+			),
 			'issue_date' => array(
 				'rule' => 'date',
 				'allowEmpty' => false,
-				'message' => 'Enter valied input'
+				'message' => 'Please select valid date'
 			),
 			'item_quantity' => array(
 				'rule' => 'numeric',
 				'allowEmpty' => false,
-				'message' => 'Enter valied input'
+				'message' => 'Please give valid quantity'
 			),
 			'hand_over_name' => array(
 				'rule' => 'notEmpty',
 				'allowEmpty' => false,
-				'message' => 'Enter valied input'
+				'message' => 'Please give valid name'
 			),
 		);
 	}

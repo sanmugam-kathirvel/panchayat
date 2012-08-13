@@ -16,62 +16,75 @@
 				$this->Scrap->set($this->data);
 				if($this->Scrap->validates()){
 					if($this->Scrap->save($this->data)){
-						$this->Session->setFlash(__('Record added successfully', true));
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
+						$this->redirect(array('action'=>'index'));
+					}else{
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['add_failed'], true));
 						$this->redirect(array('action'=>'index'));
 					}
 				}
 			}
 		}
 		function edit($id){
-			if(!empty($this->data)){
-				$this->Scrap->set($this->data);
-				if($this->Scrap->validates()){
-					if($this->Scrap->save($this->data)){
-						$this->Session->setFlash(__('Record updated successfully', true));
-						$this->redirect(array('action'=>'index'));
+			if(!empty($id)){
+				if(!empty($this->data)){
+					$this->Scrap->set($this->data);
+					if($this->Scrap->validates()){
+						if($this->Scrap->save($this->data)){
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));
+							$this->redirect(array('action'=>'index'));
+						}else{
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['add_failed'], true));
+							$this->redirect(array('action'=>'index'));
+						}
 					}
 				}
-			}
-			if(empty($this->data) && !empty($id)){
-				$this->Scrap->id=$id;
-				$this->data = $this->Scrap->read();
+				if(empty($this->data)){
+					$this->Scrap->id=$id;
+					$this->data = $this->Scrap->read();
+				}
+			}else {
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
+				$this->redirect(array('action'=>'index'));
 			}
 		}
 		function delete($id){
 			if(!empty($id)){
 				$this->Scrap->delete($id);
-				$this->Session->setFlash(__('Record deleted successfully', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['deleted'], true));
 			}else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 			}
 			$this->redirect(array('action'=>'index'));
 		}
-		function tender(){
-			if(!empty($this->data)){
-				$this->Scrap->set($this->data);
-				if($this->Scrap->validates()){
-					if(!empty($this->data['Scrap']['id'])){
+		function tender($id){
+			if(!empty($id)){
+				if(!empty($this->data)){
+					$this->Scrap->set($this->data);
+					if($this->Scrap->validates()){
 						if($this->Scrap->save($this->data)){
-							$this->Session->setFlash(__('Record added successfully', true));
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
+							$this->redirect(array('action' => 'index'));
+						}else{
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['add_failed'], true));
 							$this->redirect(array('action' => 'index'));
 						}
-					}else{
-						$this->Session->setFlash(__('Invalid Operation', true));
-						$this->redirect(array('action' => 'index'));
 					}
 				}
+				if(empty($this->data)){
+					$this->data['Scrap']['id'] = $id;
+				}
+			}else {
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
+				$this->redirect(array('action'=>'index'));
 			}
-			// if(empty($this->data)){
-				// $this->Scrap->id=$this->params['named']['id'];
-				// $this->data = $this->Scrap->read();				
-			// }
 		}
 		function view($id){
 			if(!empty($id)){
 				$this->Scrap->id=$id;
 				$this->data = $this->Scrap->read();
 			}else{
-				$this->Session->setFlash(__('Invalid Operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action' => 'index'));
 			}
 		}

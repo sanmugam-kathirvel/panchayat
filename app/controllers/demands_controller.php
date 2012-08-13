@@ -12,9 +12,13 @@
 			if(!empty($this->data)){
 				$this->HtDemand->set($this->data);
 				if($this->HtDemand->validates()){
-					$this->HtDemand->save($this->data);
-					$this->Session->setFlash(__('Demand added successfully', true));
-					$this->redirect(array('action'=>'htindex'));
+					if($this->HtDemand->save($this->data)){
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
+						$this->redirect(array('action'=>'htindex'));
+					}else{
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['add_failed'], true));
+						$this->redirect(array('action'=>'htindex'));
+					}
 				}
 			}
 		}
@@ -26,9 +30,13 @@
 			if(!empty($this->data)){
 				$this->WtDemand->set($this->data);
 				if($this->WtDemand->validates()){
-					$this->WtDemand->save($this->data);
-					$this->Session->setFlash(__('Demand added successfully', true));
-					$this->redirect(array('action'=>'wtindex'));
+					if($this->WtDemand->save($this->data)){
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
+						$this->redirect(array('action'=>'wtindex'));
+					}else{
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['add_failed'], true));
+						$this->redirect(array('action'=>'wtindex'));
+					}
 				}
 			}
 		}
@@ -40,9 +48,13 @@
 			if(!empty($this->data)){
 				$this->PtDemand->set($this->data);
 				if($this->PtDemand->validates()){
-					$this->PtDemand->save($this->data);
-					$this->Session->setFlash(__('Demand added successfully', true));
-					$this->redirect(array('action'=>'ptindex'));
+					if($this->PtDemand->save($this->data)){
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
+						$this->redirect(array('action'=>'ptindex'));
+					}else{
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['add_failed'], true));
+						$this->redirect(array('action'=>'ptindex'));
+					}
 				}
 			}
 		}
@@ -50,9 +62,13 @@
 			if(!empty($this->data)){
 				$this->DoDemand->set($this->data);
 				if($this->DoDemand->validates()){
-					$this->DoDemand->save($this->data);
-					$this->Session->setFlash(__('Demand added successfully', true));
-					$this->redirect(array('action'=>'doindex'));
+					if($this->DoDemand->save($this->data)){
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
+						$this->redirect(array('action'=>'doindex'));
+					}else{
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['add_failed'], true));
+						$this->redirect(array('action'=>'doindex'));
+					}
 				}
 			}
 		}
@@ -66,29 +82,35 @@
 			$this->set(compact('demands'));
 		}
 		function htedit($id){
+			$hamlet = $this->Hamlet->find('all');
+			$this->set(compact('hamlet'));
 			if(!empty($id)){
 				$this->HtDemand->id=$id;
 	      if(empty($this->data)) {
 	        $this->data = $this->HtDemand->read();
-					$hamlet = $this->Hamlet->find('all');
-					$this->set(compact('hamlet'));
 				}else{
-	        if($this->HtDemand->save($this->data)){
-	          $this->Session->setFlash(__('Demand saved', true));    
-	          $this->redirect(array('action'=>'htindex'));       
-	        }        
+					$this->HtDemand->set($this->data);
+					if($this->HtDemand->validates()){
+		        if($this->HtDemand->save($this->data)){
+		          $this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));    
+		          $this->redirect(array('action'=>'htindex'));       
+		        }else{
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['edit_failed'], true));
+							$this->redirect(array('action'=>'htindex'));
+						}
+					}
 	      }
 	    }else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'htindex'));
 			}
 		}
 		function htdelete($id){
 			if(!empty($id)){
 				$this->HtDemand->delete($id);
-				$this->Session->setFlash(__('Record deleted successfully', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['deleted'], true));
 			}else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 			}
 			$this->redirect(array('action'=>'htindex'));
 		}
@@ -102,29 +124,35 @@
 			$this->set(compact('demands'));
 		}
 		function wtedit($id){
+			$hamlet = $this->Hamlet->find('all');
+			$this->set(compact('hamlet'));
 			if(!empty($id)){
 				$this->WtDemand->id=$id;
 	      if(empty($this->data)) {
 	        $this->data = $this->WtDemand->read();
-					$hamlet = $this->Hamlet->find('all');
-					$this->set(compact('hamlet'));
 				}else{
-	        if($this->WtDemand->save($this->data)){
-	          $this->Session->setFlash(__('Demand saved', true));    
-	          $this->redirect(array('action'=>'wtindex'));       
-	        }        
+					$this->WtDemand->set($this->data);
+					if($this->WtDemand->validates()){
+		        if($this->WtDemand->save($this->data)){
+		          $this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));    
+		          $this->redirect(array('action'=>'wtindex'));       
+		        }else{
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['edit_failed'], true));
+							$this->redirect(array('action'=>'wtindex'));
+						}
+					}
 	      }
 	    }else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'wtindex'));
 			}
 		}
 		function wtdelete($id){
 			if(!empty($id)){
 				$this->WtDemand->delete($id);
-				$this->Session->setFlash(__('Record deleted successfully', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['deleted'], true));
 			}else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 			}
 			$this->redirect(array('action'=>'wtindex'));
 		}
@@ -138,29 +166,35 @@
 			$this->set(compact('demands'));
 		}
 		function ptedit($id){
+			$hamlet = $this->Hamlet->find('all');
+			$this->set(compact('hamlet'));
 			if(!empty($id)){
 				$this->PtDemand->id=$id;
 	      if(empty($this->data)) {
 	        $this->data = $this->PtDemand->read();
-					$hamlet = $this->Hamlet->find('all');
-					$this->set(compact('hamlet'));
 				}else{
-	        if($this->PtDemand->save($this->data)){
-	          $this->Session->setFlash(__('Demand saved', true));    
-	          $this->redirect(array('action'=>'ptindex'));       
-	        }        
+					$this->PtDemand->set($this->data);
+					if($this->PtDemand->validates()){
+		        if($this->PtDemand->save($this->data)){
+		          $this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));    
+		          $this->redirect(array('action'=>'ptindex'));
+		        }else{
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['edit_failed'], true));
+							$this->redirect(array('action'=>'ptindex'));
+						}
+					}
 	      }
 	    }else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'ptindex'));
 			}
 		}
 		function ptdelete($id){
 			if(!empty($id)){
 				$this->PtDemand->delete($id);
-				$this->Session->setFlash(__('Record deleted successfully', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['deleted'], true));
 			}else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 			}
 			$this->redirect(array('action'=>'ptindex'));
 		}
@@ -178,25 +212,29 @@
 				$this->DoDemand->id=$id;
 	      if(empty($this->data)) {
 	        $this->data = $this->DoDemand->read();
-					$hamlet = $this->Hamlet->find('all');
-					$this->set(compact('hamlet'));
 				}else{
-	        if($this->DoDemand->save($this->data)){
-	          $this->Session->setFlash(__('Demand saved', true));    
-	          $this->redirect(array('action'=>'doindex'));       
-	        }        
+					$this->DoDemand->set($this->data);
+					if($this->DoDemand->validates()){
+		        if($this->DoDemand->save($this->data)){
+		          $this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));    
+		          $this->redirect(array('action'=>'doindex'));       
+		        }else{
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['edit_failed'], true));
+							$this->redirect(array('action'=>'doindex'));
+						}
+					}
 	      }
 	    }else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'doindex'));
 			}
 		}
 		function dodelete($id){
 			if(!empty($id)){
 				$this->DoDemand->delete($id);
-				$this->Session->setFlash(__('Record deleted successfully', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['deleted'], true));
 			}else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 			}
 			$this->redirect(array('action'=>'doindex'));
 		}

@@ -1,4 +1,4 @@
-<p><h3><?php __('கணக்கு எண் - '.$this->data['ContractBillEstimation']['account_id'].', வரைவு மதிப்பீடு விபரங்களை திருத்து'); ?></h3></p>
+<h2><?php __('கணக்கு எண் - '.$this->data['ContractBillEstimation']['account_id'].', வரைவு மதிப்பீடு விபரங்களை திருத்து'); ?></h2>
 <?php
 	echo $form->create('ContractBillEstimation', array( 'url' => array('controller' => 'bills', 'action' => 'edit')));
 	echo $form->input('id');

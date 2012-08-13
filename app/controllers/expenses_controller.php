@@ -32,20 +32,18 @@
 							$acc_bank_details['BankDetail']['closing_bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'] - $this->data['Expense']['expense_amount'];
 							$this->BankDetail->save($acc_bank_details['BankDetail']);
 							$this->Expense->save();
-							$this->Session->setFlash(__('Expense saved successfully', true));
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
 							$this->redirect(array('action'=>'index', $this->data['Expense']['account_id']));
 						}else{
-							$this->Session->setFlash(__('Insufficient balance in account, available balance is '.$acc_bank_details['BankDetail']['closing_bank_balance'], true));
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['low_balance'], true));
 						}
 					}else{
-						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$this->Session->read('User.acc_opening_year').' and '.$this->Session->read('User.acc_closing_year'), true));
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['date_check'], true));
 					}
-				}else{
-					$this->Session->setFlash(__('Expense could not be saved, Please fill all Required Fields', true));
 				}
 				$this->redirect($this->referer());
 			}else{
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'../accounts/index'));
 			}
 		}
@@ -60,7 +58,7 @@
 				$expenses = $this->paginate('Expense');
 				$this->set(compact('expenses', 'acc_id'));
 			}else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'../accounts/index'));
 			}
 		}
@@ -106,16 +104,16 @@
 							$this->BankDetail->save($acc_bank_details);
 						}
 		        if($this->Expense->save($this->data)){
-		          $this->Session->setFlash(__('Expense saved', true));    
+		          $this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));    
 		          $this->redirect(array('action'=>'index', $this->data['Expense']['account_id']));       
 		        }
 					}else{
-						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$this->Session->read('User.acc_opening_year').' and '.$this->Session->read('User.acc_closing_year'), true));
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['date_check'], true));
 						$this->redirect($this->referer());
 					}
 	      }
 	    }else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'index'));
 			}
 		}
@@ -132,10 +130,10 @@
 				$acc_bank_details['BankDetail']['value'] = 'no';
 				$this->BankDetail->save($acc_bank_details);
 				$this->Expense->delete($id);
-				$this->Session->setFlash(__('Record deleted successfully', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['deleted'], true));
 				$this->redirect(array('action'=>'index', $account_id));
 			}else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'../accounts/index'));
 			}
 		}

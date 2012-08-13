@@ -4,7 +4,7 @@
 	foreach($books as $book){
 		$book_names[$book['Book']['id']] =  $book['Book']['book_name'];
 	}
-	echo $form->create('BookDetail', array( 'url' => array('controller' => 'menus', 'action' => 'editbook')));
+	echo $form->create('BookDetail', array( 'url' => array('controller' => 'menus', 'action' => 'editbook', $this->data['BookDetail']['id'])));
 	echo $form->input('id');
 	echo $form->input('book_id', array('type' => 'select', 'options' => $book_names, 'label' => 'புத்தகத்தின் பெயர்'));
 	echo $form->input('purchase_date', array('label' => 'வாங்கிய தேதி', 'id' => 'datepicker', 'type' => 'text'));

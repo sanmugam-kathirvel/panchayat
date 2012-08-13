@@ -4,6 +4,9 @@
 		function beforeFilter(){
 			parent::beforeFilter();
 		}
+		function index(){
+			
+		}
 		function newregistration(){
 			$hamlet_op = $this->Hamlet->find('list', array(
 				'fields' => array('Hamlet.hamlet_code')
@@ -16,22 +19,29 @@
 						$stock = $this->NregsStock->findById('1');
 						$stock['NregsStock']['item_quantity'] = (int)($stock['NregsStock']['item_quantity']) - 1;
 						$this->NregsStock->save($stock);
-						$this->Session->setFlash(__('Registration completed successfully', true));    
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));    
 		        $this->redirect(array('action'=>'registrationindex'));
+					}else{
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['add_failed'], true));
+						$this->redirect(array('action'=>'registrationindex')); 
 					}
-				}else{
-					$this->Session->setFlash(__('Registration cound not be saved, Please check form for error', true)); 
 				}
 			}
 		}
 		function addjobcard(){
 			if(!empty($this->data)){
-				if($this->Jobcard->save($this->data)){
-					$stock = $this->NregsStock->findById($this->data['Jobcard']['nregs_stock_id']);
-					$stock['NregsStock']['item_quantity'] = (int)($stock['NregsStock']['item_quantity']) + (int)($this->data['Jobcard']['jobcard_quantity']);
-					$this->NregsStock->save($stock);
-					$this->Session->setFlash(__('Job card added successfully', true));    
-	        $this->redirect(array('action'=>'jobcardindex'));
+				$this->Jobcard->set($this->data);
+				if($this->Jobcard->validates()){
+					if($this->Jobcard->save($this->data)){
+						$stock = $this->NregsStock->findById($this->data['Jobcard']['nregs_stock_id']);
+						$stock['NregsStock']['item_quantity'] = (int)($stock['NregsStock']['item_quantity']) + (int)($this->data['Jobcard']['jobcard_quantity']);
+						$this->NregsStock->save($stock);
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));    
+		        $this->redirect(array('action'=>'jobcardindex'));
+					}else{
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['add_failed'], true));
+						$this->redirect(array('action'=>'jobcardindex'));
+					}
 				}
 			}
 		}
@@ -46,19 +56,25 @@
 		}
 		function editregistration($id){
 			if(!empty($id)){
+				$hamlets = $this->Hamlet->find('all');
+				$this->set(compact('hamlets'));
 				$this->NregsRegistration->id=$id;
 	      if(empty($this->data)) {
 	        $this->data = $this->NregsRegistration->read();
-					$hamlets = $this->Hamlet->find('all');
-					$this->set(compact('hamlets'));
 	      }else{
-	        if($this->NregsRegistration->save($this->data)){
-	          $this->Session->setFlash(__('Registration updated successfully', true));    
-	          $this->redirect(array('action'=>'registrationindex'));
-	        }  
+	      	$this->NregsRegistration->set($this->data);
+					if($this->NregsRegistration->validates()){
+		        if($this->NregsRegistration->save($this->data)){
+		          $this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));    
+		          $this->redirect(array('action'=>'registrationindex'));
+		        }else{
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['edit_failed'], true));
+							$this->redirect(array('action'=>'registrationindex'));
+						}
+					}  
 				}      
 	    }else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'registrationindex'));
 			}
 		}
@@ -71,14 +87,9 @@
 					));
 					$hamlets = $this->Hamlet->find('all');
 					$this->set(compact('hamlets', 'registration_detail'));
-	      }//else{
-	        // if($this->NregsRegistration->save($this->data)){
-	          // $this->Session->setFlash(__('Registration updated successfully', true));    
-	          // $this->redirect(array('action'=>'registrationindex'));
-	        // }  
-				// }
+	      }
 	    }else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'registrationindex'));
 			}
 		}
@@ -88,10 +99,10 @@
 				$stock = $this->NregsStock->findById('1');
 				$stock['NregsStock']['item_quantity'] = (int)($stock['NregsStock']['item_quantity']) + 1;
 				$this->NregsStock->save($stock);
-				$this->Session->setFlash(__('Registration deleted successfully', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['deleted'], true));
 				$this->redirect(array('action'=>'registrationindex'));
 			}else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'registrationindex'));
 			}
 		}
@@ -119,22 +130,28 @@
 						$jobcard_to_change = (int)$this->data['Jobcard']['jobcard_quantity'] - (int)$old_data['Jobcard']['jobcard_quantity'];
 						$flag =1;
 					}
-					if($jobcard_to_change > 0){
-						$nrgsstock = $this->NregsStock->findById('1');
-						if($flag==0){
-							$nrgsstock['NregsStock']['item_quantity'] =(int)$nrgsstock['NregsStock']['item_quantity'] - $jobcard_to_change; 
+					$this->Jobcard->set($this->data);
+					if($this->Jobcard->validates()){
+						if($this->Jobcard->save($this->data)){
+							if($jobcard_to_change > 0){
+								$nrgsstock = $this->NregsStock->findById('1');
+								if($flag==0){
+									$nrgsstock['NregsStock']['item_quantity'] =(int)$nrgsstock['NregsStock']['item_quantity'] - $jobcard_to_change; 
+								}else{
+								  $nrgsstock['NregsStock']['item_quantity'] =(int)$nrgsstock['NregsStock']['item_quantity'] + $jobcard_to_change;	
+								}
+								$this->NregsStock->save($nrgsstock);
+							}
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));    
+		          $this->redirect(array('action'=>'jobcardindex'));
 						}else{
-						  $nrgsstock['NregsStock']['item_quantity'] =(int)$nrgsstock['NregsStock']['item_quantity'] + $jobcard_to_change;	
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['edit_failed'], true));
+							$this->redirect(array('action'=>'jobcardindex'));
 						}
-						$this->NregsStock->save($nrgsstock);
 					}
-	        if($this->Jobcard->save($this->data)){
-	          $this->Session->setFlash(__('Job card(s) updated successfully', true));    
-	          $this->redirect(array('action'=>'jobcardindex'));       
-	        }
 				}
 	    }else{
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'jobcardindex'));
 			}
 		}
@@ -144,18 +161,24 @@
 				$stock = $this->NregsStock->findById('1');
 				$stock['NregsStock']['item_quantity'] = (int)($stock['NregsStock']['item_quantity']) - (int)($quantity);
 				$this->NregsStock->save($stock);
-				$this->Session->setFlash(__('Job card(s) deleted successfully', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['deleted'], true));
 				$this->redirect(array('action'=>'jobcardindex'));
 			}else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'jobcardindex'));
 			}
 		}
 		function nmrrolls(){
 			if(!empty($this->data)){
-				if($this->NmrRoll->save($this->data)){
-					$this->Session->setFlash(__('Nmr Rolls added', true));
-					$this->redirect(array('action'=>'nmr_roll_index'));
+				$this->NmrRoll->set($this->data);
+				if($this->NmrRoll->validates()){
+					if($this->NmrRoll->save($this->data)){
+						$this->Session->setFlash(__('Nmr Rolls added', true));
+						$this->redirect(array('action'=>'nmr_roll_index'));
+					}else{
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['add_failed'], true));
+						$this->redirect(array('action'=>'nmr_roll_index'));
+					}
 				}
 			}
 		}
@@ -165,13 +188,19 @@
 	      if(empty($this->data)) {
 	        $this->data = $this->NmrRoll->read();
 	      }else{
-	      	if($this->NmrRoll->save($this->data)){
-	          $this->Session->setFlash(__('NMR Roll(s) updated successfully', true));    
-	          $this->redirect(array('action'=>'nmr_roll_index'));       
-	        }
+	      	$this->NmrRoll->set($this->data);
+					if($this->NmrRoll->validates()){
+		      	if($this->NmrRoll->save($this->data)){
+		          $this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));    
+		          $this->redirect(array('action'=>'nmr_roll_index'));       
+		        }else{
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['add_failed'], true));
+							$this->redirect(array('action'=>'nmr_roll_index'));
+						}
+					}
 				}
 			}else{
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'nmr_roll_index'));
 			}
 		}
@@ -184,9 +213,15 @@
 		}
 		function add_workdetails(){
 			if(!empty($this->data)){
-				if($this->Workdetail->save($this->data)){
-					$this->Session->setFlash(__('Work Details added', true));
-					$this->redirect(array('action'=>'index_workdetails'));
+				$this->Workdetail->set($this->data);
+				if($this->Workdetail->validates()){
+					if($this->Workdetail->save($this->data)){
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
+						$this->redirect(array('action'=>'index_workdetails'));
+					}else{
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['add_failed'], true));
+						$this->redirect(array('action'=>'index_workdetails'));
+					}
 				}
 			}
 		}
@@ -196,23 +231,29 @@
 					$this->Workdetail->id = $id;
 					$this->data = $this->Workdetail->read();
 				}else{
-					if($this->Workdetail->save($this->data)){
-						$this->Session->setFlash(__('Work Details updated successfully', true));
-						$this->redirect(array('action'=>'index_workdetails'));
+					$this->Workdetail->set($this->data);
+					if($this->Workdetail->validates()){
+						if($this->Workdetail->save($this->data)){
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));
+							$this->redirect(array('action'=>'index_workdetails'));
+						}else{
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['edit_failed'], true));
+							$this->redirect(array('action'=>'index_workdetails'));
+						}
 					}
 				}
 			}else{
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'index_workdetails'));
 			}
 		}
 		function delete_workdetails($id){
 			if(!empty($id)){
 				$this->Workdetail->delete($id);
-				$this->Session->setFlash(__('Work detail deleted successfully', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['deleted'], true));
 				$this->redirect(array('action'=>'index_workdetails'));
 			}else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'index_workdetails'));
 			}
 		}
@@ -231,7 +272,7 @@
 			$this->set(compact('work_details'));
 		  if(!empty($this->data)){
 				if($this->AttendanceRegister->saveAll($this->data)){
-					$this->Session->setFlash(__('Attendance Register Saved', true));
+					$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
 					$this->redirect(array('action'=>'attendance_index'));
 				}
 			}
@@ -243,8 +284,6 @@
         'contain' => array('Workdetail')
       );
       $attendances = $this->paginate('AttendanceRegister');
-			// echo "<pre>";
-			// print_r($attendances); die;
       $this->set(compact('attendances'));   
     }
     function get_jobcard(){
@@ -295,7 +334,7 @@
 				$attendance['AttendanceRegister']['amount_per_head'] = $this->data['Payment']['amount_per_head'];
 				$attendance['AttendanceRegister']['amount_paid'] = $this->data['Payment']['amount_paid'];
 				$this->AttendanceRegister->save($attendance);
-				$this->Session->setFlash(__('Amount paid', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
 				$this->redirect(array('action'=>'attendance_index'));
         
       }
@@ -318,11 +357,9 @@
 					$workers[$key]['name'] = $row['NregsRegistration']['name'];
 					$workers[$key]['father_or_husband_name'] = $row['NregsRegistration']['father_or_husband_name'];
 				}
-				// echo "<pre>";
-				// print_r($workers); die;
 				$this->set(compact('workers'));
 			}else{
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'attendance_index'));
 			}
 		}

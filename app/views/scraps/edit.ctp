@@ -1,7 +1,7 @@
 <h2>கழிவுகளைத் திருத்துதல்</h2>
 
 <?php
-	echo $form->create('Scrap', array( 'url' => array('controller' => 'scraps', 'action' => 'add')));
+	echo $form->create('Scrap', array( 'url' => array('controller' => 'scraps', 'action' => 'edit', $this->data['Scrap']['id'])));
 	echo $form->input('id');
 	echo $form->input('scrap_detail', array('label' => 'கழிவுகளின் விபரம்'));
 	echo $form->input('quantity', array('label' => 'அளவு'));

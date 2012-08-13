@@ -11,7 +11,7 @@
         <li><?php echo $html->link(__('கணக்கு எண் 3', true), array('action'=>'account3')); ?></li>
       </ul>
       <ul>
-      	<li><?php echo $html->link(__('கணக்கு எண் 4', true), array('action'=>'account4')); ?></li>
+      	<li><?php echo $html->link(__('கணக்கு எண் 4', true), array('controller' => 'nregs', 'action' => 'index')); ?></li>
       </ul>
       <ul>
       	<li><?php echo $html->link(__('கணக்கு எண் 5', true), array('action'=>'account5')); ?></li>

@@ -20,9 +20,12 @@ class UsersController extends AppController {
 			$year = split('[/]', $this->data['User']['accounting_year']);
 			$this->Session->write('User.acc_opening_year', $year[0]);
 			$this->Session->write('User.acc_closing_year', $year[1]);
-			
 			$this->redirect(array('controller' => 'accounts', 'action'=>'index'));
 		}
+		if($this->Auth->User('id')){ 
+			$this->redirect(array('controller' => 'accounts', 'action'=>'index'));
+		}
+		
 	}
 	function logout() {
 			$this->Session->delete('User');
@@ -35,7 +38,7 @@ class UsersController extends AppController {
         {
             if(empty($this->data['User']['email']))
             {
-                $this->Session->setFlash('Please Provide Your Email Adress that You used to Register with Us');
+                $this->Session->setFlash($GLOBALS['flash_messages']['email']);
             }
             else
             {
@@ -68,7 +71,7 @@ class UsersController extends AppController {
                             $this->Email->template = 'resetpw';
                             $this->Email->from    = 'ks.sanmugam2@gmail.com';
                             $this->Email->to      = $fu['User']['name'].'<'.$fu['User']['email'].'>';
-                            $this->Email->subject = 'Reset Your Example.com Password';
+                            $this->Email->subject = 'Reset Your Account management System Password';
                             $this->Email->sendAs = 'both';
                             $this->Email->delivery = 'smtp';
                             $this->set('ms', $ms);

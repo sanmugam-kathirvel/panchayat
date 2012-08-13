@@ -4,9 +4,19 @@
 		#var $hasMany = array('Jobcard');
 		var $validate = array(
 				'starting_roll_no' => array(
-				  'rule' => 'notEmpty',
+				  'rule' => 'numeric',
 					'allowEmpty' => false,
-					'message' => 'This Field Not Empty'
+					'message' => 'Enter valid input'
+				),
+				'ending_roll_no' => array(
+				  'rule' => 'numeric',
+					'allowEmpty' => false,
+					'message' => 'Enter valid input'
+				),
+				'role_date' => array(
+				  'rule' => 'date',
+					'allowEmpty' => false,
+					'message' => 'Enter valid input'
 				)
 			);
 			

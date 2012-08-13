@@ -5,13 +5,12 @@
 		var $validate = array(
 			'item_name' => array(
 				'rule' => 'notEmpty',
-				'allowEmpty' => false,
-				'message' => 'Enter valied input'
+				'allowEmpty' => false
 			),
 			'item_quantity' => array(
 				'rule' => 'numeric',
 				'allowEmpty' => false,
-				'message' => 'Enter valied input'
+				'message' => 'Enter valied quantity'
 			),
 		);
 	}

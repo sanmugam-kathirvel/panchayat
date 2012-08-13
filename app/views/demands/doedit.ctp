@@ -1,6 +1,6 @@
 <h2>டி & ஓ வியாபாரிகளின் கேட்பு விபரங்களைத் திருத்து</h2>
 <?php
-	echo $form->create('DoDemand', array( 'url' => array('controller' => 'demands', 'action' => 'doedit')));
+	echo $form->create('DoDemand', array( 'url' => array('controller' => 'demands', 'action' => 'doedit', $this->data['DoDemand']['id'])));
 	echo $form->input('id');
 	echo $form->input('demand_number', array('label' => 'கேட்பு எண்'));
 	echo $form->input('demand_date', array('label' => 'தேதி', 'id' => 'datepicker', 'type' => 'text'));

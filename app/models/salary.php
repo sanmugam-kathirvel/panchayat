@@ -10,7 +10,7 @@
 			),
 			'drawee_name' => array(
 				'rule' => 'notEmpty',
-				'message' => 'This Field Not Empty'
+				'message' => 'Enter Valied Name'
 			),
 			'voucher_number' => array(
 				'rule' => 'notEmpty',
@@ -26,7 +26,7 @@
 			),
 			'cheque_amount' => array(
 				'rule' => 'numeric',
-				'message' => 'This Field Not Empty'
+				'message' => 'Enter Valied Amount'
 			),
 		);
 	}

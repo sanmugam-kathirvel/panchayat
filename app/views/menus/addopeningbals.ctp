@@ -1,7 +1,7 @@
 <h2>புதிய தொடக்க இருப்புத் தொகை சேர்த்தல்</h2>
 <?php
 	echo $form->create('BankDetail', array( 'url' => array('controller' => 'menus', 'action' => 'addopeningbals')));
-	echo $form->input('account_id',array('label' => 'கணக்கின் பெயர்', 'type'=>'select','options'=> $account_op));
+	echo $form->input('account_id',array('label' => 'கணக்கின் பெயர்', 'empty' => true, 'type'=>'select','options'=> $account_op));
 	echo $form->input('acc_openning_year', array('type' => 'hidden', 'value' => $this->Session->read('User.acc_opening_year')));
 	echo $form->input('acc_closing_year', array('type' => 'hidden', 'value' => $this->Session->read('User.acc_closing_year')));
 	echo $form->input('account_number', array('label' => 'கணக்கு எண்'));

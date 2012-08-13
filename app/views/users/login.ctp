@@ -1,3 +1,6 @@
+<div id='falsh-notice-login'>
+	<?php echo $this->Session->flash('auth'); ?>
+</div>
 <h2>நுழைவு பக்கம்</h2>
 <?php
 		$accounting_year = array();
@@ -7,7 +10,6 @@
 			$accounting_year[$tmp] = $year.' - '.($year + 1);
 			$year++;
 		}
-    echo $this->Session->flash('auth');
     echo $this->Form->create('User',array('url' => array('action'=>'login'), 'class' => 'login-form'));
     echo $this->Form->input('username', array('label' => 'பயனீட்டாளர் பெயர்'));
     echo $this->Form->input('password', array('label' => 'கடவுச்சொல்'));

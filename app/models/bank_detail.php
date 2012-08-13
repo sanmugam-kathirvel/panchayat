@@ -4,30 +4,35 @@
 		var $belongsTo = array('Account');
 		var $hasMany = array('CashToBank');
 		var $validate = array(
+			'account_id' => array(
+				'rule' => 'numeric',
+				'allowEmpty' => false,
+				'message' => 'Please select account name'
+			),
 			'account_number' => array(
 				'rule' => 'numeric',
 				'allowEmpty' => false,
-				'message' => 'Enter valied input'
+				'message' => 'Enter valied Account number'
 			),
 			'bank_name' => array(
 				'rule' => 'notEmpty',
 				'allowEmpty' => false,
-				'message' => 'Enter valied input'
+				'message' => 'Enter valied Bank name'
 			),
 			'branch' => array(
 				'rule' => 'notEmpty',
 				'allowEmpty' => false,
-				'message' => 'Enter valied input'
+				'message' => 'Enter valied Branch name'
 			),
 			'opening_cash_balance' => array(
 				'rule' => 'numeric',
 				'allowEmpty' => false,
-				'message' => 'Enter valied input'
+				'message' => 'Enter valied Cash balance'
 			),
 			'opening_bank_balance' => array(
 				'rule' => 'numeric',
 				'allowEmpty' => false,
-				'message' => 'Enter valied input'
+				'message' => 'Enter valied Bank balance'
 			),
 		);
 		

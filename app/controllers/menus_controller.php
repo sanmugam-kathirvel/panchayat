@@ -15,6 +15,8 @@
 					$this->data['BankDetail']['closing_cash_balance'] = $this->data['BankDetail']['opening_cash_balance'];
 					$this->data['BankDetail']['closing_bank_balance'] = $this->data['BankDetail']['opening_bank_balance']; 
 					$this->BankDetail->save($this->data);
+					$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
+					$this->redirect(array('action'=>'balanceindex'));
 				}
 			}
 		}
@@ -27,6 +29,10 @@
 				$this->Header->set($this->data);
 				if($this->Header->validates()){
 					if($this->Header->save($this->data)){
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
+						$this->redirect(array('action'=>'headerindex'));
+					}else{
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['add_failed'], true));
 						$this->redirect(array('action'=>'headerindex'));
 					}
 				}
@@ -37,6 +43,7 @@
 				$this->Stock->set($this->data);
 				if($this->Stock->validates()){
 					$this->Stock->save($this->data);
+					$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
 				}
 			}
 		}
@@ -45,6 +52,10 @@
 				$this->Hamlet->set($this->data);
 				if($this->Hamlet->validates()){
 					if($this->Hamlet->save($this->data)){
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
+						$this->redirect(array('action'=>'hamletindex'));
+					}else{
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['add_failed'], true));
 						$this->redirect(array('action'=>'hamletindex'));
 					}
 				}
@@ -65,14 +76,19 @@
 							$stock['Stock']['item_quantity'] = $stock['Stock']['item_quantity'] - $this->data['StockIssue']['item_quantity'] ;
 							$this->Stock->save($stock);
 							if(!empty($this->data)){
-								$this->StockIssue->save($this->data);
+								$this->StockIssue->set($this->data);
+								if($this->StockIssue->validates()){
+									$this->StockIssue->save($this->data);
+									$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));    
+		          		$this->redirect(array('action'=>'stock_index'));
+								}
 							}
 						}else{
-							$this->Session->setFlash('Available Stock only '.$stock['Stock']['item_quantity']);
+							$this->Session->setFlash($GLOBALS['flash_messages']['low_stock']);
 							$this->data['StockIssue'] = '';
 						}
 					}else{
-						$this->Session->setFlash(__('Given date is invalid, please give dates between '.$this->Session->read('User.acc_opening_year').' and '.$this->Session->read('User.acc_closing_year'), true));
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['date_check'], true));
 					}
 				}
 			}
@@ -99,27 +115,30 @@
 		function editheader($id){
 			if(!empty($id)){
 				$this->Header->id=$id;
+				$account = $this->Account->find('all');
+				$this->set(compact('account'));
 	      if(empty($this->data)) {
 	        $this->data = $this->Header->read();
-					$account = $this->Account->find('all');
-					$this->set(compact('account'));
 				}else{
-	        if($this->Header->save($this->data)){
-	          $this->Session->setFlash(__('Header saved', true));    
-	          $this->redirect(array('action'=>'headerindex'));
-	        }        
+					$this->Header->set($this->data);
+					if($this->Header->validates()){
+		        if($this->Header->save($this->data)){
+		          $this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));    
+		          $this->redirect(array('action'=>'headerindex'));
+		        }
+					}
 	      }
 	    }else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'headerindex'));
 			}
 		}
 		function deleteheader($id){
 			if(!empty($id)){
 				$this->Header->delete($id);
-				$this->Session->setFlash(__('Record deleted successfully', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['deleted'], true));
 			}else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 			}
 			$this->redirect(array('action'=>'headerindex'));
 		}
@@ -135,25 +154,26 @@
 				$this->Hamlet->id=$id;
 	      if(empty($this->data)) {
 	        $this->data = $this->Hamlet->read();
-					$account = $this->Account->find('all');
-					$this->set(compact('account'));
 				}else{
-	        if($this->Hamlet->save($this->data)){
-	          $this->Session->setFlash(__('Hamlet saved', true));    
-	          $this->redirect(array('action'=>'hamletindex'));
-	        }        
+					$this->Hamlet->set($this->data);
+					if($this->Hamlet->validates()){
+		        if($this->Hamlet->save()){
+		          $this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));    
+		          $this->redirect(array('action'=>'hamletindex'));
+		        }
+					}
 	      }
 	    }else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'hamletindex'));
 			}
 		}
 		function deletehamlet($id){
 			if(!empty($id)){
 				$this->Hamlet->delete($id);
-				$this->Session->setFlash(__('Record deleted successfully', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['deleted'], true));
 			}else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 			}
 			$this->redirect(array('action'=>'hamletindex'));
 		}
@@ -167,28 +187,31 @@
 		}
 		function editbalance($id){
 			if(!empty($id)){
+				$account = $this->Account->find('all');
+				$this->set(compact('account'));
 				$this->BankDetail->id=$id;
 	      if(empty($this->data)) {
 	        $this->data = $this->BankDetail->read();
-					$account = $this->Account->find('all');
-					$this->set(compact('account'));
-				}else{
-	        if($this->BankDetail->save($this->data)){
-	          $this->Session->setFlash(__('Account saved', true));    
-	          $this->redirect(array('action'=>'balanceindex'));
-	        }        
+				}else {
+					$this->BankDetail->set($this->data);
+					if($this->BankDetail->validates()){
+		        if($this->BankDetail->save()){
+		          $this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));    
+		          $this->redirect(array('action'=>'balanceindex'));
+		        }
+					}
 	      }
 	    }else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'balanceindex'));
 			}
 		}
 		function deletebalance($id){
 			if(!empty($id)){
 				$this->BankDetail->delete($id);
-				$this->Session->setFlash(__('Record deleted successfully', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['deleted'], true));
 			}else {
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 			}
 			$this->redirect(array('action'=>'balanceindex'));
 		}
@@ -208,10 +231,10 @@
 				$this->BookDetail->set($this->data);
 				if($this->BookDetail->validates()){
 					if($this->BookDetail->save($this->data)){
-						$this->Session->setFlash(__('Book Details Saved Successfully.', true));
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
 						$this->redirect(array('action'=>'bookindex'));
 					}else{
-						$this->Session->setFlash(__('Error Saving Book Details!', true));
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['add_failed'], true));
 						$this->redirect(array('action'=>'bookindex'));
 					}
 				}
@@ -225,26 +248,29 @@
 	      if(empty($this->data)) {
 	        $this->data = $this->BookDetail->read();
 				}else{
-	        if($this->BookDetail->save($this->data)){
-	          $this->Session->setFlash(__('Book Details Updated Successfully.', true));
-						$this->redirect(array('action'=>'bookindex'));
-	        }else{
-						$this->Session->setFlash(__('Error Updating Book Details!', true));
-						$this->redirect(array('action'=>'bookindex'));
+					$this->BookDetail->set($this->data);
+					if($this->BookDetail->validates()){
+		        if($this->BookDetail->save($this->data)){
+		          $this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));
+							$this->redirect(array('action'=>'bookindex'));
+		        }else{
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['edit_failed'], true));
+							$this->redirect(array('action'=>'bookindex'));
+						}
 					}
 	      }
 			}else{
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'bookindex'));
 			}
 		}
 		function deletebook($id){
 			if(!empty($id)){
 				$this->BookDetail->delete($id);
-				$this->Session->setFlash(__('Book Details deleted successfully', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['deleted'], true));
 				$this->redirect(array('action'=>'bookindex'));
 			}else{
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'bookindex'));
 			}
 		}
@@ -258,15 +284,12 @@
 				if($this->BookDetail->validates()){
 					$this->BookDetail->id = $this->data['BookDetail']['book_detail_id'];
 					if($this->BookDetail->saveField('status', 'used')){
-						$this->Session->setFlash(__('Book issued', true));
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
 						$this->redirect(array('action' => 'bookindex'));
 					}else{
-						$this->Session->setFlash(__('Book not issued', true));
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['add_failed'], true));
 						$this->redirect(array('action' => 'book_issue'));
 					}
-				}else{
-					$this->Session->setFlash(__('Invalid operation', true));
-					$this->redirect(array('action' => 'book_issue'));
 				}
 			}
  		}
@@ -295,10 +318,10 @@
 				$this->Employee->set($this->data);
 				if($this->Employee->validates()){
 					if($this->Employee->save($this->data)){
-						$this->Session->setFlash(__('Employee Details Saved Successfully.', true));
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
 						$this->redirect(array('action'=>'employees_index'));
 					}else{
-						$this->Session->setFlash(__('Error Saving Employee Details!', true));
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['add_failed'], true));
 						$this->redirect(array('action'=>'employees_index'));
 					}
 				}
@@ -310,26 +333,29 @@
 	      if(empty($this->data)) {
 	        $this->data = $this->Employee->read();
 				}else{
-	        if($this->Employee->save($this->data)){
-	          $this->Session->setFlash(__('Employee Details Updated Successfully.', true));
-						$this->redirect(array('action'=>'employees_index'));
-	        }else{
-						$this->Session->setFlash(__('Error Updating Employee Details!', true));
-						$this->redirect(array('action'=>'employees_index'));
+					$this->Employee->set($this->data);
+					if($this->Employee->validates()){
+		        if($this->Employee->save($this->data)){
+		          $this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));
+							$this->redirect(array('action'=>'employees_index'));
+		        }else{
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['edit_failed'], true));
+							$this->redirect(array('action'=>'employees_index'));
+						}
 					}
 	      }
 			}else{
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'employees_index'));
 			}
 		}
 		function delete_employee($id){
 			if(!empty($id)){
 				$this->Employee->delete($id);
-				$this->Session->setFlash(__('Employee Details deleted successfully', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['deleted'], true));
 				$this->redirect(array('action'=>'employees_index'));
 			}else{
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'employees_index'));
 			}
 		}

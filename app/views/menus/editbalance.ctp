@@ -4,7 +4,7 @@
 	foreach($account as $acc){
 		$account_op[$acc['Account']['id']] =  $acc['Account']['account_name'];
 	}
-	echo $form->create('BankDetail', array( 'url' => array('controller' => 'menus', 'action' => 'editbalance')));
+	echo $form->create('BankDetail', array( 'url' => array('controller' => 'menus', 'action' => 'editbalance', $this->data['BankDetail']['id'])));
 	echo $form->input('id');
 	echo $form->input('account_id',array('label' => 'கணக்கின் பெயர்', 'type'=>'select','options'=> $account_op));
 	echo $form->input('acc_openning_year', array('type' => 'hidden', 'value' => $this->Session->read('User.acc_opening_year')));

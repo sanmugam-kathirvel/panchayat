@@ -6,12 +6,12 @@
 			'hamlet_code' => array(
 				'rule' => 'alphaNumeric',
 				'allowEmpty' => false,
-				'message' => 'Enter valied input'
+				'message' => 'Please give valid Hamlet code'
 			),
 			'hamlet_name' => array(
 				'rule' => 'notEmpty',
 				'allowEmpty' => false,
-				'message' => 'Enter valied input'
+				'message' => 'Please give valid Hamlet name'
 			),
 		);
 	}

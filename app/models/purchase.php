@@ -5,11 +5,11 @@
 		var $validate = array(
 			'company_name' => array(
 				'rule' => 'notEmpty',
-				'message' => 'This Field Not Empty'
+				'message' => 'Enter valid Company name'
 			),
 			'purchase_date' => array(
 				'rule' => 'notEmpty',
-				'message' => 'This Field Not Empty'
+				'message' => 'Enter valid Name'
 			),
 			'voucher_number' => array(
 				'rule' => 'notEmpty',
@@ -21,11 +21,11 @@
 			),
 			'cheque_date' => array(
 				'rule' => 'notEmpty',
-				'message' => 'This Field Not Empty'
+				'message' => 'Enter valid Amount'
 			),
 			'total_amt' => array(
 				'rule' => 'numeric',
-				'message' => 'This Field Not Empty'
+				'message' => 'Enter valid amount'
 			),
 		);
 	}

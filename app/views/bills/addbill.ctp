@@ -1,4 +1,4 @@
-<p><h3><?php __('கணக்கு எண் - '.$acc_id.', புதிய வரைவு மதிப்பீடு விபரங்களைச் சேர்'); ?></h3></p>
+<h2><?php __('கணக்கு எண் - '.$acc_id.', புதிய வரைவு மதிப்பீடு விபரங்களைச் சேர்'); ?></h2>
 <?php
 	echo $form->create('ContractBillEstimation', array( 'url' => array('controller' => 'bills', 'action' => 'addbill')));
 	echo $form->input('account_id', array('class' => 'account_id', 'type' => 'hidden', 'value' => $acc_id));

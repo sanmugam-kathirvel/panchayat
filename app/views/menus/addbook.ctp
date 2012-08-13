@@ -5,7 +5,7 @@
 		$book_names[$book['Book']['id']] =  $book['Book']['book_name'];
 	}
 	echo $form->create('BookDetail', array( 'url' => array('controller' => 'menus', 'action' => 'addbook')));
-	echo $form->input('book_id', array('type' => 'select', 'options' => $book_names, 'label' => 'புத்தகத்தின் பெயர்'));
+	echo $form->input('book_id', array('type' => 'select', 'empty' => true, 'options' => $book_names, 'label' => 'புத்தகத்தின் பெயர்'));
 	echo $form->input('purchase_date', array('label' => 'வாங்கிய தேதி', 'id' => 'datepicker', 'type' => 'text'));
 	echo $form->input('company_name', array('label' => 'நிறுவனத்தின் பெயர்'));
 	echo $form->input('book_number', array('label' => 'புத்தகத்தின் எண்'));

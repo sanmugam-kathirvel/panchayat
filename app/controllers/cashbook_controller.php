@@ -306,7 +306,7 @@
 				$xls_fmt['workbook']->send('Form_11.xls');
 				$xls_fmt['workbook']->close();
 			}else{
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'index'));
 			}
 		}
@@ -423,7 +423,7 @@
 				$xls_fmt['workbook']->send('Form_23.xls');
 				$xls_fmt['workbook']->close();
 			}else{
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'index'));
 			}
 		}
@@ -561,7 +561,7 @@
 				$xls_fmt['workbook']->send('Form_26.xls');
 				$xls_fmt['workbook']->close();
 			}else{
-				$this->Session->setFlash(__('Invalid operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'index'));
 			}
 		}

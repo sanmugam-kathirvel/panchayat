@@ -40,7 +40,7 @@
 </script>
 </head>
 
-<body background="images/tbg.gif">
+<body>
 
 <h2 align="center">Transliterate to Tamil - தமிழில் தட்டச்சு செய்ய</h2>
 

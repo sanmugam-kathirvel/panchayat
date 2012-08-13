@@ -37,7 +37,7 @@
                   $scrap['Scrap']['quantity'],
                   $scrap['Scrap']['estimation_date'],
                   $scrap['Scrap']['estimation_amount'],
-                  $scrap['Scrap']['tender_status'] =='available' ? $html->link('இருக்கின்றது', array('controller' => 'scraps', 'action' => 'tender', 'id' => $scrap['Scrap']['id'])): 'விற்றுத் தீர்ந்துவிட்டது',
+                  $scrap['Scrap']['tender_status'] =='available' ? $html->link('இருக்கின்றது', array('controller' => 'scraps', 'action' => 'tender', $scrap['Scrap']['id'])): 'விற்றுத் தீர்ந்துவிட்டது',
                   $actions,
                 );
             }

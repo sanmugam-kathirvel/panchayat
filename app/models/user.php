@@ -2,6 +2,14 @@
 	class User extends AppModel{
 		var $name = 'User';
 		var $validate = array(
+				'name' => array(
+					'rule' => 'notEmpty',
+					'message' => 'This Field Not Empty'
+				),
+				'email' => array(        
+					'rule' => array('email', true),
+					'message' => 'Please supply a valid email address.'
+				),
 				'username' => array(
 					'rule' => 'isUnique',
 					'allowEmpty' => false,

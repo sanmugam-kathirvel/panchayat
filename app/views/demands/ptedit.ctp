@@ -4,7 +4,7 @@
 	foreach($hamlet as $ham){
 		$hamlet_info[$ham['Hamlet']['id']] =  $ham['Hamlet']['hamlet_code'];
 	}
-	echo $form->create('PtDemand', array( 'url' => array('controller' => 'demands', 'action' => 'ptedit')));
+	echo $form->create('PtDemand', array( 'url' => array('controller' => 'demands', 'action' => 'ptedit', $this->data['PtDemand']['id'])));
 	echo $form->input('id');
 	echo $form->input('demand_number', array('label' => 'கேட்பு எண்'));
 	echo $form->input('demand_date', array('label' => 'தேதி', 'id' => 'datepicker', 'type' => 'text'));

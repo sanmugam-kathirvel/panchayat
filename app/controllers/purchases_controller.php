@@ -43,14 +43,12 @@
 							$acc_bank_details['BankDetail']['closing_bank_balance'] = $acc_bank_details['BankDetail']['closing_bank_balance'] - $this->data['Purchase']['total_amt'];
 							$this->BankDetail->save($acc_bank_details['BankDetail']);
 							$this->Purchase->saveAll($datas);
-							$this->Session->setFlash(__('Purchases saved successfully', true));
-							$this->redirect(array('controller' => 'accounts', 'action'=>'account1'));
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
+							$this->redirect(array('action'=>'index'));
 						}else{
-							$this->Session->setFlash(__('Insufficient balance in account, available balance is '.$acc_bank_details['BankDetail']['closing_bank_balance'], true));
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['low_balance'], true));
 						}
 					}
-				}else{
-					$this->Session->setFlash(__('Purchase could not be saved, Please fill all Required Fields', true));
 				}
 			}
 		}
@@ -81,11 +79,9 @@
 						'conditions' => array('PurchaseItem.purchase_id' => $this->data['id']),
 						'order' => 'PurchaseItem.id ASC',
 				));
-				// echo "<pre>";
-				// print_r($items); die;
 				$this->set(compact('items'));
 			}else{
-				$this->Session->setFlash(__('Invalid Operation', true));
+				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'index'));
 			}
 		}

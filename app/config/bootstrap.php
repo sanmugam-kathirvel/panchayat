@@ -50,5 +50,18 @@
  */
  //global $accounting_year;
  //$accounting_year =array('acc_opening_year' => '2012-04-01', 'acc_closing_year' => '2013-03-31');
-
- ?>
+	global $flash_messages;
+	$flash_messages = array();
+	$flash_messages['email'] = 'தங்களது மின்னஞ்சல் முகவரியை கொடுக்கவும்';
+	$flash_messages['added'] = 'ஆவணம் வெற்றிகரமாக சேர்க்கப்பட்டது';
+	$flash_messages['low_stock'] = 'கையிருப்பு அளவு குறைவாக உள்ளது';
+	$flash_messages['add_failed'] = 'ஆவணம் சேர்க்கப்படவில்லை';
+	$flash_messages['low_balance'] = 'கணக்கில் போதுமான அளவு பணம் இல்லை';
+	$flash_messages['low_cash'] = 'கையில் போதுமான அளவு பணம் இல்லை';
+	$flash_messages['edited'] = 'ஆவணம் வெற்றிகரமாக புதுப்பிக்கப்பட்டது';
+	$flash_messages['edit_failed'] = 'ஆவணம் புதுப்பிக்கப்படவில்லை';
+	$flash_messages['deleted'] = 'ஆவணம் வெற்றிகரமாக நீக்கப்பட்டது';
+	$flash_messages['invalid_operation'] = 'செல்லுபடியாகாத இயங்குமுறை';
+	$flash_messages['date_check'] = 'தாங்கள் கொடுத்த தேதி செல்லாததாகும்';
+	$flash_messages['login_check'] = 'நீங்கள் தேர்ந்தெடுத்த பக்கத்தை பார்க்க உங்களுக்கு அனுமதி இல்லை';
+?>
