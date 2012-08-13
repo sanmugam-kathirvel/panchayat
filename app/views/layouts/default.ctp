@@ -76,7 +76,7 @@
   							<li><?= $this->Html->link("கணக்கு எண் 1", array('plugin' => false, "controller" => "accounts", "action" => "account1")); ?></li>
   							<li><?= $this->Html->link("கணக்கு எண் 2", array('plugin' => false, "controller" => "accounts", "action" => "account2")); ?></li>
   							<li><?= $this->Html->link("கணக்கு எண் 3", array('plugin' => false, "controller" => "accounts", "action" => "account3")); ?></li>
-  							<li><?= $this->Html->link("கணக்கு எண் 4", array('plugin' => false, "controller" => "accounts", "action" => "account4")); ?></li>
+  							<li><?= $this->Html->link("கணக்கு எண் 4", array('plugin' => false, "controller" => "nregs", "action" => "index")); ?></li>
   							<li><?= $this->Html->link("கணக்கு எண் 5", array('plugin' => false, "controller" => "accounts", "action" => "account5")); ?></li>
   							<li><?= $this->Html->link("கணக்கு எண் 6", array('plugin' => false, "controller" => "accounts", "action" => "account6")); ?></li>
   						</ul>

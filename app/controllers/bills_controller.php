@@ -70,47 +70,49 @@
 	        $this->data = $this->ContractBillEstimation->read();
 	      }else{
 	      	$this->ContractBillEstimation->set($this->data);
-					$acc_opening_date = strtotime($this->Session->read('User.acc_opening_year'));
-					$acc_closing_date = strtotime($this->Session->read('User.acc_closing_year'));
-					$bill_date = strtotime($this->data['ContractBillEstimation']['bill_date']);
-					if($acc_closing_date >= $bill_date && $acc_opening_date <= $bill_date){
-						$old_data = $this->ContractBillEstimation->findById($this->data['ContractBillEstimation']['id']);
-						$amount_to_update = 0;
-						$flag = 0;
-						if(((int)$this->data['ContractBillEstimation']['cheque_amt']) > ((int)$old_data['ContractBillEstimation']['cheque_amt'])){
-							$amount_to_update = ((int)$this->data['ContractBillEstimation']['expense_amount']) - ((int)$old_data['ContractBillEstimation']['cheque_amt']);
-						}elseif(((int)$this->data['ContractBillEstimation']['cheque_amt']) < ((int)$old_data['ContractBillEstimation']['cheque_amt'])){
-							$amount_to_update =  ((int)$old_data['ContractBillEstimation']['cheque_amt']) - ((int)$this->data['ContractBillEstimation']['cheque_amt']);
-							$flag = 1;
-						}else{
+					if($this->ContractBillEstimation->validates()){
+						$acc_opening_date = strtotime($this->Session->read('User.acc_opening_year'));
+						$acc_closing_date = strtotime($this->Session->read('User.acc_closing_year'));
+						$bill_date = strtotime($this->data['ContractBillEstimation']['bill_date']);
+						if($acc_closing_date >= $bill_date && $acc_opening_date <= $bill_date){
+							$old_data = $this->ContractBillEstimation->findById($this->data['ContractBillEstimation']['id']);
 							$amount_to_update = 0;
-						}
-						if($amount_to_update != 0){
-							$acc_bank_details = $this->BankDetail->find('first', array(
-								'conditions' => array(
-									'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
-									'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'), 
-									'BankDetail.account_id' => $this->data['ContractBillEstimation']['account_id']
-								)
-							));
-							if($flag == 0){
-								$acc_bank_details['BankDetail']['closing_bank_balance'] -= $amount_to_update;
+							$flag = 0;
+							if(((int)$this->data['ContractBillEstimation']['cheque_amt']) > ((int)$old_data['ContractBillEstimation']['cheque_amt'])){
+								$amount_to_update = ((int)$this->data['ContractBillEstimation']['expense_amount']) - ((int)$old_data['ContractBillEstimation']['cheque_amt']);
+							}elseif(((int)$this->data['ContractBillEstimation']['cheque_amt']) < ((int)$old_data['ContractBillEstimation']['cheque_amt'])){
+								$amount_to_update =  ((int)$old_data['ContractBillEstimation']['cheque_amt']) - ((int)$this->data['ContractBillEstimation']['cheque_amt']);
+								$flag = 1;
 							}else{
-								$acc_bank_details['BankDetail']['closing_bank_balance'] += $amount_to_update;
+								$amount_to_update = 0;
 							}
-							$acc_bank_details['BankDetail']['value'] = 'no';
-							$this->BankDetail->save($acc_bank_details);
-						}
-						if($this->ContractBillEstimation->save()){
-							$this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));
-							$this->redirect(array('action'=>'index', $this->data['ContractBillEstimation']['account_id']));
+							if($amount_to_update != 0){
+								$acc_bank_details = $this->BankDetail->find('first', array(
+									'conditions' => array(
+										'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
+										'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'), 
+										'BankDetail.account_id' => $this->data['ContractBillEstimation']['account_id']
+									)
+								));
+								if($flag == 0){
+									$acc_bank_details['BankDetail']['closing_bank_balance'] -= $amount_to_update;
+								}else{
+									$acc_bank_details['BankDetail']['closing_bank_balance'] += $amount_to_update;
+								}
+								$acc_bank_details['BankDetail']['value'] = 'no';
+								$this->BankDetail->save($acc_bank_details);
+							}
+							if($this->ContractBillEstimation->save()){
+								$this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));
+								$this->redirect(array('action'=>'index', $this->data['ContractBillEstimation']['account_id']));
+							}else{
+								$this->Session->setFlash(__($GLOBALS['flash_messages']['edit_failed'], true));
+								$this->redirect(array('action'=>'index', $this->data['ContractBillEstimation']['account_id']));
+							}
 						}else{
-							$this->Session->setFlash(__($GLOBALS['flash_messages']['edit_failed'], true));
-							$this->redirect(array('action'=>'index', $this->data['ContractBillEstimation']['account_id']));
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['date_check'], true));
+							$this->redirect($this->referer());
 						}
-					}else{
-						$this->Session->setFlash(__($GLOBALS['flash_messages']['date_check'], true));
-						$this->redirect($this->referer());
 					}
 	      }
 			}else {

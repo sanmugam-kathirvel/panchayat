@@ -72,44 +72,50 @@
 					));
 					$this->set(compact('header'));
 	      }else{
-	      	$acc_opening_date = strtotime($this->Session->read('User.acc_opening_year'));
-					$acc_closing_date = strtotime($this->Session->read('User.acc_closing_year'));
-					$expense_acc_date = strtotime($this->data['Expense']['expense_date']);
-					if($acc_closing_date >= $expense_acc_date && $acc_opening_date <= $expense_acc_date){
-						$old_data = $this->Expense->findById($this->data['Expense']['id']);
-						$amount_to_update = 0;
-						$flag = 0;
-						if(((int)$this->data['Expense']['expense_amount']) > ((int)$old_data['Expense']['expense_amount'])){
-							$amount_to_update = ((int)$this->data['Expense']['expense_amount']) - ((int)$old_data['Expense']['expense_amount']);
-						}elseif(((int)$this->data['Expense']['expense_amount']) < ((int)$old_data['Expense']['expense_amount'])){
-							$amount_to_update =  ((int)$old_data['Expense']['expense_amount']) - ((int)$this->data['Expense']['expense_amount']);
-							$flag = 1;
-						}else{
+	      	$header = $this->Header->find('all', array(
+						'conditions' => array('Header.account_id' => $this->data['Expense']['account_id'], 'Header.header_type' => 'expense')
+					));
+					$this->set(compact('header'));
+	      	if($this->Expense->validates()){
+		      	$acc_opening_date = strtotime($this->Session->read('User.acc_opening_year'));
+						$acc_closing_date = strtotime($this->Session->read('User.acc_closing_year'));
+						$expense_acc_date = strtotime($this->data['Expense']['expense_date']);
+						if($acc_closing_date >= $expense_acc_date && $acc_opening_date <= $expense_acc_date){
+							$old_data = $this->Expense->findById($this->data['Expense']['id']);
 							$amount_to_update = 0;
-						}
-						if($amount_to_update != 0){
-							$acc_bank_details = $this->BankDetail->find('first', array(
-								'conditions' => array(
-									'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
-									'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'), 
-									'BankDetail.account_id' => $this->data['Expense']['account_id']
-								)
-							));
-							if($flag == 0){
-								$acc_bank_details['BankDetail']['closing_bank_balance'] -= $amount_to_update;
+							$flag = 0;
+							if(((int)$this->data['Expense']['expense_amount']) > ((int)$old_data['Expense']['expense_amount'])){
+								$amount_to_update = ((int)$this->data['Expense']['expense_amount']) - ((int)$old_data['Expense']['expense_amount']);
+							}elseif(((int)$this->data['Expense']['expense_amount']) < ((int)$old_data['Expense']['expense_amount'])){
+								$amount_to_update =  ((int)$old_data['Expense']['expense_amount']) - ((int)$this->data['Expense']['expense_amount']);
+								$flag = 1;
 							}else{
-								$acc_bank_details['BankDetail']['closing_bank_balance'] += $amount_to_update;
+								$amount_to_update = 0;
 							}
-							$acc_bank_details['BankDetail']['value'] = 'no';
-							$this->BankDetail->save($acc_bank_details);
+							if($amount_to_update != 0){
+								$acc_bank_details = $this->BankDetail->find('first', array(
+									'conditions' => array(
+										'BankDetail.acc_openning_year' => $this->Session->read('User.acc_opening_year'),
+										'BankDetail.acc_closing_year' => $this->Session->read('User.acc_closing_year'), 
+										'BankDetail.account_id' => $this->data['Expense']['account_id']
+									)
+								));
+								if($flag == 0){
+									$acc_bank_details['BankDetail']['closing_bank_balance'] -= $amount_to_update;
+								}else{
+									$acc_bank_details['BankDetail']['closing_bank_balance'] += $amount_to_update;
+								}
+								$acc_bank_details['BankDetail']['value'] = 'no';
+								$this->BankDetail->save($acc_bank_details);
+							}
+			        if($this->Expense->save($this->data)){
+			          $this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));    
+			          $this->redirect(array('action'=>'index', $this->data['Expense']['account_id']));       
+			        }
+						}else{
+							$this->Session->setFlash(__($GLOBALS['flash_messages']['date_check'], true));
+							$this->redirect($this->referer());
 						}
-		        if($this->Expense->save($this->data)){
-		          $this->Session->setFlash(__($GLOBALS['flash_messages']['edited'], true));    
-		          $this->redirect(array('action'=>'index', $this->data['Expense']['account_id']));       
-		        }
-					}else{
-						$this->Session->setFlash(__($GLOBALS['flash_messages']['date_check'], true));
-						$this->redirect($this->referer());
 					}
 	      }
 	    }else {
