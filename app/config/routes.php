@@ -26,7 +26,14 @@
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/views/pages/home.ctp)...
  */
+<<<<<<< HEAD
 	Router::connect('/', array('controller' => 'users', 'action' => 'login'));
+=======
+  if (!file_exists(CONFIGS.'settings.yml')) {
+    Router::connect('/', array('plugin' => 'install' ,'controller' => 'install'));
+  }
+	Router::connect('/', array('controller' => 'accounts', 'action' => 'index'));
+>>>>>>> feature/instalation
 	//Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
 /**
  * ...and connect the rest of 'Pages' controller's urls.
