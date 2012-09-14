@@ -1,4 +1,4 @@
-<?php
+mint<?php
 /**
  * Install Controller
  *
@@ -35,7 +35,7 @@ class InstallController extends InstallAppController {
  * @var array
  * @access public
  */
-    public $components = null;
+    public $components = 'Auth';
 /**
  * Default configuration
  *
@@ -68,6 +68,7 @@ class InstallController extends InstallAppController {
         App::import('Component', 'Session');
         $this->Session = new SessionComponent;
     }
+		
 /**
  * If settings.yml exists, app is already installed
  *
@@ -169,6 +170,11 @@ class InstallController extends InstallAppController {
                       $db->query($statement);
                   }
               }
+							// $this->loadModel('User');
+							// $user = $this->User->find('first');
+							// $user['User']['email'] = 'admin@example.com';
+							// //$user['User']['password'] = $this->Auth->password('admin');
+							// $this->user->save($user);
               $this->redirect(array('action' => 'finish'));
             }
             /*} else {

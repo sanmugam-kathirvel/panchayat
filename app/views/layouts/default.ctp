@@ -96,6 +96,7 @@
 	  						echo '<ul class = "dropdown-menu">';
 								echo '<li>'.$this->Html->link("புதிய பயனீட்டாளர் பதிவு", array('plugin' => false, "controller" => "users", "action" => "register")).'</li>';
 								echo '<li>'.$this->Html->link("வெளியேறு", array('plugin' => false, "controller" => "users", "action" => "logout")).'</li>';
+								echo '<li>'.$this->Html->link("கடவுச்சொல் மாற்ற", array('plugin' => false, "controller" => "users", "action" => "update")).'</li>';
 	  						echo '</ul>';
 	  						echo '</li>';
 								echo '<li>'.$this->Html->link('('.$this->Session->read('User.acc_opening_year').' / '.$this->Session->read('User.acc_closing_year').')','').'</li>';
