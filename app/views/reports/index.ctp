@@ -28,6 +28,10 @@
       	<dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- ரொக்கப் பதிவேடு (கணக்கு எண் II)</dd>
       	<dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 26', true), array('action'=>'../cashbook/index', '26')); ?></li></dt>
       	<dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- ரொக்கப் பதிவேடு (கணக்கு எண் III)</dd>
+      	<dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 28', true), array('action'=>'../cashbook/index', '28')); ?></li></dt>
+      	<dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- ரொக்கப் பதிவேடு (கணக்கு எண் V)</dd>
+      	<dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 29', true), array('action'=>'../cashbook/index', '29')); ?></li></dt>
+      	<dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- ரொக்கப் பதிவேடு (கணக்கு எண் VI)</dd>
       	<dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 30', true), array('action'=>'form30_index')); ?></li></dt>
       	<dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- மாதாந்திர கணக்குகள் ஊராட்சியின் ஒப்புதலுக்கு வைக்கப்படும் சான்று மற்றும் படிவம்</dd>
       	<!-- <dt><li><?php echo $html->link(__('ஊராட்சி படிவம் எண்: 31', true), array('action'=>'form31_report')); ?></li></dt>
