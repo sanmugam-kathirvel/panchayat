@@ -4,7 +4,7 @@ class UsersController extends AppController {
   var $helpers=array("Html","Form","Session");
 	function beforeFilter(){
 		$this->Auth->autoRedirect = false;
-		$this->Auth->allow('forgetpwd','reset');
+		$this->Auth->allow('forgetpwd','reset', 'register');
 	}
 	function register(){
 		if(!empty($this->data) && $this->data['User']['password'] == $this->Auth->password($this->data['User']['password_conformation'])){
@@ -30,6 +30,21 @@ class UsersController extends AppController {
 	function logout() {
 			$this->Session->delete('User');
 		 $this->redirect($this->Auth->logout());
+	}
+	function update(){
+		if(empty($this->data)){
+			//$user = $session->read('Auth.User');
+			//$this->set(compact('user'));
+		}
+		if(!empty($this->data) && isset($this->data['User']['password'])){
+			$this->data['User']['name'] = $this->data['User']['username'];
+			if($this->User->save($this->data)){
+				$this->redirect(array('controller' => 'accounts', 'action'=>'index'));
+			}
+			else{
+				var_dump($current_user);
+			}
+		}
 	}
   function forgetpwd(){
         //$this->layout="signup";
