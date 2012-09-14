@@ -3,25 +3,28 @@
     <h2><?php __('கையிருப்பு விபரம்'); ?></h2>
     <div class="actions">
         <ul>
-            <li><?php echo $html->link(__('புதிய தொடக்க கையிருப்பு விபரங்களைச் சேர்', true), array('action'=>'addopeningstock')); ?></li>
-            <li><?php echo $html->link(__('கையிருப்பு விநியோகம்', true), array('action'=>'stockissue_index')); ?></li>
+            <li><?php echo $html->link(__('புதிய கையிருப்பு விநியோகம்', true), array('action'=>'stockissue')); ?></li>
         </ul>
     </div>
     <table cellpadding="0" cellspacing="0">
         <?php
             $tableHeaders = $html->tableHeaders(array(
+            		$paginator->sort('வழங்கிய தேதி', 'issue_date'),
                 $paginator->sort('பொருளின் பெயர்', 'item_name'),
 								$paginator->sort('பொருளின் அளவு', 'item_quantity'),
+								$paginator->sort('பெறப்பட்ட நபர்', 'hand_over_name'),
 								$paginator->sort('விவரிப்பு', 'description')
             ));
             echo $tableHeaders;
     
             $rows = array();
-            foreach ($stocks AS $stock) {
+            foreach ($stock_issue AS $stock) {
                 $rows[] = array(
+                		$stock['StockIssue']['issue_date'],
 										$stock['Stock']['item_name'],
-                    $stock['Stock']['item_quantity'],
-                    $stock['Stock']['description']
+                    $stock['StockIssue']['item_quantity'],
+                    $stock['StockIssue']['hand_over_name'],
+                    $stock['StockIssue']['description']
                 );
             }
     

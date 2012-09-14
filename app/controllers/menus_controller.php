@@ -38,15 +38,6 @@
 				}
 			}
 		}
-		function addopeningstock(){
-			if(!empty($this->data)){
-				$this->Stock->set($this->data);
-				if($this->Stock->validates()){
-					$this->Stock->save($this->data);
-					$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
-				}
-			}
-		}
 		function addhamlet(){
 			if(!empty($this->data)){
 				$this->Hamlet->set($this->data);
@@ -61,47 +52,7 @@
 				}
 			}
 		}
-		function stockissue(){
-			$stock = $this->Stock->find('all');
-			$this->set(compact('stock'));
-			if(!empty($this->data)){
-				$this->StockIssue->set($this->data);
-				if($this->StockIssue->validates()){
-					$acc_opening_date = strtotime($this->Session->read('User.acc_opening_year'));
-					$acc_closing_date = strtotime($this->Session->read('User.acc_closing_year'));
-					$issue_acc_date = strtotime($this->data['StockIssue']['issue_date']);
-					if($acc_closing_date >= $issue_acc_date && $acc_opening_date <= $issue_acc_date){
-						$stock = $this->Stock->findById($this->data['StockIssue']['stock_id']);
-						if($stock['Stock']['item_quantity'] >= $this->data['StockIssue']['item_quantity']){
-							$stock['Stock']['item_quantity'] = $stock['Stock']['item_quantity'] - $this->data['StockIssue']['item_quantity'] ;
-							$this->Stock->save($stock);
-							if(!empty($this->data)){
-								$this->StockIssue->set($this->data);
-								if($this->StockIssue->validates()){
-									$this->StockIssue->save($this->data);
-									$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));    
-		          		$this->redirect(array('action'=>'stock_index'));
-								}
-							}
-						}else{
-							$this->Session->setFlash($GLOBALS['flash_messages']['low_stock']);
-							$this->data['StockIssue'] = '';
-						}
-					}else{
-						$this->Session->setFlash(__($GLOBALS['flash_messages']['date_check'], true));
-					}
-				}
-			}
-		}
-		function stockissue_avail(){
-			$this->layout = false;
-			$stocks = $this->Stock->find('all', array(
-				'conditions' => array('Stock.id' => $_POST['stock_id'])
-			));
-			$this->set(compact('stocks'));
-			echo json_encode($stocks);
-			exit;
-		}
+		
 		function index(){
 			
 		}
@@ -305,10 +256,6 @@
        echo json_encode($bookdetail);
        exit; 
 		}
-		function stock_index(){
-			$stocks = $this->paginate('Stock');
-			$this->set(compact('stocks'));
-		}
 		function employees_index(){
 			$employees = $this->paginate('Employee');
 			$this->set(compact('employees'));
@@ -358,6 +305,65 @@
 				$this->Session->setFlash(__($GLOBALS['flash_messages']['invalid_operation'], true));
 				$this->redirect(array('action'=>'employees_index'));
 			}
+		}
+		# stock details 
+		function stock_index(){
+			$stocks = $this->paginate('Stock');
+			$this->set(compact('stocks'));
+		}
+		function addopeningstock(){
+			if(!empty($this->data)){
+				$this->Stock->set($this->data);
+				if($this->Stock->validates()){
+					$this->Stock->save($this->data);
+					$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));
+				}
+			}
+		}
+		function stockissue_index(){
+			$stock_issue = $this->paginate('StockIssue');
+			$this->set(compact('stock_issue'));
+		}
+		function stockissue(){
+			$stock = $this->Stock->find('all');
+			$this->set(compact('stock'));
+			if(!empty($this->data)){
+				$this->StockIssue->set($this->data);
+				if($this->StockIssue->validates()){
+					$acc_opening_date = strtotime($this->Session->read('User.acc_opening_year'));
+					$acc_closing_date = strtotime($this->Session->read('User.acc_closing_year'));
+					$issue_acc_date = strtotime($this->data['StockIssue']['issue_date']);
+					if($acc_closing_date >= $issue_acc_date && $acc_opening_date <= $issue_acc_date){
+						$stock = $this->Stock->findById($this->data['StockIssue']['stock_id']);
+						if($stock['Stock']['item_quantity'] >= $this->data['StockIssue']['item_quantity']){
+							$stock['Stock']['item_quantity'] = $stock['Stock']['item_quantity'] - $this->data['StockIssue']['item_quantity'] ;
+							$this->Stock->save($stock);
+							if(!empty($this->data)){
+								$this->StockIssue->set($this->data);
+								if($this->StockIssue->validates()){
+									$this->StockIssue->save($this->data);
+									$this->Session->setFlash(__($GLOBALS['flash_messages']['added'], true));    
+		          		$this->redirect(array('action'=>'stockissue_index'));
+								}
+							}
+						}else{
+							$this->Session->setFlash($GLOBALS['flash_messages']['low_stock']);
+							$this->data['StockIssue'] = '';
+						}
+					}else{
+						$this->Session->setFlash(__($GLOBALS['flash_messages']['date_check'], true));
+					}
+				}
+			}
+		}
+		function stockissue_avail(){
+			$this->layout = false;
+			$stocks = $this->Stock->find('all', array(
+				'conditions' => array('Stock.id' => $_POST['stock_id'])
+			));
+			$this->set(compact('stocks'));
+			echo json_encode($stocks);
+			exit;
 		}
 	}
 ?>
