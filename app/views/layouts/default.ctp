@@ -34,7 +34,7 @@
 		echo $scripts_for_layout;
 	?>
 	<script>
-	var	Webroot = 'http://localhost/myapp/panchayat';
+	var	Webroot = 'http://localhost/panchayat';
 	</script>
 </head>
 <body>
@@ -86,6 +86,7 @@
   						<ul class = "dropdown-menu">
 								<li><?= $this->Html->link("அறிக்கைகள்", array('plugin' => false, "controller" => "reports", "action" => "index")); ?></li>
   							<li><?= $this->Html->link("தமிழ் தட்டச்சு பலகை", array('plugin' => false, "controller" => "tamilpad", "action" => "index"), array('target' =>'__blank')); ?></li>
+  							<li><?= $this->Html->link("file முலம் தகவல் சேர்க", array('plugin' => false, "controller" => "Uploadcsv", "action" => "index")); ?></li>
   						</ul>
   					</li>
   					<?php 

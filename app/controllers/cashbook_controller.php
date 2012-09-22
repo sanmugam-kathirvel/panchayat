@@ -2,7 +2,7 @@
 	App::import('Vendor', 'Writer', array('file' => 'Spreadsheet'.DS.'Writer.php'));
 	class CashbookController extends AppController{
 
-		var $uses = array('CashBook', 'Income', 'HousetaxReceipt', 'WatertaxReceipt', 'ProfessionaltaxReceipt', 'DotaxReceipt', 'OthersReceipt', 'Expense', 'Purchase', 'PurchaseItem', 'Salary', 'EmployeeSalary', 'ContractBillEstimation', 'HtDemand', 'PtDemand', 'WtDemand');
+		var $uses = array('AttendanceRegister', 'CashBook', 'Income', 'HousetaxReceipt', 'WatertaxReceipt', 'ProfessionaltaxReceipt', 'DotaxReceipt', 'OthersReceipt', 'Expense', 'Purchase', 'PurchaseItem', 'Salary', 'EmployeeSalary', 'ContractBillEstimation', 'HtDemand', 'PtDemand', 'WtDemand');
 
 		function index($report_number){
 			if(!empty($report_number)){
@@ -477,7 +477,7 @@
 				$expense_bank = 0;
 				$xls_fmt['worksheet']->write($i, 0, $start_date, $xls_fmt['fmt_left']);
 				$records = $this->CashBook->find('first',array(
-					'conditions' => array('CashBook.account_id' => 1, 'CashBook.Opening_date' => $start_date)
+					'conditions' => array('CashBook.account_id' => 3, 'CashBook.Opening_date' => $start_date)
 				));
 				$xls_fmt['worksheet']->write($i, 1, 'இம்மாத தொடக்க இருப்பு', $xls_fmt['fmt_left_title']);
 				$xls_fmt['worksheet']->writeNumber($i, 2, $records['CashBook']['opening_cash']);
